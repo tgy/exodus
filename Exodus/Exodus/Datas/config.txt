@@ -1,0 +1,7 @@
+PlayerName=Grimpow
+DisplayObstacles=false
+LevelSound=0
+GraphicQuality=0
+PaddingMap=7
+LastIP=127.0.0.1
+Port=1337

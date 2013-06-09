@@ -1,0 +1,2 @@
+0:	Le serveur ne désérialise pas et renvoie tout :)
+1:  Le serveur désérialise et vérifie les données

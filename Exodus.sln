@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exodus", "Exodus\Exodus\Exodus.csproj", "{C60E5337-F1C3-487C-B853-F8A990077894}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExodusContent", "Exodus\ExodusContent\ExodusContent.contentproj", "{EC0F2B5C-37B5-4D59-847B-E6C8D2EB9F49}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C60E5337-F1C3-487C-B853-F8A990077894}.Debug|x86.ActiveCfg = Debug|x86
+		{C60E5337-F1C3-487C-B853-F8A990077894}.Debug|x86.Build.0 = Debug|x86
+		{C60E5337-F1C3-487C-B853-F8A990077894}.Release|x86.ActiveCfg = Release|x86
+		{C60E5337-F1C3-487C-B853-F8A990077894}.Release|x86.Build.0 = Release|x86
+		{EC0F2B5C-37B5-4D59-847B-E6C8D2EB9F49}.Debug|x86.ActiveCfg = Debug|x86
+		{EC0F2B5C-37B5-4D59-847B-E6C8D2EB9F49}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

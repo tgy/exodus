@@ -124,11 +124,11 @@ namespace Exodus.PlayGame
             }
             Camera.Initialise(XMin, XMax, YMin, YMax);
             // On fixe la position du  premier point servant à dessiner les maps
-            XBase = (Width - 1) * Tile.tileWidth / 2;
-            YBase = 0;
             Width = widthMap;
             Height = heightMap;
             MapCells = m;
+            XBase = (widthMap - 1) * Tile.tileWidth / 2;
+            YBase = 0;
             CreateObstacleMap();
         }
         // Charge une map à partir d'un fichier

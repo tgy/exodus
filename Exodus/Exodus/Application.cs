@@ -26,7 +26,7 @@ namespace Exodus
         readonly GraphicsDeviceManager _graphics;
         SpriteBatch _spriteBatch;
         ScrollingSelection _scrollingSelection;
-        MenuState _gameSelection;
+        MenuState _gameLauncherMenu;
         OrangeMenuButton _gameSelectionButton;
         bool _searchingLAN = true;
         Stack<GameState> GameStates;
@@ -96,6 +96,7 @@ namespace Exodus
 
             base.Initialize();
         }
+
         protected override void LoadContent()
         {
             this.IsMouseVisible = false;
@@ -112,19 +113,14 @@ namespace Exodus
             Textures.LoadMiniGameItems(Content);
             Textures.LoadBigGameItems(Content);
             GameMouse.Initialize(Content);
-            StatusBar statusBar = new StatusBar(Data.Window.ScreenCenter.X - Textures.Menu["StatusBar"].Width / 2, Data.Window.ScreenCenter.Y - 117);
-            ParticleEngine.ParticleEngine particleMenu = new ParticleEngine.Engine.StarsEngine((int)Data.Window.WindowWidth / 2, (int)Data.Window.WindowHeight / 2, 0);
+            StatusBar statusBar = new StatusBar(Data.Window.ScreenCenter.X - Textures.Menu["StatusBar"].Width / 2,
+                                                Data.Window.ScreenCenter.Y - 117);
+            ParticleEngine.ParticleEngine particleMenu = new ParticleEngine.Engine.StarsEngine(
+                Data.Window.WindowWidth / 2, Data.Window.WindowHeight / 2, 0);
 
             #region Game Launcher
-            Texture2D t;
-            _gameSelection = new MenuState(this);
-            _gameSelection.Items.Add(new Background(Textures.Menu["MainBackground"]));
-            _gameSelection.Items.Add(new GUI.Items.ParticleEngine(particleMenu));
-            t = Textures.Menu["logo"];
-            _gameSelection.Items.Add(new GUI.Items.Passive(t, (Data.Window.WindowWidth - t.Width) / 2, Data.Window.ScreenCenter.Y / 2 - 177, 5 * float.Epsilon));
-            t = Textures.Menu["interface"];
-            _gameSelection.Items.Add(new Passive(t, (Data.Window.WindowWidth - t.Width) / 2, Data.Window.ScreenCenter.Y - (t.Height / 2) + 128, 5 * float.Epsilon));
-            _gameSelection.Items.Add(new Passive(Textures.Menu["ScrollingSelection"], (Data.Window.WindowWidth - Textures.Menu["ScrollingSelection"].Width) / 2, Data.Window.ScreenCenter.Y - 20, 4 * float.Epsilon));
+            _gameLauncherMenu = BaseMenu(particleMenu);
+            _gameLauncherMenu.Items.Add(new Passive(Textures.Menu["ScrollingSelection"], (Data.Window.WindowWidth - Textures.Menu["ScrollingSelection"].Width) / 2, Data.Window.ScreenCenter.Y - 20, 4 * float.Epsilon));
             MenuHorizontal createGameMenu = new MenuHorizontal(Data.Window.ScreenCenter.X - 330, Data.Window.ScreenCenter.Y - 8, 5);
             OrangeMenuButton createGameButton = new OrangeMenuButton("CREATE A GAME");
             _gameSelectionButton = new OrangeMenuButton("SEARCH INTERNET");
@@ -142,24 +138,19 @@ namespace Exodus
 
             _scrollingSelection = new ScrollingSelection((Data.Window.WindowWidth - Textures.Menu["ScrollingSelection"].Width) / 2, Data.Window.ScreenCenter.Y - 20, new Tuple<string, string, string>("PLAYER", "IP                                MAP", "CREATED"), new List<int> { 10, 164, 590 });
             _scrollingSelection.Reset(new List<Tuple<string, string, string>>());
-            _gameSelection.Items.Add(_scrollingSelection);
-            _gameSelection.Items.Add(joinGameMenu);
-            _gameSelection.Items.Add(createGameMenu);
-            _gameSelection.Items.Add(refreshMenu);
-
-            _gameSelection.Items.Add(statusBar);
+            _gameLauncherMenu.Items.Add(_scrollingSelection);
+            _gameLauncherMenu.Items.Add(joinGameMenu);
+            _gameLauncherMenu.Items.Add(createGameMenu);
+            _gameLauncherMenu.Items.Add(refreshMenu);
             #endregion
+
             #region Main Menu
-            MenuState mainMenu = new MenuState(this);
-            MenuVertical rightMenu = new MenuVertical(Data.Window.ScreenCenter.X + 112, Data.Window.ScreenCenter.Y + 42, 7);
-            mainMenu.Items.Add(new Background(Textures.Menu["MainBackground"]));
-            mainMenu.Items.Add(new GUI.Items.ParticleEngine(particleMenu));
-            t = Textures.Menu["logo"];
-            mainMenu.Items.Add(new GUI.Items.Passive(t, (Data.Window.WindowWidth - t.Width) / 2, Data.Window.ScreenCenter.Y / 2 - 177, 5 * float.Epsilon));
-            t = Textures.Menu["interface"];
-            mainMenu.Items.Add(new Passive(t, (Data.Window.WindowWidth - t.Width) / 2, Data.Window.ScreenCenter.Y - (t.Height / 2) + 128, 5 * float.Epsilon));
+
+            MenuState mainMenu = BaseMenu(particleMenu);
+            MenuVertical rightMenu = new MenuVertical(Data.Window.ScreenCenter.X + 112, Data.Window.ScreenCenter.Y + 42,
+                                                      7);
             MenuButton playOnline = new BlueMenuButton("PLAY ONLINE");
-            playOnline.SubMenu = _gameSelection;
+            playOnline.SubMenu = _gameLauncherMenu;
             playOnline.DoClick = LaunchLobby;
             MenuButton playSolo = new BlueMenuButton("PLAY AGAINST AI");
             playSolo.DoClick = PlaySinglePlayer;
@@ -174,10 +165,45 @@ namespace Exodus
             rightMenu.Create(new List<Component> { playOnline, playSolo, mapEditor, settings, credits, exit });
             mainMenu.Items.Add(rightMenu);
             mainMenu.Items.Add(statusBar);
-            Push(mainMenu);
+
             #endregion
+
+            #region Connection Menu
+
+            MenuState connectionMenu = BaseMenu(particleMenu);
+
+            Form connectionForm = new Form(Data.Window.ScreenCenter.X - 140, Data.Window.ScreenCenter.Y - 25,
+                                           new Padding(14, 17), 8, 4 * Data.GameDisplaying.Epsilon);
+            connectionForm.Components.Add(new JustTexture(Textures.Menu["ConnectionBackground"], connectionForm.Area.X,
+                                                          connectionForm.Area.Y, connectionForm.Depth));
+            connectionForm.Components.Add(new Label(Fonts.Eurostile12, "LOGIN", 0, 0));
+            connectionForm.Components.Add(new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30,
+                                                      2 * Data.GameDisplaying.Epsilon));
+            connectionForm.Components.Add(new Label(Fonts.Eurostile12, "PASSWORD", 0, 0));
+            connectionForm.Components.Add(new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30,
+                                                      2 * Data.GameDisplaying.Epsilon));
+            ConnectionOrangeButton connectionFormSubmitter = new ConnectionOrangeButton("CONNECT TO EXODUS")
+            {
+                SubMenu = mainMenu,
+                DoClick = ConnectionFormSubmit
+            };
+            connectionForm.SubmitterId = connectionForm.Components.Count;
+            connectionForm.Components.Add(connectionFormSubmitter);
+            ConnectionGreenButton connectionFormSignup = new ConnectionGreenButton("GET AN ACCOUNT FOR FREE");
+            // connectionFormSignup.DoClick = FIX ME (lance une page html vers la page d'inscription du site)
+            connectionForm.Components.Add(connectionFormSignup);
+            connectionForm.Initialize();
+            connectionMenu.Items.Add(connectionForm);
+            connectionMenu.Initialize();
+
+            #endregion
+
+            Push(connectionMenu);
+
             base.LoadContent();
         }
+
+        
         protected override void UnloadContent()
         {
             base.UnloadContent();
@@ -309,6 +335,28 @@ namespace Exodus
             _searchingLAN = !_searchingLAN;
             RefreshServerLists(null, 0);
         }
+
+        public void ConnectionFormSubmit(MenuState m, int i)
+        {
+            // FIX ME -> verifications des identifiants via le GameManager
+            Push(m);
+        }
         #endregion
+
+        private MenuState BaseMenu(ParticleEngine.ParticleEngine particleMenu)
+        {
+            Texture2D t;
+            MenuState baseMenuState = new MenuState(this);
+            baseMenuState.Items.Add(new Background(Textures.Menu["MainBackground"]));
+            baseMenuState.Items.Add(new GUI.Items.ParticleEngine(particleMenu));
+            t = Textures.Menu["logo"];
+            baseMenuState.Items.Add(new Passive(Textures.Menu["logo"], (Data.Window.WindowWidth - t.Width) / 2,
+                                                Data.Window.ScreenCenter.Y / 2 - 177, 5 * Data.GameDisplaying.Epsilon));
+            t = Textures.Menu["interface"];
+            baseMenuState.Items.Add(new Passive(t, (Data.Window.WindowWidth - t.Width) / 2,
+                                                Data.Window.ScreenCenter.Y - (t.Height / 2) + 128,
+                                                5 * Data.GameDisplaying.Epsilon));
+            return baseMenuState;
+        }
     }
 }

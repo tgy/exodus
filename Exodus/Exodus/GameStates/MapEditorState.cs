@@ -13,7 +13,6 @@ using Exodus.PlayGame;
 
 namespace Exodus.GameStates
 {
-    #region Trash
     public class MapEditorState : GameState
     {
         #region Variables
@@ -35,6 +34,7 @@ namespace Exodus.GameStates
         {
             typeof(PlayGame.Items.Units.Gunner),
             typeof(PlayGame.Items.Units.Worker),
+            typeof(PlayGame.Items.Units.Spider),
             typeof(PlayGame.Items.Buildings.Habitation),
             typeof(PlayGame.Items.Buildings.Labo)
         };
@@ -411,5 +411,4 @@ namespace Exodus.GameStates
             yMax = Math.Min(yMin + nTilesHeight + nTilesWidth + Data.GameDisplaying.PaddingMap, Map.Height);
         }
     }
-    #endregion
 }

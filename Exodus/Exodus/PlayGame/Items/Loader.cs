@@ -16,6 +16,8 @@ namespace Exodus.PlayGame.Items
                 return new Gunner(IdPlayer);
             else if (t == typeof(Worker))
                 return new Worker(IdPlayer);
+            else if (t == typeof(Spider))
+                return new Spider(IdPlayer);
             return null;
         }
         public static Building LoadBuilding(Type t, int IdPlayer)

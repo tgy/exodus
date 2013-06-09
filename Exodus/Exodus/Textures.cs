@@ -74,6 +74,8 @@ namespace Exodus
             GameItems[typeof(Habitation) + "1"] = content.Load<Texture2D>("Game/Buildings/habitation");
             GameItems[typeof(Worker) + "2"] = content.Load<Texture2D>("Game/Units/Worker2");
             GameItems[typeof(Gunner) + "2"] = content.Load<Texture2D>("Game/Units/gunner");
+            GameItems[typeof(Spider) + "2"] = content.Load<Texture2D>("Game/Units/Spider");
+            GameItems[typeof(Spider) + "1"] = content.Load<Texture2D>("Game/Units/Spider");
             GameItems[typeof(Habitation) + "2"] = content.Load<Texture2D>("Game/Buildings/habitation");
             GameItems[typeof(Labo) + "1"] = content.Load<Texture2D>("Game/Buildings/labo");
             GameItems[typeof(Labo) + "2"] = content.Load<Texture2D>("Game/Buildings/labo");
@@ -86,6 +88,7 @@ namespace Exodus
             MiniGameItems[typeof(Gunner)] = content.Load<Texture2D>("Game/Minis/Gunner");
             MiniGameItems[typeof(Labo)] = content.Load<Texture2D>("Game/Minis/Labo");
             MiniGameItems[typeof(Creeper)] = content.Load<Texture2D>("Game/Minis/Creeper");
+            MiniGameItems[typeof(Spider)] = content.Load<Texture2D>("Game/Minis/Spider");
         }
         public static void LoadBigGameItems(ContentManager content)
         {
@@ -93,6 +96,7 @@ namespace Exodus
             BigGameItems[typeof(Habitation)] = content.Load<Texture2D>("Game/Bigs/Habitation");
             BigGameItems[typeof(Labo)] = content.Load<Texture2D>("Game/Bigs/Labo");
             BigGameItems[typeof(Gunner)] = content.Load<Texture2D>("Game/Bigs/Gunner");
+            BigGameItems[typeof(Spider)] = content.Load<Texture2D>("Game/Bigs/Spider");
         }
         public static void LoadGame(ContentManager content)
         {

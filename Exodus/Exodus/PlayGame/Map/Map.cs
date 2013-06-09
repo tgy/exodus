@@ -162,7 +162,7 @@ namespace Exodus.PlayGame
                 // On place notre point base
             }
             // S'il y a une erreur pendant la lecture de fichier source, on génère une map standard
-            catch (Exception e)
+            catch (Exception)
             {
                 Load(50, 50);
             }

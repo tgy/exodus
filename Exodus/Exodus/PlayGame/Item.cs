@@ -288,7 +288,7 @@ namespace Exodus.PlayGame
                 {
                     t.Initialize();
                     if (TasksList.Count > 0)
-                        TasksList.Insert(TasksList.Count - 1, t);
+                        TasksList.Insert(0, t);
                     else if (TasksList.Count == 0)
                         TasksList.Add(t);
                 }

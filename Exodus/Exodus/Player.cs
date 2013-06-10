@@ -8,6 +8,6 @@ namespace Exodus
     public static class Player
     {
         public static byte ConnectionState = 2;
-        string name = "Undefined";
+        static string name = "Undefined";
     }
 }

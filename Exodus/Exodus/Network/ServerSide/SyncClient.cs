@@ -13,6 +13,7 @@ namespace Exodus.Network.ServerSide
     {
         public static List<Game> InternetGames = new List<Game>();
         private static bool IsRunning;
+        public static bool IsAuthenticated;
         private static BinaryWriter sender;
         private static BinaryReader NetReader;
         private static TcpClient Client;
@@ -62,12 +63,15 @@ namespace Exodus.Network.ServerSide
         {
             Player.ConnectionState = 2;
             //FIXME: La commande pour rechercher l'utilisateur;
-            //SendDBCMDToGameManager("COMMANDE + args (Username, Pass....)");
+            SendDBCMDToGameManager("SELECT * FROM `user` WHERE `name`=\"" + UserName + "\" AND `password`=SHA1(\"" + Password + "\")");
             for (byte b = 0; b < 50; b++)
             {
                 Thread.Sleep(100);
                 if (Player.ConnectionState == 1)
+                {
+                    IsAuthenticated = true;
                     return;
+                }
             }
         }
 
@@ -76,10 +80,14 @@ namespace Exodus.Network.ServerSide
             //if (!IsRunning)
             //    Thread.Sleep(100);
             byte ID;
-            if (IsServer)
-                ID = 0;
-            else
-                ID = 1;
+            if (IsAuthenticated)
+            {
+                if (IsServer)
+                    ID = 0;
+                else
+                    ID = 1;
+            }
+            else ID = 2;
             for (byte i = 0; i < 10; i++)
                 if (!IsRunning)
                     Thread.Sleep(10);
@@ -87,11 +95,13 @@ namespace Exodus.Network.ServerSide
         }
         public static void SendDBCMDToGameManager(string command)
         {
-            byte[] cmd = new byte[command.Length + 3];
-            Serialize.Serializer.ObjectToByteArray(command).CopyTo(cmd, 3);
+            byte[] Serialized = Serialize.Serializer.ObjectToByteArray(command);
+            byte[] cmd = new byte[Serialized.Length + 3];
+            Serialized.CopyTo(cmd, 3);
             cmd[0] = (byte)(cmd.Length / 256);
             cmd[1] = (byte)(cmd.Length % 256);
             cmd[2] = 2;
+
             SendDataToGameManager(cmd);
         }
         public static void SendGame(byte[] SGame)
@@ -127,6 +137,7 @@ namespace Exodus.Network.ServerSide
         }
         private static void SendDataToGameManager(byte[] data)
         {
+            InitializeConnection();
             sender.Write(data);
         }
         private static void ProcessData(byte[] data)

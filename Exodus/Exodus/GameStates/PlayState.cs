@@ -79,6 +79,8 @@ namespace Exodus.GameStates
             Map.AddItem(w);
             foreach (Item it in _listExamples)
                 it.Alpha = 0.6f;
+            Map.EarningPerMin = new Resource(0, 10, 0, 0, 10);
+            Map.PlayerResources = new Resource(0, 0, 0, 0, 0);
             base.LoadContent();
         }
         public override void Draw(SpriteBatch spriteBatch)
@@ -123,6 +125,12 @@ namespace Exodus.GameStates
             spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, Data.Network.Error,
                                    new Vector2(Data.Window.WindowWidth / 2 - 42, Data.Window.WindowHeight / 2), Color.Red,
                                    0f, Vector2.Zero, 1f, SpriteEffects.None, float.Epsilon);
+            string txt = "Elect:" + Math.Ceiling(Map.PlayerResources.Electricity) +
+                         " Iron:" + Math.Ceiling(Map.PlayerResources.Iron) +
+                         " Steel:" + Math.Ceiling(Map.PlayerResources.Steel) +
+                         " Graph:" + Math.Ceiling(Map.PlayerResources.Graphene) +
+                         " Hydr:" + Math.Ceiling(Map.PlayerResources.Hydrogen);
+            spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, txt, new Vector2(Data.Window.WindowWidth - GUI.Fonts.Eurostile12Bold.MeasureString(txt).X - 5, 3), Color.White);
             int Client_Count = 1;
             while (Client_Count <= Data.Network.ConnectedClients.Count)
             {
@@ -141,7 +149,7 @@ namespace Exodus.GameStates
                     GameMouse.Active = false;
                     if (_currentExample != null)
                     {
-                        Vector2 mousPos = Map.ScreenToMap(Inputs.MouseState.X+Camera.x,Inputs.MouseState.Y+Camera.y);
+                        Vector2 mousPos = Map.ScreenToMap(Inputs.MouseState.X + Camera.x, Inputs.MouseState.Y + Camera.y);
                         _currentExample.SetPos((int)mousPos.X, (int)mousPos.Y, false);
                         _currentExample.Draw(spriteBatch);
                     }
@@ -158,6 +166,7 @@ namespace Exodus.GameStates
         }
         public override void Update(GameTime gameTime)
         {
+            Map.PlayerResources = Map.PlayerResources + (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * Map.EarningPerMin;
             for (int i = 0; i < Map.ListItems.Count; i++)
                 Map.ListItems[i].Update(gameTime);
             if (Data.Window.GameFocus)
@@ -210,7 +219,7 @@ namespace Exodus.GameStates
                                             Data.GameInfos.item.AddTask(
                                                 new PlayGame.Tasks.ProductItem(
                                                     Data.GameInfos.item,
-                                                    Data.GameInfos.timeCreatingItem[newItem.GetType().ToString()],
+                                                    Data.GameInfos.timeCreatingItem[newItem.GetType()],
                                                     newItem,
                                                     new Point((int)mousePos.X, (int)mousePos.Y),
                                                     true,

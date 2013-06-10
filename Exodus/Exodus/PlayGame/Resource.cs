@@ -7,12 +7,12 @@ namespace Exodus.PlayGame
 {
     public class Resource
     {
-        public int Steel;
-        public int Iron;
-        public int Graphene;
-        public int Hydrogen;
-        public int Electricity;
-        public Resource(int steel, int iron, int graphene, int hydrogen, int electricity)
+        public double Steel;
+        public double Iron;
+        public double Graphene;
+        public double Hydrogen;
+        public double Electricity;
+        public Resource(double steel, double iron, double graphene, double hydrogen, double electricity)
         {
             Steel = steel;
             Iron = iron;
@@ -20,14 +20,14 @@ namespace Exodus.PlayGame
             Hydrogen = hydrogen;
             Electricity = electricity;
         }
-        public static Resource operator *(float i, Resource p)
+        public static Resource operator *(double i, Resource p)
         {
             return new Resource(
-                (int)(p.Steel * i),
-                (int)(p.Iron * i),
-                (int)(p.Graphene * i),
-                (int)(p.Hydrogen * i),
-                (int)(p.Electricity * i)
+                p.Steel * i,
+                p.Iron * i,
+                p.Graphene * i,
+                p.Hydrogen * i,
+                p.Electricity * i
             );
         }
         public static Resource operator *(Resource p, float i)
@@ -50,6 +50,22 @@ namespace Exodus.PlayGame
                                 p.Graphene - q.Graphene,
                                 p.Hydrogen - q.Hydrogen,
                                 p.Electricity - q.Electricity);
+        }
+        public static bool operator >(Resource p, Resource q)
+        {
+            return (p.Hydrogen > q.Hydrogen && p.Iron > q.Iron && p.Graphene > q.Graphene && p.Steel > q.Steel && p.Electricity > q.Electricity);
+        }
+        public static bool operator <(Resource p, Resource q)
+        {
+            return (p.Hydrogen < q.Hydrogen && p.Iron < q.Iron && p.Graphene < q.Graphene && p.Steel < q.Steel && p.Electricity < q.Electricity);
+        }
+        public static bool operator >=(Resource p, Resource q)
+        {
+            return (p.Hydrogen >= q.Hydrogen && p.Iron >= q.Iron && p.Graphene >= q.Graphene && p.Steel >= q.Steel && p.Electricity >= q.Electricity);
+        }
+        public static bool operator <=(Resource p, Resource q)
+        {
+            return (p.Hydrogen <= q.Hydrogen && p.Iron <= q.Iron && p.Graphene <= q.Graphene && p.Steel <= q.Steel && p.Electricity <= q.Electricity);
         }
     }
 }

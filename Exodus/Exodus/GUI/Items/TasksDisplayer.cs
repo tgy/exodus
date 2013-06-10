@@ -69,7 +69,7 @@ namespace Exodus.GUI.Items
                 for (int i = 0; i < Map.ListSelectedItems.Count; i++)
                     if (Map.ListSelectedItems[i] is Unit)
                         Network.ClientSide.Client.SendObject(
-                            new Network.Orders.Tasks.Hold(Map.ListSelectedItems[i].PrimaryId,true)
+                            new Network.Orders.Tasks.Hold(Map.ListSelectedItems[i].PrimaryId, true)
                         );
             }
         }
@@ -236,10 +236,11 @@ namespace Exodus.GUI.Items
             }
             if (item != null)
             {
+
                 if (Data.Network.SinglePlayer)
                 {
                     item.AddTask(
-                        new PlayGame.Tasks.ProductItem(item, Data.GameInfos.timeCreatingItem[t.ToString()],
+                        new PlayGame.Tasks.ProductItem(item, Data.GameInfos.timeCreatingItem[t],
                                                        PlayGame.Items.Loader.LoadUnit(t, item.IdPlayer), item.pos.Value, true, true, false),
                         false, false);
                 }

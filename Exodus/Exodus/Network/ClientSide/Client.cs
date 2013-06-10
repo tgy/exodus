@@ -257,7 +257,7 @@ namespace Exodus.Network.ClientSide
                             i.AddTask(
                                 new PlayGame.Tasks.ProductItem(
                                     i,
-                                    Data.GameInfos.timeCreatingItem[Orders.child.ToString()],
+                                    Data.GameInfos.timeCreatingItem[Orders.child],
                                     it,
                                     new Point(Orders.x, Orders.y),
                                     Orders.closestFreePosition,

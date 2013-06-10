@@ -80,7 +80,7 @@ namespace Exodus.PlayGame.Tasks
                         parent.oldPos = parent.pos;
                         if (path.Count > 0 && !MustStop &&
                             // si l'unité est plus loin de l'arrivée que la case libre la plus proche
-                            AStar.Heuristic(AStar.closestFreePoint(x => !Map.ObstacleMap[x.X, x.Y], this.Arrival), this.Arrival) < AStar.Heuristic((Point)this.parent.pos, this.Arrival))
+                            AStar.Heuristic(AStar.closestFreePoint(x => x.X >= 0 && x.X < Map.Width && x.Y >= 0 && x.Y < Map.Height && !Map.ObstacleMap[x.X, x.Y], this.Arrival), this.Arrival) < AStar.Heuristic((Point)this.parent.pos, this.Arrival))
                         {
                             if (!Map.ObstacleMap[path.First.Value.X, path.First.Value.Y])
                             {

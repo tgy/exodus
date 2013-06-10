@@ -129,6 +129,7 @@
     <Compile Include="GUI\Components\Buttons\MenuButtons\ConnectionOrangeButton.cs" />
     <Compile Include="GUI\Components\Buttons\MenuButtons\ConnectionGreenButton.cs" />
     <Compile Include="GUI\Components\Buttons\MenuButtons\OrangeMenuButton.cs" />
+    <Compile Include="GUI\Components\Minimap.cs" />
     <Compile Include="GUI\Components\ListButtons.cs" />
     <Compile Include="GUI\Components\MiniLife.cs" />
     <Compile Include="GUI\Components\Buttons\MultiButton.cs" />

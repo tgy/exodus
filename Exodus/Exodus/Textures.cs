@@ -143,6 +143,7 @@ namespace Exodus
             GameUI["Patrolhover"] = content.Load<Texture2D>("Game/UI/Actions/PatrolHover");
             GameUI["Research"] = content.Load<Texture2D>("Game/UI/Actions/Research");
             GameUI["Researchhover"] = content.Load<Texture2D>("Game/UI/Actions/ResearchHover");
+            GameUI["MiniTile"] = content.Load<Texture2D>("Game/UI/minitile");
         }
         public static void LoadParticles(ContentManager content)
         {

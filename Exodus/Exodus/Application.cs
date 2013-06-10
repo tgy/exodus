@@ -345,7 +345,7 @@ namespace Exodus
             // 
             //SyncClient.IsAuthenticated = false;
             SyncClient.UserIsValid(login.Value, pass.Value); /*ATTENTION: Cette methode impliquant du reseau et du SQL, prevoir au moins 100ms pour qu'elle soit effectuee (peut prendre plus de 3 s)*/
-            //if (Player.ConnectionState == 1)
+            // if (Player.ConnectionState == 1)
                 Push(m);
             // else
             //     Tell the user he is stupid

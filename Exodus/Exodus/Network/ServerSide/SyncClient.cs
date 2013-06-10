@@ -42,8 +42,8 @@ namespace Exodus.Network.ServerSide
             }
             try
             {
-                Client = new TcpClient(Dns.GetHostAddresses("thefirsthacker.myftp.org")[0].ToString(), 4000);
-                //Client = new TcpClient("127.0.0.1", 4000);
+                //Client = new TcpClient(Dns.GetHostAddresses("thefirsthacker.myftp.org")[0].ToString(), 4000);
+                Client = new TcpClient("192.168.1.15", 4000);
                 //NetReader = new BinaryReader(Client.GetStream());
                 //InternetGames = new List<Game>();
             }
@@ -56,6 +56,19 @@ namespace Exodus.Network.ServerSide
             Thread Pinger = new Thread(Ping);
             Pinger.Name = "SyncClientPing";
             Pinger.Start();
+        }
+
+        public static void UserIsValid(string UserName, string Password)
+        {
+            Player.ConnectionState = 2;
+            //FIXME: La commande pour rechercher l'utilisateur;
+            //SendDBCMDToGameManager("COMMANDE + args (Username, Pass....)");
+            for (byte b = 0; b < 50; b++)
+            {
+                Thread.Sleep(100);
+                if (Player.ConnectionState == 1)
+                    return;
+            }
         }
 
         private static void SendIdMessage(bool IsServer)
@@ -72,7 +85,15 @@ namespace Exodus.Network.ServerSide
                     Thread.Sleep(10);
             sender.Write(ID);
         }
-
+        public static void SendDBCMDToGameManager(string command)
+        {
+            byte[] cmd = new byte[command.Length + 3];
+            Serialize.Serializer.ObjectToByteArray(command).CopyTo(cmd, 3);
+            cmd[0] = (byte)(cmd.Length / 256);
+            cmd[1] = (byte)(cmd.Length % 256);
+            cmd[2] = 2;
+            SendDataToGameManager(cmd);
+        }
         public static void SendGame(byte[] SGame)
         {
             //byte[] SGame = Serialize.Serializer.ObjectToByteArray(Server.TheGame);
@@ -84,7 +105,7 @@ namespace Exodus.Network.ServerSide
             for (byte i = 0; i < 10; i++)
                 if (!IsRunning)
                     Thread.Sleep(100);
-            sender.Write(GamePlusThree);
+            SendDataToGameManager(GamePlusThree);
         }
         private static void Receive()
         {
@@ -104,23 +125,27 @@ namespace Exodus.Network.ServerSide
                     Thread.Sleep(100);
             }
         }
+        private static void SendDataToGameManager(byte[] data)
+        {
+            sender.Write(data);
+        }
         private static void ProcessData(byte[] data)
         {
             object o;
             switch (data[0])
             {
-                case 0:
+                case 0: //Add Game
                     o = Serialize.Serializer.ByteArrayToGame(ShortenArray(data, 1));
                     InternetGames.Add((Game)o);
                     break;
 
-                case 1:
+                case 1: //Clear Game
                     InternetGames.Clear();
                     break;
 
-                //case 2:
-                //
-                //    break;
+                case 2:
+                    Player.ConnectionState = data[1];
+                    break;
 
                 //case 3:
                 //

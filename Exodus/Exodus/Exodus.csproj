@@ -167,12 +167,14 @@
     <Compile Include="Network\ClientSide\Client.cs" />
     <Compile Include="Network\NetGame.cs" />
     <Compile Include="Network\Game.cs" />
+    <Compile Include="Network\Orders\Task.cs" />
     <Compile Include="Network\Orders\DisconnectionMessage.cs" />
     <Compile Include="Network\Orders\GetId.cs" />
     <Compile Include="Network\Orders\ItemTask.cs" />
     <Compile Include="Network\Orders\PlayerName.cs" />
     <Compile Include="Network\Orders\Tasks\Attack.cs" />
     <Compile Include="Network\Orders\Tasks\CheatSpawn.cs" />
+    <Compile Include="Network\Orders\Tasks\ReSync.cs" />
     <Compile Include="Network\Orders\Tasks\Die.cs" />
     <Compile Include="Network\Orders\Tasks\Hold.cs" />
     <Compile Include="Network\Orders\Tasks\ProductItem.cs" />

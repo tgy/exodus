@@ -227,8 +227,23 @@ namespace Exodus.Network.ClientSide
             //}
             if (o is string)
                 chat.InsertMsg((string)o);
-            else if (o is ItemTask)
+            else if (o is Task)
             {
+                if (o is Orders.Tasks.ReSync)
+                {
+                    Orders.Tasks.ReSync Orders = (Orders.Tasks.ReSync)o;
+                    PlayGame.Map.ListItems = Orders.listItems;
+                    PlayGame.Map.ListPassiveItems = Orders.listPassives;
+                    for (int x = 0; x < PlayGame.Map.Width; x++)
+                        for (int y = 0; y < PlayGame.Map.Height; y++)
+                            PlayGame.Map.MapCells[x, y].ListItems.Clear();
+                    for (int i = 0; i < Orders.listItems.Count; i++)
+                        if (Orders.listItems[i].pos != null)
+                            PlayGame.Map.MapCells[Orders.listItems[i].pos.Value.X, Orders.listItems[i].pos.Value.Y].ListItems.Add(Orders.listItems[i]);
+                    for (int i = 0; i < Orders.listPassives.Count; i++)
+                        if (Orders.listPassives[i].pos != null)
+                            PlayGame.Map.MapCells[Orders.listPassives[i].pos.Value.X, Orders.listPassives[i].pos.Value.Y].ListItems.Add(Orders.listPassives[i]);
+                }
                 if (o is Orders.Tasks.CheatSpawn)
                 {
                     Orders.Tasks.CheatSpawn Orders = (Orders.Tasks.CheatSpawn)o;

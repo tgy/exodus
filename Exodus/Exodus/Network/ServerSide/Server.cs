@@ -49,6 +49,9 @@ namespace Exodus.Network.ServerSide
             Thread BroadcastSignal = new Thread(Broadcast);
             BroadcastSignal.Name = "BroadcastSignal";
             BroadcastSignal.Start();
+            Thread ReSyncAuto = new Thread(ReSyncTimer);
+            ReSyncAuto.Name = "ReSyncAuto";
+            ReSyncAuto.Start();
             SClient Accepted;
             while (IsRunning)
             {
@@ -312,7 +315,7 @@ namespace Exodus.Network.ServerSide
         private static void ProcessObserverObject(SClient client, byte[] ObjectTablePlusOne)
         {
             object o;
-            if(ObjectTablePlusOne[0] == 1)
+            if (ObjectTablePlusOne[0] == 1)
             {
                 try
                 {
@@ -327,7 +330,8 @@ namespace Exodus.Network.ServerSide
 
                 //if (o is string)
                 //    SendToAll("[" + DateTime.Now.ToShortTimeString() + "] <" + client.Name + "> " + (string)o);
-                /*else */if (o is DisconnectionMessage)
+                /*else */
+                if (o is DisconnectionMessage)
                 {
                     client.Stop();
                     Data.Network.ConnectedClients.Remove(client);
@@ -345,6 +349,18 @@ namespace Exodus.Network.ServerSide
                     else
                         throw new Exception("Client " + client.Name + " sent his name two times!");
                 }
+            }
+        }
+        private static void Resync()
+        {
+            SendToAll(new Orders.Tasks.ReSync(PlayGame.Map.ListPassiveItems, PlayGame.Map.ListItems));
+        }
+        private static void ReSyncTimer()
+        {
+            while (IsRunning)
+            {
+                Resync();
+                Thread.Sleep(10000);
             }
         }
         #endregion

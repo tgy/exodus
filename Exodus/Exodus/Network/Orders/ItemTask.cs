@@ -6,7 +6,7 @@ using System.Text;
 namespace Exodus.Network.Orders
 {
     [Serializable]
-    class ItemTask
+    class ItemTask : Task
     {
         public long parentPrimaryKey;
         public bool overrideTask;

@@ -184,6 +184,7 @@
     <Compile Include="ParticleEngine\Particle.cs" />
     <Compile Include="ParticleEngine\ParticleEngine.cs" />
     <Compile Include="ParticleEngine\Particles\Stars.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="PlayGame\AStar.cs" />
     <Compile Include="PlayGame\Camera.cs" />
     <Compile Include="PlayGame\Items\Obstacles\Creeper.cs" />

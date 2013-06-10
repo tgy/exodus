@@ -23,6 +23,7 @@ namespace Exodus
 {
     public class Application : Microsoft.Xna.Framework.Game
     {
+        TextBox login, pass;
         readonly GraphicsDeviceManager _graphics;
         SpriteBatch _spriteBatch;
         ScrollingSelection _scrollingSelection;
@@ -177,11 +178,11 @@ namespace Exodus
             connectionForm.Components.Add(new JustTexture(Textures.Menu["ConnectionBackground"], connectionForm.Area.X,
                                                           connectionForm.Area.Y, connectionForm.Depth));
             connectionForm.Components.Add(new Label(Fonts.Eurostile12, "LOGIN", 0, 0));
-            connectionForm.Components.Add(new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30,
-                                                      2 * Data.GameDisplaying.Epsilon));
+            login = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
+            connectionForm.Components.Add(login);
             connectionForm.Components.Add(new Label(Fonts.Eurostile12, "PASSWORD", 0, 0));
-            connectionForm.Components.Add(new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30,
-                                                      2 * Data.GameDisplaying.Epsilon));
+            pass = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
+            connectionForm.Components.Add(pass);
             ConnectionOrangeButton connectionFormSubmitter = new ConnectionOrangeButton("CONNECT TO EXODUS")
             {
                 SubMenu = mainMenu,
@@ -339,7 +340,14 @@ namespace Exodus
         public void ConnectionFormSubmit(MenuState m, int i)
         {
             // FIX ME -> verifications des identifiants via le GameManager
-            Push(m);
+            //
+            // FIXME: Regarde SyncClient.UserIsValid(...)
+            // 
+            SyncClient.UserIsValid(login.Value, pass.Value); /*ATTENTION: Cette methode impliquant du reseau et du SQL, prevoir au moins 100ms pour qu'elle soit effectuee (peut prendre plus de 3 s)*/
+            if (Player.ConnectionState == 1)
+                Push(m);
+            // else
+            //     Tell the user he is stupid
         }
         #endregion
 

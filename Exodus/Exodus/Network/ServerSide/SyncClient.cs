@@ -33,6 +33,13 @@ namespace Exodus.Network.ServerSide
             Receive();
         }
 
+        public static void ConnectToAuthenticate()
+        {
+            InitializeConnection();
+            NetReader = new BinaryReader(Client.GetStream());
+            SendIdMessage(false);
+        }
+
         private static void InitializeConnection()
         {
             if (IsRunning)
@@ -54,13 +61,17 @@ namespace Exodus.Network.ServerSide
             }
             sender = new BinaryWriter(Client.GetStream());
             IsRunning = true;
-            Thread Pinger = new Thread(Ping);
-            Pinger.Name = "SyncClientPing";
-            Pinger.Start();
+            if (IsAuthenticated)
+            {
+                Thread Pinger = new Thread(Ping);
+                Pinger.Name = "SyncClientPing";
+                Pinger.Start();
+            }
         }
 
         public static void UserIsValid(string UserName, string Password)
         {
+            ConnectToAuthenticate();
             Player.ConnectionState = 2;
             //FIXME: La commande pour rechercher l'utilisateur;
             SendDBCMDToGameManager("SELECT * FROM `user` WHERE `name`=\"" + UserName + "\" AND `password`=SHA1(\"" + Password + "\")");

@@ -61,7 +61,7 @@ namespace Exodus.GUI.Items
             Components.Add(FrontPercentage);
             Components.Add(BackPercentage);
         }
-        public void Reset(string pseudo, int rank, int victories, int defeats)
+        public void Reset(string pseudo, string avatarURL, int rank, int victories, int defeats)
         {
             Player.Txt = pseudo.ToUpper();
             Rank.Txt = rank.ToString();

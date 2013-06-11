@@ -353,7 +353,8 @@ namespace Exodus
                 if (Player.ConnectionState == 1)
                 {
                     PlayerInfos.Reset(login.Value,
-                        Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = 32)"))[0][0]) + 1,
+                        SyncClient.SendSQLRequest("SELECT `avatar` FROM `user` WHERE `id` = " + id)[0][0],
+                        Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + id + ")"))[0][0]) + 1,
                         Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + id))[0][0]),
                         Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + id + " AND (`P1ID`=" + id + " OR `P2ID`=" + id + ")"))[0][0])
                     );

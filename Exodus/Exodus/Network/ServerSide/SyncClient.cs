@@ -78,7 +78,7 @@ namespace Exodus.Network.ServerSide
             SQLAnswer = null;
             ConnectToSendRequest();
             //Player.ConnectionState = 2;
-            SendDBCMDToGameManager("SELECT * FROM `user` WHERE `name`=\"" + UserName + "\" AND `password`=\""+ SHA1(Password) +"\"");
+            SendDBCMDToGameManager("SELECT * FROM `user` WHERE `name`=\"" + UserName + "\" AND `password`=\""+ Data.Security.SHA1(Password) +"\"");
             Receive();
             for (byte b = 0; b < 10; b++)
             {
@@ -243,19 +243,6 @@ namespace Exodus.Network.ServerSide
                 sender.Close();
             }
             InternetGames.Clear();
-        }
-        private static string SHA1(string s1)
-        {
-            System.Security.Cryptography.SHA1CryptoServiceProvider x = new System.Security.Cryptography.SHA1CryptoServiceProvider();
-            byte[] bs = System.Text.Encoding.ASCII.GetBytes(s1);
-            bs = x.ComputeHash(bs);
-            System.Text.StringBuilder s = new System.Text.StringBuilder();
-            foreach (byte b in bs)
-            {
-                s.Append(b.ToString("x2").ToLower());
-            }
-            string password = s.ToString();
-            return password;
         }
     }
 }

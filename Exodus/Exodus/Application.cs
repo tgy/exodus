@@ -166,7 +166,7 @@ namespace Exodus
             settingsForm.Components.Add(new Label(Fonts.Eurostile12, "CHANGE YOUR PASSWORD", 0, 0, Data.GameDisplaying.Epsilon));
             settings_pass1 = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
             settingsForm.Components.Add(settings_pass1);
-            settings_pass2 = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(7, -6), 30, 2 * Data.GameDisplaying.Epsilon);
+            settings_pass2 = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
             settingsForm.Components.Add(settings_pass2);
             ConnectionOrangeButton settingsFormSubmitter = new ConnectionOrangeButton("SAVE YOUR CHANGES")
             {
@@ -394,7 +394,7 @@ namespace Exodus
                 if (Player.ConnectionState == 1)
                 {
                     statusBar.Text = "loading";
-                    PlayerInfos.Reset(login.Value,
+                    PlayerInfos.Reset(
                         SyncClient.SendSQLRequest("SELECT `avatar` FROM `user` WHERE `id` = " + id)[0][0],
                         Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + id + ")"))[0][0]) + 1,
                         Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + id))[0][0]),
@@ -422,7 +422,9 @@ namespace Exodus
             if (!_isChangingSettings)
             {
                 _isChangingSettings = true;
-                if (settings_login.Value != "" || settings_login.Value != Data.PlayerInfos.Name)
+                bool pseudo = false,
+                     pass = false;
+                if (settings_login.Value != "" && settings_login.Value != Data.PlayerInfos.Name)
                 {
                     statusBar.Active = true;
                     statusBar.Text = "CHECKING NEW PSEUDO";
@@ -435,15 +437,37 @@ namespace Exodus
                         {
                             statusBar.Text = "CHANGING YOUR PSEUDO";
                             SyncClient.SendSQLOrder("UPDATE `user` SET `name` = \"" + settings_login.Value + "\" WHERE `name` = \"" + Data.PlayerInfos.Name + "\"");
-                            statusBar.Text = "PSEUDO CHANGED !";
+                            statusBar.Text = "PSEUDO SAVED";
+                            statusBar.Active = false;
                             Data.PlayerInfos.Name = settings_login.Value;
+                            pseudo = true;
+                            Thread.Sleep(100);
                         }
                     }
                 }
-                else if (true)
+                if (settings_pass1.Value != "")
                 {
-
+                    statusBar.Active = true;
+                    statusBar.Text = "CHECKING NEW PWD";
+                    if (settings_pass1.Value.Length < 5)
+                        statusBar.Text = "PWD NEED AT LEAST 5 CHARS";
+                    else if (settings_pass1.Value.Length > 24)
+                        statusBar.Text = "PWD NEED LESS THAN 25 CHARS";
+                    else if (settings_pass1.Value != settings_pass2.Value)
+                        statusBar.Text = "PWD1 != PWD2";
+                    else
+                    {
+                        statusBar.Text = "CHANGING PWD";
+                        string newPass = Data.Security.SHA1(settings_pass1.Value);
+                        SyncClient.SendSQLOrder("UPDATE `user` SET `password` = \"" + newPass + "\" WHERE `name` = \"" + Data.PlayerInfos.Name + "\"");
+                        statusBar.Text = "PWD SAVED";
+                        pass = true;
+                    }
+                    statusBar.Active = false;
                 }
+                if (pseudo && pass)
+                    statusBar.Text = "INFOS SAVED";
+
                 _isChangingSettings = false;
             }
         }

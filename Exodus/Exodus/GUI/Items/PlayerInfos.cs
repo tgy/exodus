@@ -68,9 +68,8 @@ namespace Exodus.GUI.Items
             Components.Add(BackPercentage);
             this.layerDepth = layerDepth;
         }
-        public void Reset(string pseudo, string avatarURL, int rank, int victories, int defeats)
+        public void Reset(string avatarURL, int rank, int victories, int defeats)
         {
-            Player.Txt = pseudo.ToUpper();
             Rank.Txt = rank.ToString();
             gPlayed.Txt = (victories + defeats).ToString();
             gWin.Txt = victories.ToString();
@@ -113,6 +112,7 @@ namespace Exodus.GUI.Items
                 FrontPercentage.Width = (int)currentFrontPercentage;
                 Percentage.Txt = (int)(100 * currentFrontPercentage / BackPercentage.Width) + "%";
             }
+            Player.Txt = Data.PlayerInfos.Name.ToUpper();
             base.Update(gameTime);
         }
     }

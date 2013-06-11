@@ -85,6 +85,22 @@ namespace Exodus
             public static int textBoxPeriodRepetition = 1000;
             public static int textBoxPeriodRepetitionCursor = 10;
         }
+        public static class Security
+        {
+            public static string SHA1(string s1)
+            {
+                System.Security.Cryptography.SHA1CryptoServiceProvider x = new System.Security.Cryptography.SHA1CryptoServiceProvider();
+                byte[] bs = System.Text.Encoding.ASCII.GetBytes(s1);
+                bs = x.ComputeHash(bs);
+                System.Text.StringBuilder s = new System.Text.StringBuilder();
+                foreach (byte b in bs)
+                {
+                    s.Append(b.ToString("x2").ToLower());
+                }
+                string password = s.ToString();
+                return password;
+            }
+        }
         public static void Load()
         {
             GameInfos.timeCreatingItem.Add(typeof(Gunner), 5000);

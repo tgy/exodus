@@ -35,38 +35,49 @@ namespace Exodus.GUI.Components
                         {
                             Color c = Color.Gray;
                             PlayGame.Item item = PlayGame.Map.MapCells[i, j].ListItems[0];
-                            if (!(item is PlayGame.Obstacle))
+                            if (!(item is PlayGame.Obstacle) || item is PlayGame.Building)
                             {
-                                switch (item.IdPlayer)
-                                {
-                                    case 0:
-                                        c = Color.Blue;
-                                        break;
-                                    case 1:
-                                        c = Color.Red;
-                                        break;
-                                    case 2:
-                                        c = Color.Green;
-                                        break;
-                                }
-                                Vector2 pos = PlayGame.Map.MapToScreen(i, j);
-                                pos.X -= PlayGame.Camera.minX;
-                                pos.Y -= PlayGame.Camera.minY;
-                                pos.X /= PlayGame.Tile.tileWidth / 2;
-                                pos.Y /= PlayGame.Tile.tileHeight / 2;
-                                pos.X *= 2;
-                                pos.Y *= 2;
-                                pos.X = pos.X * 143 / (PlayGame.Map.Width + PlayGame.Map.Height - 1);
-                                pos.Y = pos.Y * 143 / (PlayGame.Map.Width + PlayGame.Map.Height - 1);
-                                pos.X += Area.X + offsetX;
-                                pos.Y += Area.Y + offsetY;
+                                if (!item.Focused)
+                                    switch (item.IdPlayer)
+                                    {
+                                        case 0:
+                                            c = Color.Red;
+                                            break;
+                                        case 1:
+                                            c = Color.Yellow;
+                                            break;
+                                        case 2:
+                                            c = Color.Blue;
+                                            break;
+                                    }
+                                else
+                                    c = Color.White;
+                                Vector2 pos = ScreenToMiniMap(PlayGame.Map.MapToScreen(i, j));
                                 if (i + j >= PlayGame.Map.Width / 2 && i + j <= PlayGame.Map.Width + PlayGame.Map.Height / 2 && Math.Abs(i - j) <= PlayGame.Map.Width / 2)
                                     spriteBatch.Draw(minitile, new Rectangle((int)pos.X, (int)pos.Y, 2, 2), null, c, 0f, new Vector2(0, 0), SpriteEffects.None, this.Depth + Data.GameDisplaying.Epsilon);
                             }
                         }
                     }
-                }
-            }
+                } // end for
+            } // end for
+
+            //spriteBatch.Draw(minitile, new Rectangle(PlayGame.Camera.x / , PlayGame.Camera.y, Data.Window.WindowWidth, Data.Window.WindowHeight), Color.Green);
+            //spriteBatch.Draw(minitile, new Rectangle(PlayGame.Camera.x, PlayGame.Camera.y, Data.Window.WindowWidth, Data.Window.WindowHeight), Color.Green);
+        }
+
+        public Vector2 ScreenToMiniMap(Vector2 pos)
+        {
+            pos.X -= PlayGame.Camera.minX;
+            pos.Y -= PlayGame.Camera.minY;
+            pos.X /= PlayGame.Tile.tileWidth / 2;
+            pos.Y /= PlayGame.Tile.tileHeight / 2;
+            pos.X *= 2;
+            pos.Y *= 2;
+            pos.X = pos.X * 143 / (PlayGame.Map.Width + PlayGame.Map.Height - 1);
+            pos.Y = pos.Y * 143 / (PlayGame.Map.Width + PlayGame.Map.Height - 1);
+            pos.X += Area.X + offsetX;
+            pos.Y += Area.Y + offsetY;
+            return pos;
         }
     }
 }

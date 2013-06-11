@@ -31,6 +31,7 @@ namespace Exodus
             Menu["ConnectionTextBox"] = content.Load<Texture2D>("Menu/TextBox/ConnectionTextBox");
             Menu["ConnectionTextBoxHover"] = content.Load<Texture2D>("Menu/TextBox/ConnectionTextBoxHover");
             Menu["ConnectionTextBoxCursor"] = content.Load<Texture2D>("Menu/TextBox/ConnectionTextBoxCursor");
+            Menu["Settings"] = content.Load<Texture2D>("Menu/Backgrounds/Settings");
 
             Menu["MainBackground"] = content.Load<Texture2D>("Menu/Backgrounds/Main");
             Menu["BlueMenuButton"] = content.Load<Texture2D>("Menu/Buttons/BlueMenuButton");

@@ -114,6 +114,11 @@ namespace Exodus.Network.ServerSide
             }
             return null;
         }
+        public static void SendSQLOrder(string request)
+        {
+            ConnectToSendRequest();
+            SendDBCMDToGameManager(request);
+        }
         private static void SendIdMessage()
         {
             //if (!IsRunning)

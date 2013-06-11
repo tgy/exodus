@@ -22,8 +22,8 @@ namespace Exodus.GameStates
             this.previous = previous;
             SpriteFont font = GUI.Fonts.Eurostile18;
             Texture2D t = Textures.Menu["loadingBar"];
-            Items.Add(new GUI.Items.BackgroundFull(Textures.Menu["loadingBackground"]));
-            Items.Add(new GUI.Items.Passive(t, (Data.Window.WindowWidth - t.Width) / 2, (Data.Window.WindowHeight - t.Height) / 2, 5 * float.Epsilon));
+            Items.Add(new GUI.Items.BackgroundFull(Textures.Menu["loadingBackground"], 3 * float.Epsilon));
+            Items.Add(new GUI.Items.Passive(t, (Data.Window.WindowWidth - t.Width) / 2, (Data.Window.WindowHeight - t.Height) / 2, 2 * float.Epsilon));
             Items.Add(new GUI.Items.Container(
                 new List<GUI.Component>
                     {

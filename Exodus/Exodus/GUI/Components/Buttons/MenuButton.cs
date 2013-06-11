@@ -38,15 +38,15 @@ namespace Exodus.GUI.Components
             spriteBatch.Draw(ButtonTextures[Focused ? 1 : 0], Area, null, Color.White, 0f,
                              Vector2.Zero,
                              SpriteEffects.None,
-                             2*float.Epsilon);
-            spriteBatch.DrawString(Font, Text, TextPosition, Color, 0f, Vector2.Zero, 1f, SpriteEffects.None, float.Epsilon);
+                             5 * float.Epsilon);
+            spriteBatch.DrawString(Font, Text, TextPosition, Color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 4 * float.Epsilon);
             base.Draw(spriteBatch);
         }
 
         public override void SetPosition()
         {
-            TextPosition = new Vector2((int) (Area.X + (Area.Width - Font.MeasureString(Text).X)/2),
-                                       1 + (int) (Area.Y + (Area.Height - Font.MeasureString(Text).Y)/2));
+            TextPosition = new Vector2((int)(Area.X + (Area.Width - Font.MeasureString(Text).X) / 2),
+                                       1 + (int)(Area.Y + (Area.Height - Font.MeasureString(Text).Y) / 2));
         }
     }
 }

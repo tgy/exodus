@@ -10,7 +10,12 @@ namespace Exodus.GUI.Items
     public class BackgroundFull : Item
     {
         private readonly Texture2D _texture;
-
+        float LayerDepth = 1f; 
+        public BackgroundFull(Texture2D texture, float LayerDepth)
+            : this(texture)
+        {
+            this.LayerDepth = LayerDepth;
+        }
         public BackgroundFull(Texture2D texture)
         {
             _texture = texture;
@@ -21,7 +26,7 @@ namespace Exodus.GUI.Items
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, Area, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 1f);
+            spriteBatch.Draw(_texture, Area, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, LayerDepth);
         }
     }
 }

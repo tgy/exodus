@@ -24,6 +24,9 @@ namespace Exodus
     public class Application : Microsoft.Xna.Framework.Game
     {
         TextBox login, pass;
+        TextBox settings_login,
+                settings_pass1,
+                settings_pass2;
         readonly GraphicsDeviceManager _graphics;
         SpriteBatch _spriteBatch;
         ScrollingSelection _scrollingSelection;
@@ -32,6 +35,7 @@ namespace Exodus
         bool _searchingLAN = true;
         Stack<GameState> GameStates;
         PlayerInfos PlayerInfos;
+        StatusBar statusBar;
         public void Push(GameState g)
         {
             g.Initialize();
@@ -73,6 +77,8 @@ namespace Exodus
             if (GameStates.Count == 0)
                 Environment.Exit(0);
             _searchingLAN = true;
+            statusBar.Text = "Welcome !";
+            statusBar.Active = false;
             _gameSelectionButton.Text = "SEARCH INTERNET";
             return g;
         }
@@ -115,14 +121,14 @@ namespace Exodus
             Textures.LoadMiniGameItems(Content);
             Textures.LoadBigGameItems(Content);
             GameMouse.Initialize(Content);
-            StatusBar statusBar = new StatusBar(Data.Window.ScreenCenter.X - Textures.Menu["StatusBar"].Width / 2,
+            statusBar = new StatusBar(Data.Window.ScreenCenter.X - Textures.Menu["StatusBar"].Width / 2,
                                                 Data.Window.ScreenCenter.Y - 117);
             ParticleEngine.ParticleEngine particleMenu = new ParticleEngine.Engine.StarsEngine(
                 Data.Window.WindowWidth / 2, Data.Window.WindowHeight / 2, 0);
 
             #region Game Launcher
             _gameLauncherMenu = BaseMenu(particleMenu);
-            _gameLauncherMenu.Items.Add(new Passive(Textures.Menu["ScrollingSelection"], (Data.Window.WindowWidth - Textures.Menu["ScrollingSelection"].Width) / 2, Data.Window.ScreenCenter.Y - 20, 4 * float.Epsilon));
+            _gameLauncherMenu.Items.Add(new Passive(Textures.Menu["ScrollingSelection"], (Data.Window.WindowWidth - Textures.Menu["ScrollingSelection"].Width) / 2, Data.Window.ScreenCenter.Y - 20, 8 * float.Epsilon));
             MenuHorizontal createGameMenu = new MenuHorizontal(Data.Window.ScreenCenter.X - 330, Data.Window.ScreenCenter.Y - 8, 5);
             OrangeMenuButton createGameButton = new OrangeMenuButton("CREATE A GAME");
             _gameSelectionButton = new OrangeMenuButton("SEARCH INTERNET");
@@ -144,6 +150,33 @@ namespace Exodus
             _gameLauncherMenu.Items.Add(joinGameMenu);
             _gameLauncherMenu.Items.Add(createGameMenu);
             _gameLauncherMenu.Items.Add(refreshMenu);
+            _gameLauncherMenu.Items.Add(statusBar);
+            #endregion
+
+            #region Settings
+            MenuState settingsMenu = BaseMenu(particleMenu);
+            settingsMenu.Items.Add(statusBar);
+            Form settingsForm = new Form(Data.Window.ScreenCenter.X - 140, Data.Window.ScreenCenter.Y - 25,
+                                           new Padding(14, 17), 8, 4 * Data.GameDisplaying.Epsilon);
+            settingsForm.Components.Add(new JustTexture(Textures.Menu["Settings"], settingsForm.Area.X,
+                                                           settingsForm.Area.Y, settingsForm.Depth));
+            settingsForm.Components.Add(new Label(Fonts.Eurostile12, "CHANGE YOUR LOGIN", 0, 0, Data.GameDisplaying.Epsilon));
+            settings_login = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
+            settingsForm.Components.Add(settings_login);
+            settingsForm.Components.Add(new Label(Fonts.Eurostile12, "CHANGE YOUR PASSWORD", 0, 0, Data.GameDisplaying.Epsilon));
+            settings_pass1 = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
+            settingsForm.Components.Add(settings_pass1);
+            settings_pass2 = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(7, -6), 30, 2 * Data.GameDisplaying.Epsilon);
+            settingsForm.Components.Add(settings_pass2);
+            ConnectionOrangeButton settingsFormSubmitter = new ConnectionOrangeButton("SAVE YOUR CHANGES")
+            {
+                SubMenu = null,
+                DoClick = SaveSettings
+            };
+            settingsForm.SubmitterId = settingsForm.Components.Count;
+            settingsForm.Components.Add(settingsFormSubmitter);
+            settingsForm.Initialize();
+            settingsMenu.Items.Add(settingsForm);
             #endregion
 
             #region Main Menu
@@ -159,7 +192,8 @@ namespace Exodus
             MenuButton mapEditor = new BlueMenuButton("MAP EDITOR");
             mapEditor.DoClick = Editor;
             MenuButton settings = new BlueMenuButton("SETTINGS");
-            settings.DoClick = DoNothing;
+            settings.SubMenu = settingsMenu;
+            settings.DoClick = LaunchLobby;
             MenuButton credits = new BlueMenuButton("CREDITS");
             credits.DoClick = DoNothing;
             MenuButton exit = new BlueMenuButton("EXIT THE GAME");
@@ -179,13 +213,13 @@ namespace Exodus
                                            new Padding(14, 17), 8, 4 * Data.GameDisplaying.Epsilon);
             connectionForm.Components.Add(new JustTexture(Textures.Menu["ConnectionBackground"], connectionForm.Area.X,
                                                           connectionForm.Area.Y, connectionForm.Depth));
-            connectionForm.Components.Add(new Label(Fonts.Eurostile12, "LOGIN", 0, 0));
+            connectionForm.Components.Add(new Label(Fonts.Eurostile12, "LOGIN", 0, 0, Data.GameDisplaying.Epsilon));
             login = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
             connectionForm.Components.Add(login);
-            //login.Value = "toogy";
-            connectionForm.Components.Add(new Label(Fonts.Eurostile12, "PASSWORD", 0, 0));
+
+            connectionForm.Components.Add(new Label(Fonts.Eurostile12, "PASSWORD", 0, 0, Data.GameDisplaying.Epsilon));
             pass = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
-            //pass.Value = "hello";
+
             connectionForm.Components.Add(pass);
             ConnectionOrangeButton connectionFormSubmitter = new ConnectionOrangeButton("CONNECT TO EXODUS")
             {
@@ -199,7 +233,10 @@ namespace Exodus
             connectionForm.Components.Add(connectionFormSignup);
             connectionForm.Initialize();
             connectionMenu.Items.Add(connectionForm);
+            connectionMenu.Items.Add(statusBar);
             connectionMenu.Initialize();
+            statusBar.Text = "Enter your logs";
+            statusBar.Active = false;
 
             #endregion
 
@@ -259,6 +296,8 @@ namespace Exodus
         }
         private void LaunchLobby(MenuState m, int i)
         {
+            statusBar.Text = "";
+            statusBar.Active = false;
             RefreshServerLists(null, 0);
             Push(m);
         }
@@ -313,7 +352,6 @@ namespace Exodus
             if (_searchingLAN)
             {
                 Client.RefreshLANServerList();
-                //SyncClient.Stop();
             }
             else
             {
@@ -338,7 +376,7 @@ namespace Exodus
             _searchingLAN = !_searchingLAN;
             RefreshServerLists(null, 0);
         }
-        public void ConnectionFormSubmit(MenuState m, int i)
+        void ConnectionFormSubmit(MenuState m, int i)
         {
             _temp = m;
             new Thread(ConnectionFormSubmit).Start();
@@ -350,9 +388,12 @@ namespace Exodus
             if (!_isConnecting)
             {
                 _isConnecting = true;
+                statusBar.Text = "Connecting";
+                statusBar.Active = true;
                 int id = SyncClient.UserIsValid(login.Value, pass.Value);
                 if (Player.ConnectionState == 1)
                 {
+                    statusBar.Text = "loading";
                     PlayerInfos.Reset(login.Value,
                         SyncClient.SendSQLRequest("SELECT `avatar` FROM `user` WHERE `id` = " + id)[0][0],
                         Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + id + ")"))[0][0]) + 1,
@@ -360,8 +401,50 @@ namespace Exodus
                         Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + id + " AND (`P1ID`=" + id + " OR `P2ID`=" + id + ")"))[0][0])
                     );
                     Push(_temp);
+                    statusBar.Text = "Welcome !";
+                    statusBar.Active = false;
+                }
+                else
+                {
+                    statusBar.Text = "Connection Failed";
+                    statusBar.Active = false;
                 }
                 _isConnecting = false;
+            }
+        }
+        void SaveSettings(MenuState m, int i)
+        {
+            new Thread(SaveSettings).Start();
+        }
+        bool _isChangingSettings = false;
+        private void SaveSettings()
+        {
+            if (!_isChangingSettings)
+            {
+                _isChangingSettings = true;
+                if (settings_login.Value != "" || settings_login.Value != Data.PlayerInfos.Name)
+                {
+                    statusBar.Active = true;
+                    statusBar.Text = "CHECKING NEW PSEUDO";
+                    if (settings_login.Value.Length > 12)
+                        statusBar.Text = "TOO MANY LETTERS";
+                    else
+                    {
+                        string[][] result = SyncClient.SendSQLRequest("SELECT id FROM `user` WHERE `name` = \"" + settings_login.Value + "\"");
+                        if (result.Length == 0)
+                        {
+                            statusBar.Text = "CHANGING YOUR PSEUDO";
+                            SyncClient.SendSQLOrder("UPDATE `user` SET `name` = \"" + settings_login.Value + "\" WHERE `name` = \"" + Data.PlayerInfos.Name + "\"");
+                            statusBar.Text = "PSEUDO CHANGED !";
+                            Data.PlayerInfos.Name = settings_login.Value;
+                        }
+                    }
+                }
+                else if (true)
+                {
+
+                }
+                _isChangingSettings = false;
             }
         }
         #endregion

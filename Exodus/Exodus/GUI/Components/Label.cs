@@ -13,6 +13,12 @@ namespace Exodus.GUI.Components
         readonly SpriteFont _font;
         public Vector2 Pos;
         public Color Color;
+        float layerDepth = float.Epsilon;
+        public Label(SpriteFont font, string txt, int x, int y, float LayerDepth)
+            : this(font, txt, x, y)
+        {
+            this.layerDepth = LayerDepth;
+        }
         public Label(SpriteFont font, string txt, int x, int y)
         {
             Txt = txt;
@@ -23,7 +29,7 @@ namespace Exodus.GUI.Components
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(_font, Txt, Pos, Color, 0f, Vector2.Zero, 1f, SpriteEffects.None, float.Epsilon);
+            spriteBatch.DrawString(_font, Txt, Pos, Color, 0f, Vector2.Zero, 1f, SpriteEffects.None, layerDepth);
         }
         public void SetColor(int R, int G, int B)
         {

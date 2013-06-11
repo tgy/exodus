@@ -18,7 +18,7 @@ namespace Exodus.Network.ClientSide
         public static List<Game> ServerList = new List<Game>();
 
         private static string IP;
-        private static bool IsRefreshing;
+        public static bool IsRefreshing { get; private set; }
         private static bool IsRunning;
         private static BinaryWriter sender;
         private static TcpClient client;

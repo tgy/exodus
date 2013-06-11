@@ -95,10 +95,10 @@ namespace Exodus.PlayGame
             ListItems = new List<Item>();
             ListPassiveItems = new List<Item>();
             // On Fixe ça à la barbare :3
-            int XMax = Int32.MaxValue,
-                XMin = 0,
-                YMax = Int32.MaxValue,
-                YMin = 0;
+            int XMin = heightMap * PlayGame.Tile.tileWidth / 4,
+                YMin = widthMap * PlayGame.Tile.tileHeight / 4,
+                XMax = XMin + widthMap * PlayGame.Tile.tileWidth / 2,
+                YMax = YMin + heightMap * PlayGame.Tile.tileHeight / 2;
             MapCell[,] m = new MapCell[widthMap, heightMap];
             Random r = new Random();
             int max = heightMap > widthMap ? heightMap : widthMap;

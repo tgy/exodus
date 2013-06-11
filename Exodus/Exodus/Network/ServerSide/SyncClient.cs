@@ -18,6 +18,7 @@ namespace Exodus.Network.ServerSide
         private static BinaryWriter sender;
         private static BinaryReader NetReader;
         private static TcpClient Client;
+        static bool _MySQLConnection = false;
         public static void ConnectAsServer()
         {
             WhatIsIt = 0;
@@ -103,12 +104,23 @@ namespace Exodus.Network.ServerSide
         }
         public static void SendDBCMDToGameManager(string command)
         {
-            byte[] Serialized = Serialize.Serializer.ObjectToByteArray(command);
-            byte[] cmd = new byte[Serialized.Length + 2];
-            Serialized.CopyTo(cmd, 2);
-            cmd[0] = (byte)(Serialized.Length / 256);
-            cmd[1] = (byte)(Serialized.Length % 256);
-            SendDataToGameManager(cmd);
+            while (IsRunning)
+            {
+                if (_MySQLConnection)
+                    Thread.Sleep(10);
+                else
+                {
+                    _MySQLConnection = true;
+                    byte[] Serialized = Serialize.Serializer.ObjectToByteArray(command);
+                    byte[] cmd = new byte[Serialized.Length + 2];
+                    Serialized.CopyTo(cmd, 2);
+                    cmd[0] = (byte)(Serialized.Length / 256);
+                    cmd[1] = (byte)(Serialized.Length % 256);
+                    SendDataToGameManager(cmd);
+                    _MySQLConnection = false;
+                    break;
+                }
+            }
         }
         public static void SendGame(byte[] SGame)
         {

@@ -22,9 +22,9 @@ namespace Exodus.PlayGame
         public static void Initialise(int miniX, int maxiX, int miniY, int maxiY)
         {
             minX = miniX;
-            maxX = maxiX;
+            maxX = maxiX - Data.Window.WindowWidth;
             minY = miniY;
-            maxY = maxiY;
+            maxY = maxiY - Data.Window.WindowHeight;
             x = minX;
             y = minY;
         }

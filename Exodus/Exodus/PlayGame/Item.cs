@@ -122,20 +122,24 @@ namespace Exodus.PlayGame
         {
             if (pos != null && secure)
             {
-                Map.MapCells[(int)pos.Value.X, (int)pos.Value.Y].ListItems.Remove(this);
                 // On met toutes les cases ex-occupée par notre item à libre
                 for (int i = (int)pos.Value.X, mi = Math.Min(i + Width, Map.Width); i < mi; i++)
                     for (int j = (int)pos.Value.Y, mj = Math.Min(j + Width, Map.Height); j < mj; j++)
+                    {
                         Map.ObstacleMap[i, j] = false;
+                        Map.MapCells[i, j].ListItems.Remove(this);
+                    }
             }
             pos = new Point(x, y);
             if (secure)
             {
-                Map.MapCells[x, y].ListItems.Add(this);
                 // On met toutes les cases occupées par notre item à occupées
                 for (int i = x, mi = Math.Min(i + Width, Map.Width); i < mi; i++)
                     for (int j = y, mj = Math.Min(j + Width, Map.Height); j < mj; j++)
+                    {
                         Map.ObstacleMap[i, j] = true;
+                        Map.MapCells[i, j].ListItems.Add(this);
+                    }
             }
         }
         /// <summary>

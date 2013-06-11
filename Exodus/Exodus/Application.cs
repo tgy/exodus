@@ -100,6 +100,7 @@ namespace Exodus
         }
         protected override void LoadContent()
         {
+            Data.GameDisplaying.GraphicsDevice = GraphicsDevice;
             this.IsMouseVisible = false;
             Inputs.Initialise();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -166,7 +167,7 @@ namespace Exodus
             rightMenu.Create(new List<Component> { playOnline, playSolo, mapEditor, settings, credits, exit });
             mainMenu.Items.Add(rightMenu);
             mainMenu.Items.Add(statusBar);
-            PlayerInfos = new PlayerInfos(Data.Window.ScreenCenter.X - 300, Data.Window.ScreenCenter.Y - 10, Data.GameDisplaying.Epsilon * 3);
+            PlayerInfos = new PlayerInfos(Data.Window.ScreenCenter.X - 300, Data.Window.ScreenCenter.Y + 30, Data.GameDisplaying.Epsilon * 3);
             mainMenu.Items.Add(PlayerInfos);
             #endregion
 

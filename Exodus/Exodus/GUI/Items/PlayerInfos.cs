@@ -5,7 +5,8 @@ using System.Text;
 using Exodus.GUI.Components;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using System.Net;
+using System.IO;
 namespace Exodus.GUI.Items
 {
     public class PlayerInfos : Item
@@ -18,16 +19,21 @@ namespace Exodus.GUI.Items
         Label Percentage;
         JustTextureRectangle BackPercentage,
                              FrontPercentage;
+        JustTexture avatar = null,
+                             avatarFrame;
+        Texture2D _avatarFrame,
+                  _avatar;
         int FrontPercentageWidth = 0;
-        float currentFrontPercentage = 0;
+        float currentFrontPercentage = 0,
+              layerDepth;
         public PlayerInfos(int x, int y, float layerDepth)
         {
             Focused = false;
             Area = new Rectangle(x, y, 0, 0);
-
-            JustTexture avatarFrame = new JustTexture(Textures.Menu["avatarFrame"], x, y + 20, layerDepth + Data.GameDisplaying.Epsilon);
+            _avatarFrame = Textures.Menu["avatarFrame"];
+            avatarFrame = new JustTexture(_avatarFrame, x, y + 20, layerDepth + Data.GameDisplaying.Epsilon);
             Components.Add(avatarFrame);
-            Player = new Label(Fonts.Eurostile16Bold, Data.PlayerInfos.Name, x + 6, y -5);
+            Player = new Label(Fonts.Eurostile16Bold, Data.PlayerInfos.Name, x + 6, y - 5);
             Player.SetColor(0, 0, 0);
             Components.Add(Player);
             Label l = new Label(Fonts.Eurostile16Bold, "RANK", x + 147, y + 20);
@@ -60,6 +66,7 @@ namespace Exodus.GUI.Items
             FrontPercentage.c = new Color(119, 255, 67);
             Components.Add(FrontPercentage);
             Components.Add(BackPercentage);
+            this.layerDepth = layerDepth;
         }
         public void Reset(string pseudo, string avatarURL, int rank, int victories, int defeats)
         {
@@ -76,6 +83,21 @@ namespace Exodus.GUI.Items
             currentFrontPercentage = 0;
             Percentage.Txt = (int)percentage + "%";
             FrontPercentageWidth = (int)(percentage * BackPercentage.Width / 100);
+            WebClient Client = new WebClient();
+            try
+            {
+                Client.DownloadFile(Data.PlayerInfos.beginAvatar + avatarURL, "Content/" + avatarURL);
+                Stream s = new FileStream("Content/" + avatarURL, FileMode.Open);
+                _avatar = Texture2D.FromStream(Data.GameDisplaying.GraphicsDevice, s);
+                if (avatar != null)
+                    Components.Remove(avatar);
+                avatar = new JustTexture(_avatar, avatarFrame.Area.X + (_avatarFrame.Width - _avatar.Width) / 2, avatarFrame.Area.Y + (_avatarFrame.Height - _avatar.Height) / 2, layerDepth);
+                Components.Add(avatar);
+            }
+            catch
+            {
+                Components.Remove(avatar);
+            }
         }
         public override void Update(GameTime gameTime)
         {

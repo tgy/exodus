@@ -59,6 +59,7 @@ namespace Exodus
         }
         public static class GameDisplaying
         {
+            public static GraphicsDevice GraphicsDevice;
             public const float Epsilon = 0.000001f;
             public static bool DisplayObstacle = false;
             public static int GraphicQuality = 0;

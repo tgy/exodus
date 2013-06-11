@@ -86,8 +86,8 @@ namespace Exodus
         {
             _graphics = new GraphicsDeviceManager(this)
                 {
-                    PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width,
-                    PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height
+                    PreferredBackBufferWidth = 500,//GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width,
+                    PreferredBackBufferHeight = 500//GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height
                 };
 
             Content.RootDirectory = "Content";

@@ -36,6 +36,7 @@ namespace Exodus
         Stack<GameState> GameStates;
         PlayerInfos PlayerInfos;
         StatusBar statusBar;
+        ConnectionOrangeButton settings_sound;
         public void Push(GameState g)
         {
             g.Initialize();
@@ -173,6 +174,9 @@ namespace Exodus
                 SubMenu = null,
                 DoClick = SaveSettings
             };
+            settings_sound = new ConnectionOrangeButton(Data.Config.LevelSound == 100 ? "DISABLE SOUND" : "ENABLE SOUND");
+            settings_sound.DoClick = ToogleSound;
+            settingsForm.Components.Add(settings_sound);
             settingsForm.SubmitterId = settingsForm.Components.Count;
             settingsForm.Components.Add(settingsFormSubmitter);
             settingsForm.Initialize();
@@ -464,12 +468,32 @@ namespace Exodus
                         pass = true;
                     }
                     statusBar.Active = false;
+                    Thread.Sleep(100);
                 }
                 if (pseudo && pass)
                     statusBar.Text = "INFOS SAVED";
 
                 _isChangingSettings = false;
             }
+        }
+        void ToogleSound(MenuState m, int i)
+        {
+
+            statusBar.Text = "SAVING SOUND";
+            statusBar.Active = true;
+            if (Data.Config.LevelSound == 100)
+            {
+                Data.Config.LevelSound = 0;
+                settings_sound.Text = "ENABLE SOUND";
+            }
+            else
+            {
+                Data.Config.LevelSound = 100;
+                settings_sound.Text = "DISABLE SOUND";
+            }
+            Data.SavePlayerConfig();
+            statusBar.Text = "SOUND SAVED";
+            statusBar.Active = false;
         }
         #endregion
 

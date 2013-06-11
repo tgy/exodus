@@ -154,5 +154,21 @@ namespace Exodus
 
             }
         }
+        public static void SavePlayerConfig()
+        {
+            try
+            {
+                System.IO.File.WriteAllText(Config.PathConfig,
+                    "DisplayObstacles="+GameDisplaying.DisplayObstacle+"\n"+
+                    "LevelSound="+Config.LevelSound+"\n"+
+                    "GraphicQuality="+GameDisplaying.GraphicQuality+"\n"+
+                    "PaddingMap="+GameDisplaying.PaddingMap+"\n"+
+                    "LastIP="+Network.LastIP+"\n"+
+                    "Port="+Network.Port);
+            }
+            catch
+            {
+            }
+        }
     }
 }

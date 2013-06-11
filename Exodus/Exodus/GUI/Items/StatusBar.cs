@@ -93,7 +93,6 @@ namespace Exodus.GUI.Items
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Texture, Area, DisplayedArea, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 2 * float.Epsilon);
-            //if (_animated)
             spriteBatch.DrawString(Font, Text, TextPosition, TextColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, float.Epsilon);
         }
 

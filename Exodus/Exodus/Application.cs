@@ -87,8 +87,8 @@ namespace Exodus
         {
             _graphics = new GraphicsDeviceManager(this)
                 {
-                    PreferredBackBufferWidth = 500,//GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width,
-                    PreferredBackBufferHeight = 500//GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height
+                    PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width,
+                    PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height
                 };
 
             Content.RootDirectory = "Content";
@@ -222,7 +222,6 @@ namespace Exodus
             connectionForm.Components.Add(new Label(Fonts.Eurostile12, "LOGIN", 0, 0, Data.GameDisplaying.Epsilon));
             login = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
             connectionForm.Components.Add(login);
-
             connectionForm.Components.Add(new Label(Fonts.Eurostile12, "PASSWORD", 0, 0, Data.GameDisplaying.Epsilon));
             pass = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
             pass.Hidden = true;
@@ -238,6 +237,8 @@ namespace Exodus
             // connectionFormSignup.DoClick = FIX ME (lance une page html vers la page d'inscription du site)
             connectionForm.Components.Add(connectionFormSignup);
             connectionForm.Initialize();
+            login.ResetValue(Data.Config.Login);
+            pass.ResetValue(Data.Config.Pwd);
             connectionMenu.Items.Add(connectionForm);
             connectionMenu.Items.Add(statusBar);
             connectionMenu.Initialize();
@@ -399,6 +400,9 @@ namespace Exodus
                 int id = SyncClient.UserIsValid(login.Value, pass.Value);
                 if (Player.ConnectionState == 1)
                 {
+                    Data.Config.Login = login.Value;
+                    Data.Config.Pwd = pass.Value;
+                    Data.SavePlayerConfig();
                     statusBar.Text = "loading";
                     PlayerInfos.Reset(
                         SyncClient.SendSQLRequest("SELECT `avatar` FROM `user` WHERE `id` = " + id)[0][0],

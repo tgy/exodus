@@ -69,10 +69,10 @@ namespace Exodus.GUI.Components
         }
         public override void SetPosition()
         {
-            _textPosition = new Vector2(Area.X + Area.Width/2,
+            _textPosition = new Vector2(Area.X + Area.Width / 2,
                                         Area.Y + Padding.Top);
 
-            _labelPosition = new Vector2(Area.X + (Area.Width - (int) _font.MeasureString(Label).X)/2,
+            _labelPosition = new Vector2(Area.X + (Area.Width - (int)_font.MeasureString(Label).X) / 2,
                                          Area.Y + Padding.Top);
             base.SetPosition();
         }
@@ -80,10 +80,10 @@ namespace Exodus.GUI.Components
         {
             Area = new Rectangle(x + Padding.Left, y + Padding.Top, _texture.Width, _texture.Height);
 
-            _textPosition = new Vector2(Area.X + Area.Width/2,
+            _textPosition = new Vector2(Area.X + Area.Width / 2,
                                         Area.Y + Padding.Top);
 
-            _labelPosition = new Vector2(Area.X + (Area.Width - (int) _font.MeasureString(Label).X)/2,
+            _labelPosition = new Vector2(Area.X + (Area.Width - (int)_font.MeasureString(Label).X) / 2,
                                          Area.Y + Padding.Top);
         }
         private static char _keyToChar(Keys k)
@@ -98,7 +98,7 @@ namespace Exodus.GUI.Components
                 case Keys.Space:
                     return ' ';
 
-                    #region test-0-9
+                #region test-0-9
 
                 case Keys.D0:
                 case Keys.NumPad0:
@@ -131,9 +131,9 @@ namespace Exodus.GUI.Components
                 case Keys.NumPad9:
                     return '9';
 
-                    #endregion
+                #endregion
 
-                    #region test a-z
+                #region test a-z
 
                 case Keys.A:
                     return 'a';
@@ -188,7 +188,7 @@ namespace Exodus.GUI.Components
                 case Keys.Z:
                     return 'z';
 
-                    #endregion
+                #endregion
 
                 default:
                     return '$';
@@ -201,7 +201,7 @@ namespace Exodus.GUI.Components
                 case Keys.OemComma:
                     return ',';
 
-                    #region test-0-9
+                #region test-0-9
 
                 case Keys.D0:
                 case Keys.NumPad0:
@@ -234,7 +234,7 @@ namespace Exodus.GUI.Components
                 case Keys.NumPad9:
                     return '9';
 
-                    #endregion
+                #endregion
 
                 default:
                     return '$';
@@ -259,7 +259,7 @@ namespace Exodus.GUI.Components
                 if (inputChar > 96 && inputChar < 123 &&
                     (Inputs.PreKeyboardState.GetPressedKeys().Contains(Keys.LeftShift) ||
                      Inputs.PreKeyboardState.GetPressedKeys().Contains(Keys.RightShift)))
-                    inputChar = (char) (inputChar - 32);
+                    inputChar = (char)(inputChar - 32);
 
                 if (inputChar != '$' &&
                     ((Inputs.KeyboardState.IsKeyUp(pressedKey) ||
@@ -367,7 +367,7 @@ namespace Exodus.GUI.Components
 
             _displayedValue = Value.Substring(_displayedIndexBegin, _displayedIndexEnd - _displayedIndexBegin);
 
-            _textPosition.X = Area.X + (Area.Width - (int) _font.MeasureString(_displayedValue).X)/2;
+            _textPosition.X = Area.X + (Area.Width - (int)_font.MeasureString(_displayedValue).X) / 2;
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -381,7 +381,7 @@ namespace Exodus.GUI.Components
                 spriteBatch.Draw(_cursorTexture,
                                  new Vector2(
                                      _textPosition.X +
-                                     _cursorIndex*
+                                     _cursorIndex *
                                      (_cursorIndex == 0
                                           ? 0
                                           : (_font.MeasureString(Hidden ? HideString(_displayedValue) : _displayedValue).X /
@@ -407,10 +407,19 @@ namespace Exodus.GUI.Components
             _cursorIndex = 0;
             Value = "";
         }
+        public void ResetValue(string s)
+        {
+            _displayedIndexBegin = 0;
+            _displayedIndexEnd = (short)Math.Min(_charDisplayed, s.Length);
+            _cursorIndex = 0;
+            Value = s;
+            _displayedValue = Hidden ? HideString(s.Substring(0, _displayedIndexEnd)) : s.Substring(0, _displayedIndexEnd);
+            _textPosition.X = Area.X + (Area.Width - (int)_font.MeasureString(_displayedValue).X) / 2;
+        }
         public void SetColor(int R, int G, int B)
         {
             color = new Color(R, G, B);
-            _unfocusedColor = new Color(4*R/5, 4*G/5, 4*B/5);
+            _unfocusedColor = new Color(4 * R / 5, 4 * G / 5, 4 * B / 5);
         }
     }
 }

@@ -72,6 +72,8 @@ namespace Exodus
         }
         public static class Config
         {
+            public static string Login = "";
+            public static string Pwd = "";
             public static int LevelSound = 0;
             public static string PathConfig = "../../../Datas/config.txt";
             public static string PathMaps = "../../../Maps/";
@@ -146,6 +148,12 @@ namespace Exodus
                         case "Port":
                             Int32.TryParse(array[1], out Network.Port);
                             break;
+                        case "Pwd":
+                            Config.Pwd = SymetricCrypt(array[1]);
+                            break;
+                        case "Login":
+                            Config.Login = SymetricCrypt(array[1]);
+                            break;
                     }
                 }
             }
@@ -164,11 +172,21 @@ namespace Exodus
                     "GraphicQuality="+GameDisplaying.GraphicQuality+"\n"+
                     "PaddingMap="+GameDisplaying.PaddingMap+"\n"+
                     "LastIP="+Network.LastIP+"\n"+
-                    "Port="+Network.Port);
+                    "Port="+Network.Port+"\n"+
+                    "Login="+SymetricCrypt(Config.Login)+"\n"+
+                    "Pwd="+SymetricCrypt(Config.Pwd));
             }
             catch
             {
             }
+        }
+        static string SymetricCrypt(string s)
+        {
+            string result = "";
+            short key = 17651;
+            for (int i = 0; i < s.Length; i++)
+                result += Convert.ToChar(s[i] ^ key);
+            return result;
         }
     }
 }

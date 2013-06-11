@@ -158,7 +158,6 @@
     <Compile Include="GUI\Fonts.cs" />
     <Compile Include="GUI\Item.cs" />
     <Compile Include="GUI\Items\MenuHorizontal.cs" />
-    <Compile Include="GUI\Items\MiniMap.cs" />
     <Compile Include="GUI\Items\Patterned.cs" />
     <Compile Include="GUI\Items\ResourcesDisplayer.cs" />
     <Compile Include="GUI\Items\ScrollingSelection.cs" />

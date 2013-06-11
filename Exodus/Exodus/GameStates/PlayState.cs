@@ -61,7 +61,7 @@ namespace Exodus.GameStates
             selectionDisplayer = new SelectionDisplayer(0, Data.Window.WindowHeight - Textures.GameUI["selection"].Height, 25 * Data.GameDisplaying.Epsilon);
             Items.Add(selectionDisplayer);
 
-            Minimap minimap = new Minimap(Data.Window.WindowWidth - 200, Data.Window.WindowHeight - 200, 25 * Data.GameDisplaying.Epsilon);
+            Minimap minimap = new Minimap(Data.Window.WindowWidth - 284, Data.Window.WindowHeight - 170, 25 * Data.GameDisplaying.Epsilon);
             Items.Add(minimap);
 
             t = Textures.GameUI["launchMenuButton"];

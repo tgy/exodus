@@ -166,8 +166,10 @@ namespace Exodus
             settingsForm.Components.Add(settings_login);
             settingsForm.Components.Add(new Label(Fonts.Eurostile12, "CHANGE YOUR PASSWORD", 0, 0, Data.GameDisplaying.Epsilon));
             settings_pass1 = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
+            settings_pass1.Hidden = true;
             settingsForm.Components.Add(settings_pass1);
             settings_pass2 = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
+            settings_pass2.Hidden = true;
             settingsForm.Components.Add(settings_pass2);
             ConnectionOrangeButton settingsFormSubmitter = new ConnectionOrangeButton("SAVE YOUR CHANGES")
             {
@@ -223,7 +225,7 @@ namespace Exodus
 
             connectionForm.Components.Add(new Label(Fonts.Eurostile12, "PASSWORD", 0, 0, Data.GameDisplaying.Epsilon));
             pass = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
-
+            pass.Hidden = true;
             connectionForm.Components.Add(pass);
             ConnectionOrangeButton connectionFormSubmitter = new ConnectionOrangeButton("CONNECT TO EXODUS")
             {

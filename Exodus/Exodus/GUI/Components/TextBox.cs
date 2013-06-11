@@ -36,6 +36,7 @@ namespace Exodus.GUI.Components
         private SpriteFont _font;
         private readonly int _charDisplayed;
         public Color color { get; private set; }
+        public bool Hidden = false;
         private Color _unfocusedColor;
         public bool ValueIsNumber = false;
 
@@ -66,7 +67,6 @@ namespace Exodus.GUI.Components
             maxChars = _charDisplayed;
             SetColor(255, 255, 255);
         }
-
         public override void SetPosition()
         {
             _textPosition = new Vector2(Area.X + Area.Width/2,
@@ -76,7 +76,6 @@ namespace Exodus.GUI.Components
                                          Area.Y + Padding.Top);
             base.SetPosition();
         }
-
         public void SetPosition(int x, int y)
         {
             Area = new Rectangle(x + Padding.Left, y + Padding.Top, _texture.Width, _texture.Height);
@@ -87,7 +86,6 @@ namespace Exodus.GUI.Components
             _labelPosition = new Vector2(Area.X + (Area.Width - (int) _font.MeasureString(Label).X)/2,
                                          Area.Y + Padding.Top);
         }
-
         private static char _keyToChar(Keys k)
         {
             switch (k)
@@ -196,7 +194,6 @@ namespace Exodus.GUI.Components
                     return '$';
             }
         }
-
         private static char _keyToInt(Keys k)
         {
             switch (k)
@@ -243,9 +240,7 @@ namespace Exodus.GUI.Components
                     return '$';
             }
         }
-
         public int maxChars;
-
         public override void Update(GameTime gameTime)
         {
             if (!Focused)
@@ -374,13 +369,12 @@ namespace Exodus.GUI.Components
 
             _textPosition.X = Area.X + (Area.Width - (int) _font.MeasureString(_displayedValue).X)/2;
         }
-
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Focused ? _textureFocused : _texture, Area, null,
                              Color.White, 0f, Vector2.Zero, SpriteEffects.None, Depth);
 
-            spriteBatch.DrawString(_font, _displayedValue, _textPosition, Focused ? color : _unfocusedColor, 0f,
+            spriteBatch.DrawString(_font, Hidden ? HideString(_displayedValue) : _displayedValue, _textPosition, Focused ? color : _unfocusedColor, 0f,
                                    Vector2.Zero, 1f, SpriteEffects.None, Depth - Data.GameDisplaying.Epsilon);
 
             if (_cursorVisible && Focused)
@@ -390,7 +384,7 @@ namespace Exodus.GUI.Components
                                      _cursorIndex*
                                      (_cursorIndex == 0
                                           ? 0
-                                          : (_font.MeasureString(_displayedValue).X/
+                                          : (_font.MeasureString(Hidden ? HideString(_displayedValue) : _displayedValue).X /
                                              _displayedValue.Length)), _textPosition.Y), null, Color.White, 0f,
                                  Vector2.Zero,
                                  1f,
@@ -399,7 +393,13 @@ namespace Exodus.GUI.Components
             spriteBatch.DrawString(_font, new StringBuilder(Label), _labelPosition, new Color(138, 0, 255), 0f,
                                    Vector2.Zero, 1f, SpriteEffects.None, Depth - Data.GameDisplaying.Epsilon);
         }
-
+        string HideString(string s)
+        {
+            string result = "";
+            for (int i = 0; i < s.Length; i++)
+                result += '*';
+            return result;
+        }
         public void ResetValue()
         {
             _displayedIndexBegin = 0;
@@ -407,7 +407,6 @@ namespace Exodus.GUI.Components
             _cursorIndex = 0;
             Value = "";
         }
-
         public void SetColor(int R, int G, int B)
         {
             color = new Color(R, G, B);

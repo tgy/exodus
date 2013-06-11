@@ -73,7 +73,7 @@ namespace Exodus.Network.ServerSide
                 Pinger.Start();
             }
         }
-        public static void UserIsValid(string UserName, string Password)
+        public static int UserIsValid(string UserName, string Password)
         {
             SQLAnswer = null;
             ConnectToSendRequest();
@@ -86,12 +86,33 @@ namespace Exodus.Network.ServerSide
                 if (SQLAnswer != null)
                 {
                     if (SQLAnswer.Length == 1)
+                    {
                         Player.ConnectionState = 1;
+                        Data.PlayerInfos.Name = UserName;
+                        return Int32.Parse(SQLAnswer[0][0]);
+                    }
                     else
+                    {
                         Player.ConnectionState = 0;
-                    return;
+                        return -1;
+                    }
                 }
             }
+            return -1;
+        }
+        public static string[][] SendSQLRequest(string request)
+        {
+            SQLAnswer = null;
+            ConnectToSendRequest();
+            SendDBCMDToGameManager(request);
+            Receive();
+            for (byte b = 0; b < 10; b++)
+            {
+                Thread.Sleep(100);
+                if (SQLAnswer != null)
+                    return SQLAnswer;
+            }
+            return null;
         }
         private static void SendIdMessage()
         {

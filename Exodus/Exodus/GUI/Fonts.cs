@@ -14,6 +14,7 @@ namespace Exodus.GUI
                                  Eurostile10Bold,
                                  Eurostile12,
                                  Eurostile12Bold,
+                                 Eurostile16Bold,
                                  Eurostile18,
                                  Eurostile18Bold,
                                  Eurostile24,
@@ -26,6 +27,7 @@ namespace Exodus.GUI
             Eurostile10Bold = content.Load<SpriteFont>("Fonts/Eurostile/10Bold");
             Eurostile12 = content.Load<SpriteFont>("Fonts/Eurostile/12");
             Eurostile12Bold = content.Load<SpriteFont>("Fonts/Eurostile/12Bold");
+            Eurostile16Bold = content.Load<SpriteFont>("Fonts/Eurostile/16Bold");
             Eurostile18 = content.Load<SpriteFont>("Fonts/Eurostile/18");
             Eurostile18Bold = content.Load<SpriteFont>("Fonts/Eurostile/18Bold");
             Eurostile24 = content.Load<SpriteFont>("Fonts/Eurostile/24");

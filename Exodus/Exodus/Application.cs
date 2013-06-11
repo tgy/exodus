@@ -31,6 +31,7 @@ namespace Exodus
         OrangeMenuButton _gameSelectionButton;
         bool _searchingLAN = true;
         Stack<GameState> GameStates;
+        PlayerInfos PlayerInfos;
         public void Push(GameState g)
         {
             g.Initialize();
@@ -165,7 +166,8 @@ namespace Exodus
             rightMenu.Create(new List<Component> { playOnline, playSolo, mapEditor, settings, credits, exit });
             mainMenu.Items.Add(rightMenu);
             mainMenu.Items.Add(statusBar);
-
+            PlayerInfos = new PlayerInfos(Data.Window.ScreenCenter.X - 300, Data.Window.ScreenCenter.Y - 10, Data.GameDisplaying.Epsilon * 3);
+            mainMenu.Items.Add(PlayerInfos);
             #endregion
 
             #region Connection Menu
@@ -179,8 +181,10 @@ namespace Exodus
             connectionForm.Components.Add(new Label(Fonts.Eurostile12, "LOGIN", 0, 0));
             login = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
             connectionForm.Components.Add(login);
+            //login.Value = "toogy";
             connectionForm.Components.Add(new Label(Fonts.Eurostile12, "PASSWORD", 0, 0));
             pass = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
+            //pass.Value = "hello";
             connectionForm.Components.Add(pass);
             ConnectionOrangeButton connectionFormSubmitter = new ConnectionOrangeButton("CONNECT TO EXODUS")
             {
@@ -201,7 +205,7 @@ namespace Exodus
             Push(connectionMenu);
 
             base.LoadContent();
-        }        
+        }
         protected override void UnloadContent()
         {
             base.UnloadContent();
@@ -345,9 +349,16 @@ namespace Exodus
             if (!_isConnecting)
             {
                 _isConnecting = true;
-                SyncClient.UserIsValid(login.Value, pass.Value);
+                int id = SyncClient.UserIsValid(login.Value, pass.Value);
                 if (Player.ConnectionState == 1)
+                {
+                    PlayerInfos.Reset(login.Value,
+                        Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = 32)"))[0][0]) + 1,
+                        Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + id))[0][0]),
+                        Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + id + " AND (`P1ID`=" + id + " OR `P2ID`=" + id + ")"))[0][0])
+                    );
                     Push(_temp);
+                }
                 _isConnecting = false;
             }
         }

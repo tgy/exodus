@@ -59,7 +59,7 @@ namespace Exodus.Network.ClientSide
 
         private static void InitialMessages()
         {
-            SendObject(new PlayerName(Data.Config.PlayerName));
+            SendObject(new PlayerName(Data.PlayerInfos.Name));
             SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Units.Worker), Data.Network.IdPlayer, 0, Data.Network.IdPlayer));
         }
         #endregion

@@ -104,7 +104,7 @@ namespace Exodus.GameStates
             for (int x = 0; x < PlayGame.Map.Width; x++)
                 for (int y = 0; y < PlayGame.Map.Height; y++)
                     file.map[x, y] = PlayGame.Map.MapCells[x, y].TileId;
-            file.author = Data.Config.PlayerName;
+            file.author = Data.PlayerInfos.Name;
             file.xMax = PlayGame.Camera.maxX;
             file.xMin = PlayGame.Camera.minX;
             file.yMax = PlayGame.Camera.maxY;

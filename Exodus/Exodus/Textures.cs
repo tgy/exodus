@@ -65,6 +65,8 @@ namespace Exodus
             Menu["logo"] = content.Load<Texture2D>("Menu/Backgrounds/logo");
             Menu["selectionSquare1"] = content.Load<Texture2D>("Game/Reperes/selection1");
             Menu["selectionSquare2"] = content.Load<Texture2D>("Game/Reperes/selection2");
+            Menu["avatarFrame"] = content.Load<Texture2D>("Menu/avatarFrame");
+            Menu["bar"] = content.Load<Texture2D>("Menu/bar");
         }
 
         public static void LoadGameItems(ContentManager content)

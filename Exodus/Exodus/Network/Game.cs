@@ -22,7 +22,7 @@ namespace Exodus.Network
             NbPlayers = 0;
             NbObservers = 0;
             CreationTime = DateTime.Now;
-            HostName = Data.Config.PlayerName;
+            HostName = Data.PlayerInfos.Name;
         }
     }
 }

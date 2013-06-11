@@ -64,9 +64,13 @@ namespace Exodus
             public static int GraphicQuality = 0;
             public static int PaddingMap = 7;
         }
+        public static class PlayerInfos
+        {
+            public static string Name = "";
+            public const string beginAvatar = "";
+        }
         public static class Config
         {
-            public static string PlayerName = "Player";
             public static int LevelSound = 0;
             public static string PathConfig = "../../../Datas/config.txt";
             public static string PathMaps = "../../../Maps/";
@@ -107,9 +111,6 @@ namespace Exodus
                 {
                     switch (array[0])
                     {
-                        case "PlayerName":
-                            Config.PlayerName = array[1];
-                            break;
                         case "DisplayObstacles":
                             bool.TryParse(array[1], out GameDisplaying.DisplayObstacle);
                             break;

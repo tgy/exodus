@@ -37,6 +37,8 @@ namespace Exodus
 
                 Items[i].Update(gameTime);
             }
+            if (Music != null)
+                Music.Volume = (float)Data.Config.LevelSound / 100f;
         }
         public virtual void UnLoad()
         {

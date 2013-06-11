@@ -37,7 +37,6 @@ namespace Exodus
         PlayerInfos PlayerInfos;
         StatusBar statusBar;
         ConnectionOrangeButton settings_sound;
-        int sound;
         public void Push(GameState g)
         {
             g.Initialize();
@@ -182,7 +181,6 @@ namespace Exodus
             settingsForm.Components.Add(settingsFormSubmitter);
             settingsForm.Initialize();
             settingsMenu.Items.Add(settingsForm);
-            sound = Data.Config.LevelSound;
             #endregion
 
             #region Main Menu
@@ -429,8 +427,7 @@ namespace Exodus
             {
                 _isChangingSettings = true;
                 bool pseudo = false,
-                     pass = false,
-                     soundd = false;
+                     pass = false;
                 if (settings_login.Value != "" && settings_login.Value != Data.PlayerInfos.Name)
                 {
                     statusBar.Active = true;
@@ -473,17 +470,7 @@ namespace Exodus
                     statusBar.Active = false;
                     Thread.Sleep(100);
                 }
-                if (sound != Data.Config.LevelSound)
-                {
-                    statusBar.Text = "SAVING SOUND";
-                    statusBar.Active = true;
-                    Data.Config.LevelSound = sound;
-                    Data.SavePlayerConfig();
-                    statusBar.Text = "SOUND SAVED";
-                    statusBar.Active = false;
-                    soundd = true;
-                }
-                if (pseudo && pass || pseudo && soundd || soundd && pass)
+                if (pseudo && pass)
                     statusBar.Text = "INFOS SAVED";
 
                 _isChangingSettings = false;
@@ -491,16 +478,22 @@ namespace Exodus
         }
         void ToogleSound(MenuState m, int i)
         {
-            if (sound == 100)
+
+            statusBar.Text = "SAVING SOUND";
+            statusBar.Active = true;
+            if (Data.Config.LevelSound == 100)
             {
-                sound = 0;
+                Data.Config.LevelSound = 0;
                 settings_sound.Text = "ENABLE SOUND";
             }
             else
             {
-                sound = 100;
+                Data.Config.LevelSound = 100;
                 settings_sound.Text = "DISABLE SOUND";
             }
+            Data.SavePlayerConfig();
+            statusBar.Text = "SOUND SAVED";
+            statusBar.Active = false;
         }
         #endregion
 

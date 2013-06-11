@@ -1,6 +1,5 @@
-PlayerName=Grimpow
-DisplayObstacles=false
-LevelSound=0
+DisplayObstacles=False
+LevelSound=100
 GraphicQuality=0
 PaddingMap=7
 LastIP=127.0.0.1

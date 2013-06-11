@@ -36,6 +36,8 @@ namespace Exodus
         Stack<GameState> GameStates;
         PlayerInfos PlayerInfos;
         StatusBar statusBar;
+        ConnectionOrangeButton settings_sound;
+        int sound;
         public void Push(GameState g)
         {
             g.Initialize();
@@ -173,10 +175,14 @@ namespace Exodus
                 SubMenu = null,
                 DoClick = SaveSettings
             };
+            settings_sound = new ConnectionOrangeButton(Data.Config.LevelSound == 100 ? "DISABLE SOUND" : "ENABLE SOUND");
+            settings_sound.DoClick = ToogleSound;
+            settingsForm.Components.Add(settings_sound);
             settingsForm.SubmitterId = settingsForm.Components.Count;
             settingsForm.Components.Add(settingsFormSubmitter);
             settingsForm.Initialize();
             settingsMenu.Items.Add(settingsForm);
+            sound = Data.Config.LevelSound;
             #endregion
 
             #region Main Menu
@@ -423,7 +429,8 @@ namespace Exodus
             {
                 _isChangingSettings = true;
                 bool pseudo = false,
-                     pass = false;
+                     pass = false,
+                     soundd = false;
                 if (settings_login.Value != "" && settings_login.Value != Data.PlayerInfos.Name)
                 {
                     statusBar.Active = true;
@@ -464,11 +471,35 @@ namespace Exodus
                         pass = true;
                     }
                     statusBar.Active = false;
+                    Thread.Sleep(100);
                 }
-                if (pseudo && pass)
+                if (sound != Data.Config.LevelSound)
+                {
+                    statusBar.Text = "SAVING SOUND";
+                    statusBar.Active = true;
+                    Data.Config.LevelSound = sound;
+                    Data.SavePlayerConfig();
+                    statusBar.Text = "SOUND SAVED";
+                    statusBar.Active = false;
+                    soundd = true;
+                }
+                if (pseudo && pass || pseudo && soundd || soundd && pass)
                     statusBar.Text = "INFOS SAVED";
 
                 _isChangingSettings = false;
+            }
+        }
+        void ToogleSound(MenuState m, int i)
+        {
+            if (sound == 100)
+            {
+                sound = 0;
+                settings_sound.Text = "ENABLE SOUND";
+            }
+            else
+            {
+                sound = 100;
+                settings_sound.Text = "DISABLE SOUND";
             }
         }
         #endregion

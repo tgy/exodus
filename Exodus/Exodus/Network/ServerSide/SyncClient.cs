@@ -18,7 +18,6 @@ namespace Exodus.Network.ServerSide
         private static BinaryWriter sender;
         private static BinaryReader NetReader;
         private static TcpClient Client;
-
         public static void ConnectAsServer()
         {
             WhatIsIt = 0;
@@ -26,6 +25,7 @@ namespace Exodus.Network.ServerSide
             SendIdMessage();
             Data.Network.Server = "Server (synchronized): Connected clients:";
         }
+        private static string[][] SQLAnswer;
 
         public static void ConnectAsClient()
         {
@@ -74,6 +74,7 @@ namespace Exodus.Network.ServerSide
         }
         public static void UserIsValid(string UserName, string Password)
         {
+            SQLAnswer = null;
             ConnectToSendRequest();
             //Player.ConnectionState = 2;
             SendDBCMDToGameManager("SELECT * FROM `user` WHERE `name`=\"" + UserName + "\" AND `password`=\""+ SHA1(Password) +"\"");
@@ -81,9 +82,12 @@ namespace Exodus.Network.ServerSide
             for (byte b = 0; b < 10; b++)
             {
                 Thread.Sleep(100);
-                if (Player.ConnectionState == 1)
+                if (SQLAnswer != null)
                 {
-                    //IsAuthenticated = true;
+                    if (SQLAnswer.Length == 1)
+                        Player.ConnectionState = 1;
+                    else
+                        Player.ConnectionState = 0;
                     return;
                 }
             }
@@ -158,7 +162,7 @@ namespace Exodus.Network.ServerSide
 
                 case 2:
                     IsRunning = false;
-                    Player.ConnectionState = data[1];
+                    ProcessSQLRequest(ShortenArray(data,1));
                     break;
 
                 //case 3:
@@ -180,6 +184,10 @@ namespace Exodus.Network.ServerSide
                 sender.Write(ping);
                 Thread.Sleep(100);
             }
+        }
+        private static void ProcessSQLRequest(byte[]data)
+        {
+            SQLAnswer = (string[][])Serialize.Serializer.ByteArrayToObject(data);
         }
         private static byte[] ShortenArray(byte[] Long, int StartIndex)
         {

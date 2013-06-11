@@ -55,7 +55,7 @@ namespace Exodus.Network.ServerSide
             try
             {
                 //Client = new TcpClient(Dns.GetHostAddresses("thefirsthacker.myftp.org")[0].ToString(), 4000);
-                Client = new TcpClient("127.0.0.1", 4000);
+                Client = new TcpClient("192.168.1.15", 4000);
                 //NetReader = new BinaryReader(Client.GetStream());
                 //InternetGames = new List<Game>();
             }
@@ -75,10 +75,10 @@ namespace Exodus.Network.ServerSide
         public static void UserIsValid(string UserName, string Password)
         {
             ConnectToSendRequest();
-            Player.ConnectionState = 2;
-            //FIXME: La commande pour rechercher l'utilisateur;
-            SendDBCMDToGameManager("SELECT * FROM `user` WHERE `name`=\"" + UserName + "\" AND `password`=SHA1(\"" + Password + "\")");
-            for (byte b = 0; b < 50; b++)
+            //Player.ConnectionState = 2;
+            SendDBCMDToGameManager("SELECT * FROM `user` WHERE `name`=\"" + UserName + "\" AND `password`=\""+ SHA1(Password) +"\"");
+            Receive();
+            for (byte b = 0; b < 10; b++)
             {
                 Thread.Sleep(100);
                 if (Player.ConnectionState == 1)
@@ -157,6 +157,7 @@ namespace Exodus.Network.ServerSide
                     break;
 
                 case 2:
+                    IsRunning = false;
                     Player.ConnectionState = data[1];
                     break;
 
@@ -196,6 +197,19 @@ namespace Exodus.Network.ServerSide
                 sender.Close();
             }
             InternetGames.Clear();
+        }
+        private static string SHA1(string s1)
+        {
+            System.Security.Cryptography.SHA1CryptoServiceProvider x = new System.Security.Cryptography.SHA1CryptoServiceProvider();
+            byte[] bs = System.Text.Encoding.ASCII.GetBytes(s1);
+            bs = x.ComputeHash(bs);
+            System.Text.StringBuilder s = new System.Text.StringBuilder();
+            foreach (byte b in bs)
+            {
+                s.Append(b.ToString("x2").ToLower());
+            }
+            string password = s.ToString();
+            return password;
         }
     }
 }

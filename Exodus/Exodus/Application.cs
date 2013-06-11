@@ -97,7 +97,6 @@ namespace Exodus
 
             base.Initialize();
         }
-
         protected override void LoadContent()
         {
             this.IsMouseVisible = false;
@@ -202,9 +201,7 @@ namespace Exodus
             Push(connectionMenu);
 
             base.LoadContent();
-        }
-
-        
+        }        
         protected override void UnloadContent()
         {
             base.UnloadContent();
@@ -336,19 +333,23 @@ namespace Exodus
             _searchingLAN = !_searchingLAN;
             RefreshServerLists(null, 0);
         }
-
         public void ConnectionFormSubmit(MenuState m, int i)
         {
-            // FIX ME -> verifications des identifiants via le GameManager
-            //
-            // FIXME: Regarde SyncClient.UserIsValid(...)
-            // 
-            //SyncClient.IsAuthenticated = false;
-            SyncClient.UserIsValid(login.Value, pass.Value); /*ATTENTION: Cette methode impliquant du reseau et du SQL, prevoir au moins 100ms pour qu'elle soit effectuee (peut prendre plus de 3 s)*/
-            // if (Player.ConnectionState == 1)
-                Push(m);
-            // else
-            //     Tell the user he is stupid
+            _temp = m;
+            new Thread(ConnectionFormSubmit).Start();
+        }
+        bool _isConnecting = false;
+        MenuState _temp;
+        private void ConnectionFormSubmit()
+        {
+            if (!_isConnecting)
+            {
+                _isConnecting = true;
+                SyncClient.UserIsValid(login.Value, pass.Value);
+                if (Player.ConnectionState == 1)
+                    Push(_temp);
+                _isConnecting = false;
+            }
         }
         #endregion
 

@@ -9,7 +9,7 @@ namespace Exodus
         /// The main entry point for the application.
         /// </summary>
         static void Main(string[] args)
-        {
+       {
             PlayGame.Researchs.Research r = PlayGame.Researchs.Attack;
             for (int i = 1; i < 20; i++)
             {

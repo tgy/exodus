@@ -65,10 +65,10 @@ namespace Exodus
             public static int GraphicQuality = 0;
             public static int PaddingMap = 7;
         }
-        public static class PlayerInfos
+        public static class PlayerInfosll
         {
             public static string Name = "";
-            public const string beginAvatar = "http://192.168.1.34/exodus/web/avatar/";
+            public const string beginAvatar = "http://192.168.1.33/exodus/web/avatar/";
         }
         public static class Config
         {

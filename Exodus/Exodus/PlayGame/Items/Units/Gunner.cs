@@ -18,7 +18,7 @@ namespace Exodus.PlayGame.Items.Units
             AttackDelayMax = 10;
             currentAttackDelay = AttackDelayMax;
             this.IdPlayer = IdPlayer;
-            this.AttackSound = Audio.Attack["Gunner"];
+            //this.AttackSound = Audio.Attack["Gunner"];
             Initialize(40, 24, 9, 15);
         }
     }

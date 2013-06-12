@@ -67,6 +67,7 @@ namespace Exodus
         }
         public static class PlayerInfos
         {
+            public static int InternetID = -1;
             public static string Name = "";
             public const string beginAvatar = "http://192.168.1.33/exodus/web/avatar/";
         }

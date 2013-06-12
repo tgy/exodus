@@ -19,6 +19,8 @@ namespace Exodus.Network.ServerSide
         private static BinaryReader NetReader;
         private static TcpClient Client;
         static bool _MySQLConnection = false;
+        private static string[][] SQLAnswer;
+
         public static void ConnectAsServer()
         {
             WhatIsIt = 0;
@@ -26,8 +28,6 @@ namespace Exodus.Network.ServerSide
             SendIdMessage();
             Data.Network.Server = "Server (synchronized): Connected clients:";
         }
-        private static string[][] SQLAnswer;
-
         public static void ConnectAsClient()
         {
             WhatIsIt = 1;
@@ -36,7 +36,6 @@ namespace Exodus.Network.ServerSide
             SendIdMessage();
             Receive();
         }
-
         public static void ConnectToSendRequest()
         {
             WhatIsIt = 2;
@@ -44,7 +43,6 @@ namespace Exodus.Network.ServerSide
             NetReader = new BinaryReader(Client.GetStream());
             SendIdMessage();
         }
-
         private static void InitializeConnection()
         {
             if (IsRunning)
@@ -179,7 +177,7 @@ namespace Exodus.Network.ServerSide
                     Thread.Sleep(100);
             }
         }
-        private static void SendDataToGameManager(byte[] data)
+        public static void SendDataToGameManager(byte[] data)
         {
             //InitializeConnection();
             sender.Write(data);

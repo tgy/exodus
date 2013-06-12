@@ -33,8 +33,6 @@ namespace Exodus.PlayGame
         }
         public Point? oldPos { get; set; }
         public float mediumPos { private get; set; }
-        [NonSerialized]public SoundEffectInstance AttackSound;
-        [NonSerialized]public SoundEffectInstance DieSound;
         protected new void Initialize(int baseAnimDelay, int AnimNbFrames, int marginX, int marginY)
         {
             this.oldPos = null;
@@ -192,6 +190,9 @@ namespace Exodus.PlayGame
             this._texture = Textures.GameItems[GetType().ToString() + IdPlayer];
             this._selectionCircle = Textures.Game["selectUnit"];
             this.bigLife = new GUI.Components.BigLife(this.screenPos.X, this.screenPos.Y, this.layerDepth);
+            this.AttackSound = Audio.Attack[GetType()];
+            this.DieSound = Audio.Die[GetType()];
+            this.SelectionSound = Audio.Selection[GetType()];
         }
     }
 }

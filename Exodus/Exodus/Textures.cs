@@ -108,7 +108,14 @@ namespace Exodus
             Game["selectCase"] = content.Load<Texture2D>("Game/Reperes/selectCase");
             Game["selectUnit"] = content.Load<Texture2D>("Game/Reperes/circleSelectUnit");
             Game["selectUnitHover"] = content.Load<Texture2D>("Game/Reperes/circleSelectUnitHover");
-            Game["tileSet"] = content.Load<Texture2D>("Game/tileSet");
+            Game["tileSet-0-0"] = content.Load<Texture2D>("Game/tileSet-0-0");
+            Game["tileSet-0-1"] = content.Load<Texture2D>("Game/tileSet-0-1");
+            Game["tileSet-0-2"] = content.Load<Texture2D>("Game/tileSet-0-2");
+            Game["tileSet-0-3"] = content.Load<Texture2D>("Game/tileSet-0-3");
+            Game["tileSet-1-0"] = content.Load<Texture2D>("Game/tileSet-1-0");
+            Game["tileSet-1-1"] = content.Load<Texture2D>("Game/tileSet-1-1");
+            Game["tileSet-1-2"] = content.Load<Texture2D>("Game/tileSet-1-2");
+            Game["tileSet-1-3"] = content.Load<Texture2D>("Game/tileSet-1-3");
             Game["selectBuilding1"] = content.Load<Texture2D>("Game/Reperes/selectionBuilding/1");
             Game["selectBuilding2"] = content.Load<Texture2D>("Game/Reperes/selectionBuilding/2");
             Game["selectBuilding3"] = content.Load<Texture2D>("Game/Reperes/selectionBuilding/3");

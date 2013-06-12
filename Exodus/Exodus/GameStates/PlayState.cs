@@ -73,16 +73,25 @@ namespace Exodus.GameStates
             ));
             #endregion
 
-            Tile.tileSetTexture = Textures.Game["tileSet"];
-            Map.Load(50, 50);
+            Tile.tileSetTextures = new Texture2D[4, 2];
+            Tile.tileSetTextures[0, 0] = Textures.Game["tileSet-0-0"];
+            Tile.tileSetTextures[1, 0] = Textures.Game["tileSet-0-1"];
+            Tile.tileSetTextures[2, 0] = Textures.Game["tileSet-0-2"];
+            Tile.tileSetTextures[3, 0] = Textures.Game["tileSet-0-3"];
+            Tile.tileSetTextures[0, 1] = Textures.Game["tileSet-1-0"];
+            Tile.tileSetTextures[1, 1] = Textures.Game["tileSet-1-1"];
+            Tile.tileSetTextures[2, 1] = Textures.Game["tileSet-1-2"];
+            Tile.tileSetTextures[3, 1] = Textures.Game["tileSet-1-3"];
+            Map.Load(200, 200);
+            Tile.tileSetWidth = (Tile.tileSetTextures[0, 0].Width * (Tile.tileSetTextures.GetLength(0) - 1) + Tile.tileSetTextures[Tile.tileSetTextures.GetLength(0) - 1, 0].Width) / Tile.tileWidth;
             _listExamples.Add(new PlayGame.Items.Buildings.Habitation(Data.Network.IdPlayer));
             _listExamples.Add(new PlayGame.Items.Buildings.Labo(Data.Network.IdPlayer));
             PlayGame.Items.Units.Worker w = new PlayGame.Items.Units.Worker(Data.Network.IdPlayer);
             w.SetPos(20, 25, true);
             Map.AddItem(w);
-            PlayGame.Items.Units.Worker w2 = new PlayGame.Items.Units.Worker(Data.Network.IdPlayer + 1);
-            w2.SetPos(28, 25, true);
-            Map.AddItem(w2);
+            PlayGame.Items.Units.Gunner g2 = new PlayGame.Items.Units.Gunner(Data.Network.IdPlayer + 1);
+            g2.SetPos(28, 25, true);
+            Map.AddItem(g2);
             foreach (Item it in _listExamples)
                 it.Alpha = 0.6f;
             Map.EarningPerMin = new Resource(0, 10, 0, 0, 10);
@@ -103,9 +112,10 @@ namespace Exodus.GameStates
                     v = Map.MapToScreen(x, y);
                     v.X -= Camera.x;
                     v.Y -= Camera.y;
-                    spriteBatch.Draw(Tile.tileSetTexture,
+                    Tuple<Texture2D, Rectangle> tile = Tile.GetSourceRectangle(Map.MapCells[x, y].TileId);
+                    spriteBatch.Draw(tile.Item1,
                                      v,
-                                     Tile.GetSourceRectangle(Map.MapCells[x, y].TileId),
+                                     tile.Item2,
                                      (Data.GameDisplaying.DisplayObstacle && Map.ObstacleMap[x, y]
                                           ? Color.Lime
                                           : Color.White),

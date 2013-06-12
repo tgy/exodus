@@ -74,7 +74,15 @@ namespace Exodus.GameStates
             Textures.LoadGameItems(game.Content);
             Textures.LoadMiniGameItems(game.Content);
             Textures.LoadGame(game.Content);
-            Tile.tileSetTexture = Textures.Game["tileSet"];
+            Tile.tileSetTextures = new Texture2D[4, 4];
+            Tile.tileSetTextures[0, 0] = Textures.Game["tileSet-0-0"];
+            Tile.tileSetTextures[0, 1] = Textures.Game["tileSet-0-1"];
+            Tile.tileSetTextures[0, 2] = Textures.Game["tileSet-0-2"];
+            Tile.tileSetTextures[0, 3] = Textures.Game["tileSet-0-3"];
+            Tile.tileSetTextures[1, 0] = Textures.Game["tileSet-1-0"];
+            Tile.tileSetTextures[1, 1] = Textures.Game["tileSet-1-1"];
+            Tile.tileSetTextures[1, 2] = Textures.Game["tileSet-1-2"];
+            Tile.tileSetTextures[1, 3] = Textures.Game["tileSet-1-3"];
             Map.MouseMap = Textures.Game["mouseMap"];
             #region LoadMap
             PlayGame.Map.Load(50, 50);
@@ -119,8 +127,8 @@ namespace Exodus.GameStates
             Items.Add(menuBox);
             #endregion
             #region Chargement textures
-            int width = Tile.tileSetTexture.Width / Tile.tileWidth,
-                height = Tile.tileSetTexture.Height / Tile.tileHeight;
+            int width = Tile.tileSetTextures.GetLength(0) * Tile.tileSetTextures[0, 0].Width / Tile.tileWidth,
+                height = Tile.tileSetTextures.GetLength(0) * Tile.tileSetTextures[0, 0].Height / Tile.tileHeight;
             Rectangle sourceRectangle = new Rectangle(0, 0, Tile.tileWidth, Tile.tileHeight);
             Texture2D cropTexture;
             Color[] data;
@@ -135,7 +143,7 @@ namespace Exodus.GameStates
                     sourceRectangle.Y = y * Tile.tileHeight;
                     cropTexture = new Texture2D(game.GetGraphicDevice(), sourceRectangle.Width, sourceRectangle.Height);
                     data = new Color[sourceRectangle.Width * sourceRectangle.Height];
-                    Tile.tileSetTexture.GetData(0, sourceRectangle, data, 0, data.Length);
+                    Tile.GetTexture(sourceRectangle.X, sourceRectangle.Y).GetData(0, sourceRectangle, data, 0, data.Length);
                     cropTexture.SetData(data);
                     _tilesList.Add(cropTexture);
                 }
@@ -307,9 +315,10 @@ namespace Exodus.GameStates
                     v = Map.MapToScreen(x, y);
                     v.X -= Camera.x;
                     v.Y -= Camera.y;
-                    spriteBatch.Draw(Tile.tileSetTexture,
+                    Tuple<Texture2D, Rectangle> tile = Tile.GetSourceRectangle(Map.MapCells[x, y].TileId);
+                    spriteBatch.Draw(tile.Item1,
                                      v,
-                                     Tile.GetSourceRectangle(Map.MapCells[x, y].TileId),
+                                     tile.Item2,
                                      (Data.GameDisplaying.DisplayObstacle && Map.ObstacleMap[x, y]
                                           ? Color.Lime
                                           : Color.White),
@@ -321,9 +330,10 @@ namespace Exodus.GameStates
                     {
                         if (_currentItemType == itemType.tile)
                         {
-                            spriteBatch.Draw(Tile.tileSetTexture,
+                            Tuple<Texture2D, Rectangle> t = Tile.GetSourceRectangle(_currentItemId);
+                            spriteBatch.Draw(t.Item1,
                                      v,
-                                     Tile.GetSourceRectangle(_currentItemId),
+                                     t.Item2,
                                      Color.White,
                                      0f, Vector2.Zero, 1f, SpriteEffects.None, 0.9999f
                             );

@@ -1,5 +1,5 @@
 DisplayObstacles=False
-LevelSound=0
+LevelSound=100
 GraphicQuality=0
 PaddingMap=7
 LastIP=127.0.0.1

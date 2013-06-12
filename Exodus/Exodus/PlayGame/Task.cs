@@ -2,7 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Exodus.GUI.Components;
+using Exodus.GUI.Items;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using System.Threading;
+using Exodus.PlayGame;
+using Exodus.Network;
 
 namespace Exodus.PlayGame
 {
@@ -13,6 +24,7 @@ namespace Exodus.PlayGame
         public bool Finished { get; protected set; }
         public bool MustStop { protected get; set; }
         public bool Initialized { get; protected set; }
+        public SoundEffectInstance Sound;
 
         protected Task(Item parent, string name, string description)
         {

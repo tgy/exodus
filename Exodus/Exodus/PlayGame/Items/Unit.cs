@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Exodus.PlayGame
 {
@@ -32,6 +33,8 @@ namespace Exodus.PlayGame
         }
         public Point? oldPos { get; set; }
         public float mediumPos { private get; set; }
+        public SoundEffectInstance AttackSound;
+        public SoundEffectInstance DieSound;
         protected new void Initialize(int baseAnimDelay, int AnimNbFrames, int marginX, int marginY)
         {
             this.oldPos = null;

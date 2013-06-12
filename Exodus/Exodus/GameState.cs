@@ -13,6 +13,7 @@ namespace Exodus
     {
         public List<Item> Items = new List<Item>();
         public SoundEffectInstance Music;
+        public SoundEffectInstance Sound;
 
         public virtual void Initialize()
         {

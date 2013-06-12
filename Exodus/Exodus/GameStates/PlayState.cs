@@ -78,8 +78,11 @@ namespace Exodus.GameStates
             _listExamples.Add(new PlayGame.Items.Buildings.Habitation(Data.Network.IdPlayer));
             _listExamples.Add(new PlayGame.Items.Buildings.Labo(Data.Network.IdPlayer));
             PlayGame.Items.Units.Worker w = new PlayGame.Items.Units.Worker(Data.Network.IdPlayer);
-            w.SetPos(25, 25, true);
+            w.SetPos(20, 25, true);
             Map.AddItem(w);
+            PlayGame.Items.Units.Worker w2 = new PlayGame.Items.Units.Worker(Data.Network.IdPlayer + 1);
+            w2.SetPos(28, 25, true);
+            Map.AddItem(w2);
             foreach (Item it in _listExamples)
                 it.Alpha = 0.6f;
             Map.EarningPerMin = new Resource(0, 10, 0, 0, 10);
@@ -178,7 +181,7 @@ namespace Exodus.GameStates
                 if (!Items.Exists(s => s.Focused))
                 {
                     Vector2 mousePos;
-                    // Suivant l'étate de jeu, on va faire telle ou telle action en fonction des interations du joueur
+                    // Suivant l'état de jeu, on va faire telle ou telle action en fonction des interations du joueur
                     switch (Data.GameInfos.currentMode)
                     {
                         // Si on attend un clic de la part du joueur pour qu'il assigne une attaque à un item :)

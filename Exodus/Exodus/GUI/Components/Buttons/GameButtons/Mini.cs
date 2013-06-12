@@ -34,7 +34,9 @@ namespace Exodus.GUI.Components.Buttons.GameButtons
         public override void Update(GameTime gameTime)
         {
             if (Focused && Inputs.LeftClick())
+            {
                 DoClick(Type);
+            }
         }
     }
 }

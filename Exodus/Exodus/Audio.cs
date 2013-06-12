@@ -11,6 +11,8 @@ namespace Exodus
     {
         public static SoundEffectInstance MenuMusic;
         public static SoundEffectInstance PlayStateMusic;
+        public static Dictionary<string, SoundEffectInstance> Attack = new Dictionary<string,SoundEffectInstance>();
+        public static Dictionary<string, SoundEffectInstance> Die = new Dictionary<string,SoundEffectInstance>();
         public static void LoadAudio(ContentManager content)
         {
             MenuMusic = content.Load<SoundEffect>("Audio/The-me").CreateInstance();
@@ -19,6 +21,9 @@ namespace Exodus
             PlayStateMusic = content.Load<SoundEffect>("Audio/The-me-2").CreateInstance();
             PlayStateMusic.IsLooped = true;
             PlayStateMusic.Volume = (float)Data.Config.LevelSound / 100f;
+            Attack.Add("Gunner", content.Load<SoundEffect>("Audio/6198").CreateInstance());
+            Attack["Gunner"].IsLooped = true;
+            Attack["Gunner"].Volume = (float)Data.Config.LevelSound / 100f;
         }
     }
 }

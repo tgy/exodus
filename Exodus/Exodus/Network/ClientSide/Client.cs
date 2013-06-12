@@ -203,6 +203,9 @@ namespace Exodus.Network.ClientSide
             }
             NetReader.Close();
         }
+        private static void SendResources()
+        {
+        }
         #endregion
 
         #region Compute
@@ -211,15 +214,15 @@ namespace Exodus.Network.ClientSide
             object o;
             //try
             //{
-                o = Serialize.Serializer.ByteArrayToObject(ObjectTable);
+            o = Serialize.Serializer.ByteArrayToObject(ObjectTable);
             //}
             //catch
             //{
-                //if (IsRunning)
-                //{
-                //    o = ""; //throw new Exception("Error during deserialization!");
-                //}
-                //return;
+            //if (IsRunning)
+            //{
+            //    o = ""; //throw new Exception("Error during deserialization!");
+            //}
+            //return;
             //}
             if (o is string)
                 chat.InsertMsg((string)o);

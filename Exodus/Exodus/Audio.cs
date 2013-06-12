@@ -13,6 +13,7 @@ namespace Exodus
         public static SoundEffectInstance PlayStateMusic;
         public static Dictionary<string, SoundEffectInstance> Attack = new Dictionary<string,SoundEffectInstance>();
         public static Dictionary<string, SoundEffectInstance> Die = new Dictionary<string,SoundEffectInstance>();
+        public static Dictionary<string, SoundEffectInstance> Selection = new Dictionary<string,SoundEffectInstance>();
         public static void LoadAudio(ContentManager content)
         {
             MenuMusic = content.Load<SoundEffect>("Audio/The-me").CreateInstance();

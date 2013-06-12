@@ -15,16 +15,23 @@ namespace Exodus.PlayGame
 {
     public static class Tile
     {
-        static public Texture2D tileSetTexture;
+        static public Texture2D[,] tileSetTextures;
         static public int tileWidth = 64;
         static public int tileHeight = 32;
-
-        static public Rectangle GetSourceRectangle(int tileID)
+        static public int tileSetWidth; // en nb de tiles
+        
+        static public Tuple<Texture2D,Rectangle> GetSourceRectangle(int tileID)
         {
-            int tileX = tileID % (tileSetTexture.Width / tileWidth);
-            int tileY = tileID / (tileSetTexture.Width / tileWidth);
+            int tileX = tileID % tileSetWidth;
+            int tileY = tileID / tileSetWidth;
+            Texture2D texture = tileSetTextures[tileX / (tileSetTextures[0, 0].Width / Tile.tileWidth), tileY / (tileSetTextures[0, 0].Height / Tile.tileHeight)];
+            Rectangle rectangle = new Rectangle(((tileX * Tile.tileWidth) % tileSetTextures[0, 0].Width), ((tileY * Tile.tileHeight) % tileSetTextures[0, 0].Height), Tile.tileWidth, Tile.tileHeight);
+            return new Tuple<Texture2D, Rectangle>(texture, rectangle);
+        }
 
-            return new Rectangle(tileX * tileWidth, tileY * tileHeight, tileWidth, tileHeight);
+        static public Texture2D GetTexture(int x, int y)
+        {
+            return tileSetTextures[x / tileSetTextures[0, 0].Width, y / tileSetTextures[0, 0].Height];
         }
     }
 }

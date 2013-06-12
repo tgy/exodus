@@ -53,8 +53,8 @@ namespace Exodus.Network.ServerSide
             }
             try
             {
-                //Client = new TcpClient(Dns.GetHostAddresses("thefirsthacker.myftp.org")[0].ToString(), 4000);
-                Client = new TcpClient("192.168.1.15", 4000);
+                Client = new TcpClient(Dns.GetHostAddresses("192.168.1.15")[0].ToString(), 4000);
+                //Client = new TcpClient("192.168.1.15", 4000);
                 //NetReader = new BinaryReader(Client.GetStream());
                 //InternetGames = new List<Game>();
             }

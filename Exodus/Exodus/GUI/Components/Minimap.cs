@@ -60,14 +60,12 @@ namespace Exodus.GUI.Components
                     }
                 } // end for
             } // end for
-            Vector2 pos1 = ScreenToMiniMap(new Vector2(PlayGame.Camera.x, PlayGame.Camera.y));
-            Vector2 pos2 = ScreenToMiniMap(new Vector2(PlayGame.Camera.x + Data.Window.WindowWidth, PlayGame.Camera.y));
-            Vector2 pos3 = ScreenToMiniMap(new Vector2(PlayGame.Camera.x + Data.Window.WindowWidth, PlayGame.Camera.y + Data.Window.WindowHeight));
-            Vector2 pos4 = ScreenToMiniMap(new Vector2(PlayGame.Camera.x, PlayGame.Camera.y + Data.Window.WindowHeight));
-            spriteBatch.Draw(minitile, new Rectangle((int)pos1.X, (int)pos1.Y, (int)(pos2.X - pos1.X), 1), Color.Green);
-            spriteBatch.Draw(minitile, new Rectangle((int)pos2.X, (int)pos2.Y, 1, (int)(pos3.Y - pos2.Y)), Color.Green);
-            spriteBatch.Draw(minitile, new Rectangle((int)pos4.X, (int)pos4.Y, (int)(pos3.X - pos4.X), 1), Color.Green);
-            spriteBatch.Draw(minitile, new Rectangle((int)pos1.X, (int)pos1.Y, 1, (int)(pos4.Y - pos1.Y)), Color.Green);
+            Vector2 pos1 = ScreenToMiniMap(new Vector2(PlayGame.Camera.x, PlayGame.Camera.y)),
+                    pos2 = ScreenToMiniMap(new Vector2(PlayGame.Camera.x + Data.Window.WindowWidth, PlayGame.Camera.y + Data.Window.WindowHeight));
+            spriteBatch.Draw(minitile, new Rectangle((int)pos1.X, (int)pos1.Y, (int)(pos2.X - pos1.X + 1), 1), Color.Green);
+            spriteBatch.Draw(minitile, new Rectangle((int)pos1.X, (int)pos2.Y, (int)(pos2.X - pos1.X + 1), 1), Color.Green);
+            spriteBatch.Draw(minitile, new Rectangle((int)pos1.X, (int)pos1.Y, 1, (int)(pos2.Y - pos1.Y + 1)), Color.Green);
+            spriteBatch.Draw(minitile, new Rectangle((int)pos2.X, (int)pos1.Y, 1, (int)(pos2.Y - pos1.Y + 1)), Color.Green);
         }
 
         public Vector2 ScreenToMiniMap(Vector2 pos)

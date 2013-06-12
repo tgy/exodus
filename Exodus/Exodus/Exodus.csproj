@@ -169,6 +169,7 @@
     <Compile Include="Network\ClientSide\Client.cs" />
     <Compile Include="Network\NetGame.cs" />
     <Compile Include="Network\Game.cs" />
+    <Compile Include="Network\Orders\Resources.cs" />
     <Compile Include="Network\Orders\Task.cs" />
     <Compile Include="Network\Orders\DisconnectionMessage.cs" />
     <Compile Include="Network\Orders\GetId.cs" />
@@ -194,7 +195,7 @@
     <Compile Include="PlayGame\Items\Obstacles\Creeper.cs" />
     <Compile Include="PlayGame\Items\Buildings\Labo.cs" />
     <Compile Include="PlayGame\Items\Buildings\Habitation.cs" />
-    <Compile Include="PlayGame\Items\Units\Copie de Gunner.cs" />
+    <Compile Include="PlayGame\Items\Units\Spider.cs" />
     <Compile Include="PlayGame\Items\Units\Gunner.cs" />
     <Compile Include="PlayGame\Items\Loader.cs" />
     <Compile Include="PlayGame\Items\Units\Worker.cs" />

@@ -68,7 +68,7 @@ namespace Exodus
         public static class PlayerInfos
         {
             public static string Name = "";
-            public const string beginAvatar = "http://192.168.1.33/exodus/web/avatar/";
+            public const string beginAvatar = "http://thefirsthacker.myftp.org/avatar/";
         }
         public static class Config
         {

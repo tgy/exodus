@@ -151,7 +151,8 @@ namespace Exodus.Network.ClientSide
                 if (obj is string ||
                     obj is DisconnectionMessage ||
                     obj is PlayerName ||
-                    obj is Orders.Tasks.ProductItem)
+                    obj is Orders.Tasks.ProductItem ||
+                    obj is Resources)
                     tWithLength[2] = 1;
                 // Sinon le serveur ne désérialisera pas
                 else
@@ -206,6 +207,9 @@ namespace Exodus.Network.ClientSide
                     Thread.Sleep(5);
             }
             NetReader.Close();
+        }
+        private static void SendResources()
+        {
         }
         #endregion
 

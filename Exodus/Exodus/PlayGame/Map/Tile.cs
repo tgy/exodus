@@ -29,9 +29,12 @@ namespace Exodus.PlayGame
             return new Tuple<Texture2D, Rectangle>(texture, rectangle);
         }
 
-        static public Texture2D GetTexture(int x, int y)
+        static public void GetData(Rectangle sourceRectangle, Color[] data)
         {
-            return tileSetTextures[x / tileSetTextures[0, 0].Width, y / tileSetTextures[0, 0].Height];
+            Texture2D t = tileSetTextures[sourceRectangle.X / tileSetTextures[0, 0].Width, sourceRectangle.Y / tileSetTextures[0, 0].Height];
+            sourceRectangle.X %= tileSetTextures[0, 0].Width;
+            sourceRectangle.Y %= tileSetTextures[0, 0].Height;
+            t.GetData(0, sourceRectangle, data, 0, data.Length);
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Exodus.Network.ServerSide
         private static Thread Observer_reading;
         private static int PrimaryKey = 2;
         private static bool GameHasChanged = true;
+        private static TwoPStatistics TPStats;
 
         #region Start
         public static void Start()
@@ -53,6 +54,7 @@ namespace Exodus.Network.ServerSide
             ReSyncAuto.Name = "ReSyncAuto";
             ReSyncAuto.Start();
             SClient Accepted;
+            TPStats = new TwoPStatistics();
             while (IsRunning)
             {
                 TcpClient client;
@@ -264,11 +266,12 @@ namespace Exodus.Network.ServerSide
                     {
                         //SendToAll("Desync detected!");
                         //if (IsRunning)
-                            throw new Exception("Error during deserialization!");
+                        throw new Exception("Error during deserialization!");
                         //else
                         //return;
                     }
                     break;
+
                 default: // sinon on ne désérialise pas
                     byte[] Packet = new byte[ObjectTablePlusOne.Length + 2];
                     Packet[0] = (byte)((ObjectTablePlusOne.Length - 1) / 256);
@@ -316,6 +319,10 @@ namespace Exodus.Network.ServerSide
                 client.InternetID = (int)o;
                 client.SendInternetIDToGameManager();
             }
+            else if (o is Statistics)
+                TPStats.AddStatistic((Statistics)o);
+            else
+                throw new Exception("Dah hell is that object?");
         }
         private static void ProcessObserverObject(SClient client, byte[] ObjectTablePlusOne)
         {
@@ -415,6 +422,7 @@ namespace Exodus.Network.ServerSide
             IsRunning = false;
             PrimaryKey = 0;
             KillAllSClients();
+            TPStats.Reset();
             server.Stop();
             SyncClient.Stop();
         }

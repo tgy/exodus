@@ -295,11 +295,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Reperes\circleSelectUnit.png">
-      <Name>circleSelectUnit</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Game\tileSet.png">
       <Name>tileSet</Name>
       <Importer>TextureImporter</Importer>
@@ -410,13 +405,6 @@
     </Compile>
     <Compile Include="Menu\loadingBar.png">
       <Name>loadingBar</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Game\Units\spider.png">
-      <Name>spider</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -936,6 +924,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\MinimapBackground.png">
+      <Name>MinimapBackground</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\Reperes\circleSelectUnit.png">
+      <Name>circleSelectUnit</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Game\Buildings\labo-blue.png">
       <Name>labo-blue</Name>
       <Importer>TextureImporter</Importer>
@@ -943,6 +945,20 @@
     </Compile>
     <Compile Include="Game\Buildings\labo-yellow.png">
       <Name>labo-yellow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\Obstacles\gas.png">
+      <Name>gas</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\Units\spider.png">
+      <Name>spider</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

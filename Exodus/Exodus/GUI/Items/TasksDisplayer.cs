@@ -215,7 +215,7 @@ namespace Exodus.GUI.Items
             int currentX = Area.X + 9;
             Texture2D te;
             foreach (Type ty in unitProductibles)
-                if (ty == typeof(Worker) || ty == typeof(Gunner))
+                //if (ty == typeof(Worker) || ty == typeof(Gunner))
                 {
                     te = Textures.MiniGameItems[ty];
                     result.Add(new Mini(CreateUnit, ty, te, te, currentX, Area.Y + 14));

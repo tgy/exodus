@@ -13,12 +13,12 @@ namespace Exodus.PlayGame.Items.Units
             Name = "Spider Pig";
             maxLife = 4657;
             maxShield = 69;
-            Speed = 50;
+            Speed = 100;
             AttackStrength = 69;
             AttackDelayMax = 10;
             currentAttackDelay = AttackDelayMax;
             this.IdPlayer = IdPlayer;
-            Initialize(40, 16, -14, 18);
+            Initialize(40, 16, 0, 0);
         }
     }
 }

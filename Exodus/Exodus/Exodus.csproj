@@ -169,7 +169,7 @@
     <Compile Include="Network\ClientSide\Client.cs" />
     <Compile Include="Network\NetGame.cs" />
     <Compile Include="Network\Game.cs" />
-    <Compile Include="Network\Orders\Resources.cs" />
+    <Compile Include="Network\Orders\Statistics.cs" />
     <Compile Include="Network\Orders\Task.cs" />
     <Compile Include="Network\Orders\DisconnectionMessage.cs" />
     <Compile Include="Network\Orders\GetId.cs" />
@@ -182,6 +182,7 @@
     <Compile Include="Network\Orders\Tasks\Hold.cs" />
     <Compile Include="Network\Orders\Tasks\ProductItem.cs" />
     <Compile Include="Network\Orders\Tasks\Move.cs" />
+    <Compile Include="Network\ServerSide\TwoPStatistics.cs" />
     <Compile Include="Network\ServerSide\SClient.cs" />
     <Compile Include="Network\ServerSide\Server.cs" />
     <Compile Include="Network\ServerSide\SyncClient.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="PlayGame\Items\Obstacles\Creeper.cs" />
     <Compile Include="PlayGame\Items\Buildings\University.cs" />
     <Compile Include="PlayGame\Items\Buildings\Habitation.cs" />
+    <Compile Include="PlayGame\Items\Obstacles\Gas.cs" />
     <Compile Include="PlayGame\Items\Units\Spider.cs" />
     <Compile Include="PlayGame\Items\Units\Gunner.cs" />
     <Compile Include="PlayGame\Items\Loader.cs" />

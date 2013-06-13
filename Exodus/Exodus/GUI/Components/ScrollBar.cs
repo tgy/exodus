@@ -18,6 +18,7 @@ namespace Exodus.GUI.Components
         {
             Area = new Rectangle(parentArea.X + parentArea.Width, parentArea.Y, 8, parentArea.Height);
 
+            
             _areaSmallThing = new Rectangle(Area.X, Area.Y, Area.Width, totalElements > 0 ? Math.Min(Area.Height * displayedElements / totalElements, Area.Height) : 0);
 
             Value = 0;

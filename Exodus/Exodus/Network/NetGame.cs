@@ -68,6 +68,7 @@ namespace Exodus.Network
                 ClientThread = null;
             }
             SyncClient.Stop();
+            TwoPStatistics.Reset();
             Thread.Sleep(100);
             Client.RefreshLANServerList();
         }

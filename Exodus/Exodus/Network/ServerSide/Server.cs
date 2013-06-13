@@ -264,11 +264,12 @@ namespace Exodus.Network.ServerSide
                     {
                         //SendToAll("Desync detected!");
                         //if (IsRunning)
-                            throw new Exception("Error during deserialization!");
+                        throw new Exception("Error during deserialization!");
                         //else
                         //return;
                     }
                     break;
+
                 default: // sinon on ne désérialise pas
                     byte[] Packet = new byte[ObjectTablePlusOne.Length + 2];
                     Packet[0] = (byte)((ObjectTablePlusOne.Length - 1) / 256);
@@ -316,6 +317,10 @@ namespace Exodus.Network.ServerSide
                 client.InternetID = (int)o;
                 client.SendInternetIDToGameManager();
             }
+            else if (o is Statistics)
+                TwoPStatistics.AddStatistic((Statistics)o);
+            else
+                throw new Exception("Dah hell is that object?");
         }
         private static void ProcessObserverObject(SClient client, byte[] ObjectTablePlusOne)
         {

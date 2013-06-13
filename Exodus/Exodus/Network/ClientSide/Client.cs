@@ -25,6 +25,8 @@ namespace Exodus.Network.ClientSide
         private static UdpClient BroadcastListener;
         private static IPEndPoint EndPoint;
         public static GUI.Items.Chat chat;
+        public static int UnitsTrained = 0;
+        public static int UnitsLost = 0;
 
         #region Start
         public static void Start(object ip)
@@ -53,6 +55,9 @@ namespace Exodus.Network.ClientSide
             Init.Start();
             Init.Name = "Init";
             IsRunning = true;
+            Thread Stats = new Thread(UpdateStatistics);
+            Stats.Name = "Stats Update";
+            Stats.Start();
             Receive();
         }
         private static void InitialMessages()
@@ -134,6 +139,10 @@ namespace Exodus.Network.ClientSide
         #region IO
         public static void SendObject(object obj)
         {
+            if (obj is Orders.Tasks.ProductItem)
+                UnitsTrained++;
+            if (obj is Orders.Tasks.Die)
+                UnitsLost++;
             if (IsRunning)
             {
                 byte[] ObjectTable = Serialize.Serializer.ObjectToByteArray(obj);
@@ -147,10 +156,11 @@ namespace Exodus.Network.ClientSide
                     obj is DisconnectionMessage ||
                     obj is PlayerName ||
                     obj is Orders.Tasks.ProductItem ||
-                    obj is int)
+                    obj is int ||
+                    obj is Statistics)
                     tWithLength[2] = 1;
                 // Sinon le serveur ne désérialisera pas
-                else
+                else //Le serveur fera suivre a tous les clients sans deserialiser
                     tWithLength[2] = 0;
                 ObjectTable.CopyTo(tWithLength, 3);
                 //try
@@ -175,7 +185,6 @@ namespace Exodus.Network.ClientSide
             //    DisconnectedError();
             //}
         }
-
         private static void Receive()
         {
             BinaryReader NetReader = new BinaryReader(client.GetStream());
@@ -202,9 +211,6 @@ namespace Exodus.Network.ClientSide
                     Thread.Sleep(5);
             }
             NetReader.Close();
-        }
-        private static void SendResources()
-        {
         }
         #endregion
 
@@ -347,6 +353,14 @@ namespace Exodus.Network.ClientSide
             for (int i = 0; i < Long.Length - StartIndex; i++)
                 Short[i] = Long[i + StartIndex];
             return Short;
+        }
+        private static void UpdateStatistics()
+        {
+            while (IsRunning)
+            {
+                SendObject(new Statistics(Data.PlayerInfos.InternetID, PlayGame.Map.PlayerResources));
+                Thread.Sleep(30000);
+            }
         }
         #endregion
 

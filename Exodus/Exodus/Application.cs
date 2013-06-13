@@ -353,6 +353,7 @@ namespace Exodus
         {
             GameState editorState = new MapEditorState(this);
             Push(editorState);
+
         }
         private void RefreshServerLists(MenuState m, int i)
         {

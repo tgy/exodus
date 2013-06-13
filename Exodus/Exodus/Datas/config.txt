@@ -1,4 +1,4 @@
-DisplayObstacles=False
+DisplayObstacles=True
 LevelSound=0
 GraphicQuality=0
 PaddingMap=7
@@ -6,3 +6,4 @@ LastIP=127.0.0.1
 Port=1337
 Login=䒇䒜䒜䒔䒊
 Pwd=䒛䒖䒟䒟䒜
+ColorObstacles=255,0,255,0

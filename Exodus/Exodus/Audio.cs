@@ -30,18 +30,24 @@ namespace Exodus
             Attack[typeof(Spider)] = null;
             Attack[typeof(Worker)] = null;
             Attack[typeof(Creeper)] = null;
+            Attack[typeof(Nothing1x1)] = null;
+            Attack[typeof(Nothing2x2)] = null;
             Attack[typeof(Habitation)] = null;
             Attack[typeof(Labo)] = null;
             Die[typeof(Gunner)] = null;
             Die[typeof(Spider)] = null;
             Die[typeof(Worker)] = null;
             Die[typeof(Creeper)] = null;
+            Die[typeof(Nothing1x1)] = null;
+            Die[typeof(Nothing2x2)] = null;
             Die[typeof(Habitation)] = null;
             Die[typeof(Labo)] = null;
             Selection[typeof(Gunner)] = null;
             Selection[typeof(Spider)] = null;
             Selection[typeof(Worker)] = null;
             Selection[typeof(Creeper)] = null;
+            Selection[typeof(Nothing1x1)] = null;
+            Selection[typeof(Nothing2x2)] = null;
             Selection[typeof(Habitation)] = null;
             Selection[typeof(Labo)] = null;
         }

@@ -32,6 +32,10 @@ namespace Exodus.PlayGame.Items
         {
             if (t == typeof(Creeper))
                 return new Creeper();
+            if (t == typeof(Nothing1x1))
+                return new Nothing1x1();
+            if (t == typeof(Nothing2x2))
+                return new Nothing2x2();
             return null;
         }
         public static Item LoadItem(Type t, int IdPlayer)

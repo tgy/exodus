@@ -62,6 +62,7 @@ namespace Exodus
             public static GraphicsDevice GraphicsDevice;
             public const float Epsilon = 0.000001f;
             public static bool DisplayObstacle = false;
+            public static Color DisplayingColor = Color.Red;
             public static int GraphicQuality = 0;
             public static int PaddingMap = 7;
         }
@@ -124,6 +125,7 @@ namespace Exodus
             try
             {
                 string[] configs = System.IO.File.ReadAllLines(Config.PathConfig);
+                byte a = 255, r = 255, g = 0, b = 0;
                 foreach (
                     string[] array in
                         configs.Select(s => s.Replace(" ", ""))
@@ -156,6 +158,43 @@ namespace Exodus
                         case "Login":
                             Config.Login = SymetricCrypt(array[1]);
                             break;
+                        case "ColorObstacles":
+                            string[] s = array[1].Split(',');
+                            if (s.Length == 4)
+                            {
+                                a = 0;
+                                r = 0;
+                                g = 0;
+                                b = 0;
+                                Byte.TryParse(s[0], out a);
+                                Byte.TryParse(s[1], out r);
+                                Byte.TryParse(s[2], out g);
+                                Byte.TryParse(s[3], out b);
+                                GameDisplaying.DisplayingColor = new Color(r, g, b, a);
+                            }
+                            else if (s.Length == 3)
+                            {
+                                r = 0;
+                                g = 0;
+                                b = 0;
+                                Byte.TryParse(s[0], out r);
+                                Byte.TryParse(s[1], out g);
+                                Byte.TryParse(s[2], out b);
+                                GameDisplaying.DisplayingColor = new Color(r, g, b, Byte.MaxValue);
+                            }
+                            else if (s.Length == 1)
+                            {
+                                r = 0;
+                                g = 0;
+                                b = 0;
+                                if (Byte.TryParse(array[0], out r))
+                                {
+                                    g = r;
+                                    b = g;
+                                }
+                                GameDisplaying.DisplayingColor = new Color(r, g, b, Byte.MaxValue);
+                            }
+                            break;
                     }
                 }
             }
@@ -169,14 +208,16 @@ namespace Exodus
             try
             {
                 System.IO.File.WriteAllText(Config.PathConfig,
-                    "DisplayObstacles="+GameDisplaying.DisplayObstacle+"\n"+
-                    "LevelSound="+Config.LevelSound+"\n"+
-                    "GraphicQuality="+GameDisplaying.GraphicQuality+"\n"+
-                    "PaddingMap="+GameDisplaying.PaddingMap+"\n"+
-                    "LastIP="+Network.LastIP+"\n"+
-                    "Port="+Network.Port+"\n"+
-                    "Login="+SymetricCrypt(Config.Login)+"\n"+
-                    "Pwd="+SymetricCrypt(Config.Pwd));
+                    "DisplayObstacles=" + GameDisplaying.DisplayObstacle + "\n" +
+                    "LevelSound=" + Config.LevelSound + "\n" +
+                    "GraphicQuality=" + GameDisplaying.GraphicQuality + "\n" +
+                    "PaddingMap=" + GameDisplaying.PaddingMap + "\n" +
+                    "LastIP=" + Network.LastIP + "\n" +
+                    "Port=" + Network.Port + "\n" +
+                    "Login=" + SymetricCrypt(Config.Login) + "\n" +
+                    "Pwd=" + SymetricCrypt(Config.Pwd) + "\n" +
+                    "ColorObstacles=" + GameDisplaying.DisplayingColor.A + "," + GameDisplaying.DisplayingColor.R + "," + GameDisplaying.DisplayingColor.G + "," + GameDisplaying.DisplayingColor.B
+                );
             }
             catch
             {

@@ -117,7 +117,7 @@ namespace Exodus.GameStates
                                      v,
                                      tile.Item2,
                                      (Data.GameDisplaying.DisplayObstacle && Map.ObstacleMap[x, y]
-                                          ? Color.Lime
+                                          ? Data.GameDisplaying.DisplayingColor
                                           : Color.White),
                                      0f, Vector2.Zero, 1f, SpriteEffects.None, 1f
                         );

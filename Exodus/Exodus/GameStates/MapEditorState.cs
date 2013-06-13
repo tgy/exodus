@@ -27,7 +27,9 @@ namespace Exodus.GameStates
         List<Texture2D> _obstacleList = new List<Texture2D>();
         List<Type> _obstacleTypesList = new List<Type>
         {
-            typeof(PlayGame.Items.Obstacles.Creeper)
+            typeof(PlayGame.Items.Obstacles.Creeper),
+            typeof(PlayGame.Items.Obstacles.Nothing1x1),
+            typeof(PlayGame.Items.Obstacles.Nothing2x2)
         };
         List<Texture2D> _gameItemList = new List<Texture2D>();
         List<Type> _gameItemsTypeList = new List<Type>
@@ -322,7 +324,7 @@ namespace Exodus.GameStates
                                      v,
                                      tile.Item2,
                                      (Data.GameDisplaying.DisplayObstacle && Map.ObstacleMap[x, y]
-                                          ? Color.Lime
+                                          ? Data.GameDisplaying.DisplayingColor
                                           : Color.White),
                                      0f, Vector2.Zero, 1f, SpriteEffects.None, 1f
                         );

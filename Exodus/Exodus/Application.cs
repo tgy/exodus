@@ -397,7 +397,7 @@ namespace Exodus
                 _isConnecting = true;
                 statusBar.Text = "Connecting";
                 statusBar.Active = true;
-                int id = SyncClient.UserIsValid(login.Value, pass.Value);
+                Data.PlayerInfos.InternetID = SyncClient.UserIsValid(login.Value, pass.Value);
                 if (Player.ConnectionState == 1)
                 {
                     Data.Config.Login = login.Value;
@@ -405,10 +405,10 @@ namespace Exodus
                     Data.SavePlayerConfig();
                     statusBar.Text = "loading";
                     PlayerInfos.Reset(
-                        SyncClient.SendSQLRequest("SELECT `avatar` FROM `user` WHERE `id` = " + id)[0][0],
-                        Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + id + ")"))[0][0]) + 1,
-                        Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + id))[0][0]),
-                        Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + id + " AND (`P1ID`=" + id + " OR `P2ID`=" + id + ")"))[0][0])
+                        SyncClient.SendSQLRequest("SELECT `avatar` FROM `user` WHERE `id` = " + Data.PlayerInfos.InternetID)[0][0],
+                        Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + Data.PlayerInfos.InternetID + ")"))[0][0]) + 1,
+                        Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + Data.PlayerInfos.InternetID))[0][0]),
+                        Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + Data.PlayerInfos.InternetID + " AND (`P1ID`=" + Data.PlayerInfos.InternetID + " OR `P2ID`=" + Data.PlayerInfos.InternetID + ")"))[0][0])
                     );
                     Push(_temp);
                     statusBar.Text = "Welcome !";

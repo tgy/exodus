@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Exodus.PlayGame
 {
@@ -38,12 +39,19 @@ namespace Exodus.PlayGame
         public int Width { get; protected set; }
         [NonSerialized]public GUI.Components.BigLife bigLife;
         [NonSerialized]protected Texture2D _texture;
-        [NonSerialized]protected Texture2D _selectionCircle;
+        [NonSerialized]
+        protected Texture2D _selectionCircle;
+        [NonSerialized]public SoundEffectInstance AttackSound;
+        [NonSerialized]public SoundEffectInstance DieSound;
+        [NonSerialized]public SoundEffectInstance SelectionSound;
         [OnDeserializedAttribute]
         protected void OnDeserialisation(StreamingContext context)
         {
             this._texture = Textures.GameItems[GetType().ToString() + IdPlayer];
             this.bigLife = new GUI.Components.BigLife(this.screenPos.X, this.screenPos.Y, this.layerDepth);
+            this.AttackSound = Audio.Attack[GetType()];
+            this.DieSound = Audio.Die[GetType()];
+            this.SelectionSound = Audio.Selection[GetType()];
         }
         public string Name { get; protected set; }
         #endregion
@@ -112,6 +120,9 @@ namespace Exodus.PlayGame
             this.ItemsProductibles = new List<Type>();
             this.bigLife = new GUI.Components.BigLife(this.screenPos.X, this.screenPos.Y, this.layerDepth);
             this.bigLife.Value = 100;
+            this.AttackSound = Audio.Attack[GetType()];
+            this.DieSound = Audio.Die[GetType()];
+            this.SelectionSound = Audio.Selection[GetType()];
         }
         /// <summary>
         /// Initialise la position de l'unité

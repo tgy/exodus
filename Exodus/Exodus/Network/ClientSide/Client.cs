@@ -34,7 +34,6 @@ namespace Exodus.Network.ClientSide
             else
                 throw new Exception("Unknown Type " + ip.GetType());
         }
-
         private static void Start(string ip)
         {
             IsRunning = false;
@@ -56,9 +55,9 @@ namespace Exodus.Network.ClientSide
             IsRunning = true;
             Receive();
         }
-
         private static void InitialMessages()
         {
+            SendObject(Data.PlayerInfos.InternetID);
             SendObject(new PlayerName(Data.PlayerInfos.Name));
             SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Units.Worker), Data.Network.IdPlayer, 0, Data.Network.IdPlayer));
         }
@@ -74,7 +73,6 @@ namespace Exodus.Network.ClientSide
                 Refreshing.Name = "LAN Games Refreshing";
             }
         }
-
         public static void RefreshInternetServerList()
         {
             //SyncClient
@@ -83,7 +81,6 @@ namespace Exodus.Network.ClientSide
             OnlineSynchronyzation.Start();
             //Thread.Sleep(1000);
         }
-
         private static void StartRefreshing()
         {
             IsRefreshing = true;
@@ -108,7 +105,6 @@ namespace Exodus.Network.ClientSide
             BroadcastListener.Close();
             IsRefreshing = false;
         }
-
         private static bool IsGameAlreadyInList(Game ThisGame)
         {
             foreach (Game game in ServerList)
@@ -127,7 +123,6 @@ namespace Exodus.Network.ClientSide
             Thread.Sleep(500);
             Start(IP);
         }
-
         private static void DisconnectedError()
         {
             IsRunning = false;
@@ -151,7 +146,8 @@ namespace Exodus.Network.ClientSide
                 if (obj is string ||
                     obj is DisconnectionMessage ||
                     obj is PlayerName ||
-                    obj is Orders.Tasks.ProductItem)
+                    obj is Orders.Tasks.ProductItem ||
+                    obj is int)
                     tWithLength[2] = 1;
                 // Sinon le serveur ne désérialisera pas
                 else
@@ -207,6 +203,9 @@ namespace Exodus.Network.ClientSide
             }
             NetReader.Close();
         }
+        private static void SendResources()
+        {
+        }
         #endregion
 
         #region Compute
@@ -215,15 +214,15 @@ namespace Exodus.Network.ClientSide
             object o;
             //try
             //{
-                o = Serialize.Serializer.ByteArrayToObject(ObjectTable);
+            o = Serialize.Serializer.ByteArrayToObject(ObjectTable);
             //}
             //catch
             //{
-                //if (IsRunning)
-                //{
-                //    o = ""; //throw new Exception("Error during deserialization!");
-                //}
-                //return;
+            //if (IsRunning)
+            //{
+            //    o = ""; //throw new Exception("Error during deserialization!");
+            //}
+            //return;
             //}
             if (o is string)
                 chat.InsertMsg((string)o);

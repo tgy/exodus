@@ -102,7 +102,7 @@ namespace Exodus.GameStates
                 PlayGame.Tile.tileSetTextures = new Texture2D[m.Item1, m.Item2];
                 for (int i = 0; i < m.Item1; i++)
                     for (int j = 0; j < m.Item2; j++)
-                        PlayGame.Tile.tileSetTextures[i, j] = Textures.Game[m.Item5 + "-" + i + "-" + j];
+                        PlayGame.Tile.tileSetTextures[i, j] = Textures.Game[m.Item5 + "-" + j + "-" + i];
                 PlayGame.Map.Load(_listMaps[selectionBox.SelectedItem].Item1, _listMaps[selectionBox.SelectedItem].Item2);
             }
             catch

@@ -16,8 +16,11 @@ namespace Exodus.Network.ServerSide
         }
         public string IP;
         public int Id = -1;
+        public int InternetID = -1;
         public string Name = "Undefined";
         private bool _Connected;
+        private int NbOfUnitsTrained = 1;
+        private int NbOfUnitsLost = 0;
         //private Thread ConnectionStatus;
         //private bool ShouldStop;
 
@@ -30,6 +33,16 @@ namespace Exodus.Network.ServerSide
             //ConnectionStatus = new Thread(UpdateConnectionStatus);
             //ConnectionStatus.Start();
             //ConnectionStatus.Name = "UpdateConnectionStatus(" + IP.ToString() + ")";
+        }
+
+        public void SendInternetIDToGameManager()
+        {
+            byte[] msg = new byte[4];
+            msg[0] = 0;
+            msg[1] = 2;
+            msg[2] = 2;
+            msg[3] = (byte)Data.PlayerInfos.InternetID;
+            SyncClient.SendDataToGameManager(msg);
         }
 
         //private void UpdateConnectionStatus()

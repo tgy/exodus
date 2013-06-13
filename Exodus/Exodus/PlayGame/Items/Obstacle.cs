@@ -33,6 +33,9 @@ namespace Exodus.PlayGame
             this._texture = Textures.GameItems[GetType().ToString() + IdPlayer];
             this._selectionCircle = Textures.Game["selectBuilding" + Width];
             this.bigLife = new GUI.Components.BigLife(this.screenPos.X, this.screenPos.Y, this.layerDepth);
+            this.AttackSound = Audio.Attack[GetType()];
+            this.DieSound = Audio.Die[GetType()];
+            this.SelectionSound = Audio.Selection[GetType()];
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Exodus.PlayGame.Tasks
 
         public override void Initialize()
         {
-            if (Parent is Unit && ((Unit)this.Parent).AttackSound != null)
-                ((Unit)this.Parent).AttackSound.Play();
+            //if (Parent is Unit && ((Unit)this.Parent).AttackSound != null)
+            //    ((Unit)this.Parent).AttackSound.Play();
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -39,8 +39,8 @@ namespace Exodus.PlayGame.Tasks
                     if (this.Enemy.currentLife < 0)
                     {
                         this.Finished = true;
-                        if (Parent is Unit && ((Unit)this.Parent).AttackSound != null)
-                            ((Unit)this.Parent).AttackSound.Stop();
+                        //if (Parent is Unit && ((Unit)this.Parent).AttackSound != null)
+                        //    ((Unit)this.Parent).AttackSound.Stop();
                     }
                 }
             }

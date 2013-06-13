@@ -262,11 +262,11 @@ namespace Exodus.Network.ServerSide
                     }
                     catch
                     {
-                        SendToAll("Desync detected!");
+                        //SendToAll("Desync detected!");
                         //if (IsRunning)
-                        //    throw new Exception("Error during deserialization!");
+                            throw new Exception("Error during deserialization!");
                         //else
-                        return;
+                        //return;
                     }
                     break;
                 default: // sinon on ne désérialise pas
@@ -310,6 +310,11 @@ namespace Exodus.Network.ServerSide
                 order.nextId = PrimaryKey;
                 PrimaryKey++;
                 SendToAll(order);
+            }
+            else if (o is int)
+            {
+                client.InternetID = (int)o;
+                client.SendInternetIDToGameManager();
             }
         }
         private static void ProcessObserverObject(SClient client, byte[] ObjectTablePlusOne)

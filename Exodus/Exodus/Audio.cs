@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Audio;
+using Exodus.PlayGame.Items.Units;
+using Exodus.PlayGame.Items.Obstacles;
+using Exodus.PlayGame.Items.Buildings;
 
 namespace Exodus
 {
@@ -11,9 +14,9 @@ namespace Exodus
     {
         public static SoundEffectInstance MenuMusic;
         public static SoundEffectInstance PlayStateMusic;
-        public static Dictionary<string, SoundEffectInstance> Attack = new Dictionary<string,SoundEffectInstance>();
-        public static Dictionary<string, SoundEffectInstance> Die = new Dictionary<string,SoundEffectInstance>();
-        public static Dictionary<string, SoundEffectInstance> Selection = new Dictionary<string,SoundEffectInstance>();
+        public static Dictionary<Type, SoundEffectInstance> Attack = new Dictionary<Type,SoundEffectInstance>();
+        public static Dictionary<Type, SoundEffectInstance> Die = new Dictionary<Type,SoundEffectInstance>();
+        public static Dictionary<Type, SoundEffectInstance> Selection = new Dictionary<Type,SoundEffectInstance>();
         public static void LoadAudio(ContentManager content)
         {
             MenuMusic = content.Load<SoundEffect>("Audio/The-me").CreateInstance();
@@ -22,9 +25,32 @@ namespace Exodus
             PlayStateMusic = content.Load<SoundEffect>("Audio/The-me-2").CreateInstance();
             PlayStateMusic.IsLooped = true;
             PlayStateMusic.Volume = (float)Data.Config.LevelSound / 100f;
-            Attack.Add("Gunner", content.Load<SoundEffect>("Audio/6198").CreateInstance());
-            Attack["Gunner"].IsLooped = true;
-            Attack["Gunner"].Volume = (float)Data.Config.LevelSound / 100f;
+
+            Attack[typeof(Gunner)] = LoadAudio(content, "Audio/6198");
+            Attack[typeof(Spider)] = null;
+            Attack[typeof(Worker)] = null;
+            Attack[typeof(Creeper)] = null;
+            Attack[typeof(Habitation)] = null;
+            Attack[typeof(Labo)] = null;
+            Die[typeof(Gunner)] = null;
+            Die[typeof(Spider)] = null;
+            Die[typeof(Worker)] = null;
+            Die[typeof(Creeper)] = null;
+            Die[typeof(Habitation)] = null;
+            Die[typeof(Labo)] = null;
+            Selection[typeof(Gunner)] = null;
+            Selection[typeof(Spider)] = null;
+            Selection[typeof(Worker)] = null;
+            Selection[typeof(Creeper)] = null;
+            Selection[typeof(Habitation)] = null;
+            Selection[typeof(Labo)] = null;
+        }
+        static SoundEffectInstance LoadAudio(ContentManager content, string name)
+        {
+            SoundEffectInstance s = content.Load<SoundEffect>(name).CreateInstance();
+            s.IsLooped = true;
+            s.Volume = (float)Data.Config.LevelSound / 100f;
+            return s;
         }
     }
 }

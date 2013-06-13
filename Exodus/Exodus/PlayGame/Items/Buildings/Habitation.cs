@@ -16,6 +16,7 @@ namespace Exodus.PlayGame.Items.Buildings
             Width = 2;
             this.IdPlayer = IdPlayer;
             base.Initialize(40, 10, 5, 6);
+            this.resourcesGeneration.Electricity = 5;
             this.ItemsProductibles = new List<Type>
             {
                 typeof(PlayGame.Items.Units.Worker),

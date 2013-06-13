@@ -51,6 +51,14 @@ namespace Exodus.PlayGame
                                 p.Hydrogen - q.Hydrogen,
                                 p.Electricity - q.Electricity);
         }
+        public void Reset()
+        {
+            Iron = 0;
+            Steel = 0;
+            Graphene = 0;
+            Electricity = 0;
+            Hydrogen = 0;
+        }
         public static bool operator >(Resource p, Resource q)
         {
             return (p.Hydrogen > q.Hydrogen && p.Iron > q.Iron && p.Graphene > q.Graphene && p.Steel > q.Steel && p.Electricity > q.Electricity);

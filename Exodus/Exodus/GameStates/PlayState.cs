@@ -95,7 +95,7 @@ namespace Exodus.GameStates
             Map.ListPassiveItems.Add(gasToogy);
             foreach (Item it in _listExamples)
                 it.Alpha = 0.6f;
-            Map.EarningPerSec = new Resource(2, 2, 2, 2, 2);
+            Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
             Map.PlayerResources = new Resource(0, 0, 0, 0, 0);
             base.LoadContent();
         }
@@ -184,8 +184,13 @@ namespace Exodus.GameStates
         public override void Update(GameTime gameTime)
         {
             Map.PlayerResources = Map.PlayerResources + (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * Map.EarningPerSec;
+            Map.EarningPerSec.Reset();
             for (int i = 0; i < Map.ListItems.Count; i++)
+            {
+                if (Map.ListItems[i].IdPlayer == Data.Network.IdPlayer)
+                    Map.EarningPerSec += Map.ListItems[i].resourcesGeneration;
                 Map.ListItems[i].Update(gameTime);
+            }
             if (Data.Window.GameFocus)
             {
                 Camera.Update(gameTime);

@@ -44,7 +44,7 @@ namespace Exodus.PlayGame
         [NonSerialized]public SoundEffectInstance AttackSound;
         [NonSerialized]public SoundEffectInstance DieSound;
         [NonSerialized]public SoundEffectInstance SelectionSound;
-        public int ElectricityGeneration { get; private set; }
+        public Resource resourcesGeneration { get; protected set; }
         [OnDeserializedAttribute]
         protected void OnDeserialisation(StreamingContext context)
         {
@@ -124,6 +124,7 @@ namespace Exodus.PlayGame
             this.AttackSound = Audio.Attack[GetType()];
             this.DieSound = Audio.Die[GetType()];
             this.SelectionSound = Audio.Selection[GetType()];
+            this.resourcesGeneration = new Resource(0,0,0,0,0);
         }
         /// <summary>
         /// Initialise la position de l'unité

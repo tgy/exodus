@@ -142,7 +142,7 @@ namespace Exodus.Network.ClientSide
         {
             if (obj is Orders.Tasks.ProductItem)
                 UnitsTrained++;
-            if (obj is Orders.Tasks.Die)
+            else if (obj is Orders.Tasks.Die)
                 UnitsLost++;
             if (IsRunning)
             {

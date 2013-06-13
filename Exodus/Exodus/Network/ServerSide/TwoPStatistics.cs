@@ -9,19 +9,19 @@ namespace Exodus.Network.ServerSide
     [Serializable]
     class TwoPStatistics
     {
-        private int P1InternetID = -1;
-        private int P2InternetID = -1;
-        private int P1ArmyValue = -1;
-        private int P2ArmyValue = -1;
-        private string P1ResourcesValue = "";
-        private string P2ResourcesValue = "";
-        private int P1TrainedCount = -1;
-        private int P2TrainedCount = -1;
-        private int P1LostCount = -1;
-        private int P2LostCount = -1;
-        private string TimeElapsed = "";
-        private bool P1Sended = false;
-        private bool P2Sended = false;
+        public int P1InternetID = -1;
+        public int P2InternetID = -1;
+        public int P1ArmyValue = -1;
+        public int P2ArmyValue = -1;
+        public string P1ResourcesValue = "";
+        public string P2ResourcesValue = "";
+        public int P1TrainedCount = -1;
+        public int P2TrainedCount = -1;
+        public int P1LostCount = -1;
+        public int P2LostCount = -1;
+        public string TimeElapsed = "";
+        public bool P1Sended = false;
+        public bool P2Sended = false;
 
         public void AddStatistic(Statistics PlayerStats)
         {
@@ -43,12 +43,12 @@ namespace Exodus.Network.ServerSide
                 P2ResourcesValue = PlayerStats.Electricity + "-" + PlayerStats.Iron + "-" + PlayerStats.Hydrogen + "-" + PlayerStats.Steel + "-" + PlayerStats.Graphene + ";";
                 P2TrainedCount = PlayerStats.UnitsTrained;
                 P2LostCount = PlayerStats.UnitsLost;
-                TimeElapsed = DateTime.Now.Subtract(Data.Network.GameStartTime).ToString();
                 P2Sended = true;
             }
             else throw new Exception("Something went wrong...");
             if (P1Sended && P2Sended)
             {
+                TimeElapsed = DateTime.Now.Subtract(Data.Network.GameStartTime).ToString().Substring(0, 8);
                 byte[] SStats = Serialize.Serializer.ObjectToByteArray(this);
                 byte[] SStatsPlusThree = new byte[SStats.Length + 3];
                 SStats.CopyTo(SStatsPlusThree, 3);

@@ -60,7 +60,7 @@ namespace Exodus
         }
         static public bool KeyPress(Keys k)
         {
-            return KeyboardState.IsKeyUp(k) && PreKeyboardState.IsKeyDown(k);
+            return PreKeyboardState.IsKeyDown(k) && KeyboardState.IsKeyUp(k);
         }
     }
 }

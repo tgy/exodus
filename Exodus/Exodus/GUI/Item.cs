@@ -27,33 +27,24 @@ namespace Exodus.GUI
 
         public virtual void Update(GameTime gameTime)
         {
-            Focused = false;
             foreach (var c in Components)
             {
                 if (c.ClickFocus)
                 {
-                    if (Inputs.PreMouseState.LeftButton == ButtonState.Pressed &&
-                        Inputs.MouseState.LeftButton == ButtonState.Released)
+                    if (Inputs.LeftClick())
                         c.Focused = c.Area.Contains(Inputs.MouseState.X, Inputs.MouseState.Y);
                 }
                 else
                     c.Focused = c.Area.Contains(Inputs.MouseState.X, Inputs.MouseState.Y);
 
                 c.Update(gameTime);
-                if (c.Focused)
-                    Focused = true;
             }
-
-            if (Area.Contains(Inputs.MouseState.X, Inputs.MouseState.Y))
-                Focused = true;
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             foreach (var component in Components)
-            {
                 component.Draw(spriteBatch);
-            }
         }
     }
 }

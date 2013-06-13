@@ -91,6 +91,9 @@ namespace Exodus.GameStates
             gasToogy.SetPos(100, 11, true);
             w.SetPos(100, 10, true);
             Map.AddItem(w);
+            PlayGame.Items.Units.Laserman l = new PlayGame.Items.Units.Laserman(Data.Network.IdPlayer);
+            l.SetPos(100, 30, true);
+            Map.AddItem(l);
             PlayGame.Items.Units.Gunner g = new PlayGame.Items.Units.Gunner(Data.Network.IdPlayer + 1);
             g.SetPos(100, 20, true);
             Map.AddItem(g);

@@ -37,6 +37,7 @@ namespace Exodus.GameStates
             typeof(PlayGame.Items.Units.Gunner),
             typeof(PlayGame.Items.Units.Worker),
             typeof(PlayGame.Items.Units.Spider),
+            typeof(PlayGame.Items.Units.Laserman),
             typeof(PlayGame.Items.Buildings.Habitation),
             typeof(PlayGame.Items.Buildings.Laboratory)
         };

@@ -15,7 +15,8 @@ namespace Exodus.GUI.Components
         private Vector2 backgroundPosition;
         private int offsetX = 129;
         private int offsetY = 14;
-
+        DateTime start;
+        Label hour;
         public Minimap(int x, int y, float depth)
         {
             Depth = depth;
@@ -26,10 +27,13 @@ namespace Exodus.GUI.Components
 
             Area = new Rectangle(x, y, borders.Width, borders.Height);
             backgroundPosition = new Vector2(Area.X + offsetX, Area.Y + offsetY);
+            start = DateTime.Now;
+            hour = new Label(GUI.Fonts.Eurostile12, "", x + 54, y + 139);
+            Components.Add(hour);
         }
-
         public override void Draw(SpriteBatch spriteBatch)
         {
+            hour.Txt = DateTime.Now.Subtract(start).ToString().Substring(0, 8);
             /*spriteBatch.Draw(minitile, new Rectangle(Area.X + offsetX, Area.Y + offsetY, 143, 143), null,
                              new Color(6, 36, 49), 0f, Vector2.Zero, SpriteEffects.None,
                              this.Depth + 2*Data.GameDisplaying.Epsilon);*/
@@ -86,6 +90,7 @@ namespace Exodus.GUI.Components
                              Color.Green);
             spriteBatch.Draw(minitile, new Rectangle((int) pos2.X, (int) pos1.Y, 1, (int) (pos2.Y - pos1.Y + 1)),
                              Color.Green);
+            base.Draw(spriteBatch);
         }
 
         public Vector2 ScreenToMiniMap(Vector2 pos)

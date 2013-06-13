@@ -20,7 +20,7 @@ namespace Exodus.GUI.Components.Buttons.GameButtons
             get { return _id; }
             set
             {
-                Texture = Textures.MiniGameItems[Map.ListSelectedItems[value].GetType()];
+                Texture = Textures.MiniGameItems[Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[value]).GetType()];
                 _id = value;
             }
         }

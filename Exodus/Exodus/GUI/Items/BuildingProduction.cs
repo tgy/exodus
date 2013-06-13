@@ -62,21 +62,22 @@ namespace Exodus.GUI.Items
         {
             if (!IsVisible)
                 return;
-            _progressBar.Progression = Map.ListSelectedItems[0].TasksList.Count > 0
-                ? (Map.ListSelectedItems[0].TasksList[0] is ProductItem ? ((ProductItem)Map.ListSelectedItems[0].TasksList[0]).Progress : ((ChangeResource)Map.ListSelectedItems[0].TasksList[0]).Progress)
+            PlayGame.Item c = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[0]);
+            _progressBar.Progression = c.TasksList.Count > 0
+                ? (c.TasksList[0] is ProductItem ? ((ProductItem)c.TasksList[0]).Progress : ((ChangeResource)c.TasksList[0]).Progress)
                                            : 0;
-            _big.Item = Map.ListSelectedItems[0];
+            _big.Item = c;
             base.Update(gameTime);
             for (int i = 0; i < 5; i++)
             {
                 ((Mini)Components[i]).Texture = null;
                 ((Mini)Components[i]).TextureHover = null;
             }
-            for (int i = 0; i < Map.ListSelectedItems[0].TasksList.Count(s => s is ProductItem || s is ChangeResource); i++)
+            for (int i = 0; i < c.TasksList.Count(s => s is ProductItem || s is ChangeResource); i++)
             {
-                Type name = Map.ListSelectedItems[0].TasksList[i] is ProductItem ?
-                    ((ProductItem)Map.ListSelectedItems[0].TasksList[i]).GetTypeOfProduct() :
-                    ((ChangeResource)Map.ListSelectedItems[0].TasksList[i]).GetType();
+                Type name = c.TasksList[i] is ProductItem ?
+                    ((ProductItem)c.TasksList[i]).GetTypeOfProduct() :
+                    ((ChangeResource)c.TasksList[i]).GetType();
                 ((Mini)Components[i]).Texture = Textures.MiniGameItems[name];
                 ((Mini)Components[i]).TextureHover = Textures.MiniGameItems[name];
             }
@@ -94,7 +95,7 @@ namespace Exodus.GUI.Items
                 this.buildingType = BuildingType;
                 _justTexture.Texture = Textures.BigGameItems[buildingType];
             }
-            _name.Txt = Map.ListSelectedItems[0].Name + "(" + Map.ListSelectedItems[0].PrimaryId + ")";
+            _name.Txt = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[0]).Name + "(" + Map.ListSelectedItems[0] + ")";
         }
         void DoNothing(Type t) { }
     }

@@ -49,9 +49,9 @@ namespace Exodus.PlayGame
             {
                 if (_selectionContainsUnit)
                 {
-                    if (i is Unit && !Map.ListSelectedItems.Contains(i))
+                    if (i is Unit && !Map.ListSelectedItems.Contains(i.PrimaryId))
                     {
-                        Map.ListSelectedItems.Add(i);
+                        Map.ListSelectedItems.Add(i.PrimaryId);
                         i.Focused = true;
                     }
                 }
@@ -62,20 +62,21 @@ namespace Exodus.PlayGame
                         _selectionContainsUnit = true;
                         for (int j = 0; j < Map.ListSelectedItems.Count; )
                         {
-                            if (Map.ListSelectedItems[j] is Unit)
+                            Item c = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[j]);
+                            if (c is Unit)
                                 j++;
                             else
                             {
-                                Map.ListSelectedItems[j].Focused = false;
+                                c.Focused = false;
                                 Map.ListSelectedItems.RemoveAt(j);
                             }
                         }
-                        Map.ListSelectedItems.Add(i);
+                        Map.ListSelectedItems.Add(i.PrimaryId);
                         i.Focused = true;
                     }
-                    else if (!Map.ListSelectedItems.Contains(i))
+                    else if (!Map.ListSelectedItems.Contains(i.PrimaryId))
                     {
-                        Map.ListSelectedItems.Add(i);
+                        Map.ListSelectedItems.Add(i.PrimaryId);
                         i.Focused = true;
                     }
                 }
@@ -85,10 +86,10 @@ namespace Exodus.PlayGame
         {
             _selectionContainsUnit = false;
             for (int i = Map.ListSelectedItems.Count - 1; i >= 0; i--)
-                Map.ListSelectedItems[i].Focused = false;
+                Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[i]).Focused = false;
             Map.ListSelectedItems.Clear();
         }
-        public static List<Item> ListSelectedItems = new List<Item>();
+        public static List<int> ListSelectedItems = new List<int>();
         // Charge une map standard
         public static void Load(int widthMap, int heightMap)
         {

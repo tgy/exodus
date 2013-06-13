@@ -27,7 +27,7 @@ namespace Exodus.GUI.Items
             if (Map.ListSelectedItems.Count < 5)
                 for (int i = 0; i < Map.ListSelectedItems.Count; i++)
                     Components.Add(new Big(Area.X + 10 + i * (Textures.GameUI["bigItem"].Width + 1), Area.Y + 10,
-                                           Depth - (Data.GameDisplaying.Epsilon * 2), Map.ListSelectedItems[i]));
+                                           Depth - (Data.GameDisplaying.Epsilon * 2), Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[i])));
 
             else
                 for (int i = 0; i < Map.ListSelectedItems.Count; i++)

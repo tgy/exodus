@@ -10,6 +10,7 @@ using Exodus.GUI;
 using Exodus.Network.Orders;
 using Microsoft.Xna.Framework;
 using Exodus.Network.ServerSide;
+using Exodus.PlayGame;
 
 namespace Exodus.Network.ClientSide
 {
@@ -25,6 +26,8 @@ namespace Exodus.Network.ClientSide
         private static UdpClient BroadcastListener;
         private static IPEndPoint EndPoint;
         public static GUI.Items.Chat chat;
+        public static int UnitsTrained = 0;
+        public static int UnitsLost = 0;
 
         #region Start
         public static void Start(object ip)
@@ -53,6 +56,9 @@ namespace Exodus.Network.ClientSide
             Init.Start();
             Init.Name = "Init";
             IsRunning = true;
+            Thread Stats = new Thread(UpdateStatistics);
+            Stats.Name = "Stats Update";
+            Stats.Start();
             Receive();
         }
         private static void InitialMessages()
@@ -134,6 +140,10 @@ namespace Exodus.Network.ClientSide
         #region IO
         public static void SendObject(object obj)
         {
+            if (obj is Orders.Tasks.ProductItem)
+                UnitsTrained++;
+            if (obj is Orders.Tasks.Die)
+                UnitsLost++;
             if (IsRunning)
             {
                 byte[] ObjectTable = Serialize.Serializer.ObjectToByteArray(obj);
@@ -147,10 +157,11 @@ namespace Exodus.Network.ClientSide
                     obj is DisconnectionMessage ||
                     obj is PlayerName ||
                     obj is Orders.Tasks.ProductItem ||
-                    obj is int)
+                    obj is int ||
+                    obj is Statistics)
                     tWithLength[2] = 1;
                 // Sinon le serveur ne désérialisera pas
-                else
+                else //Le serveur fera suivre a tous les clients sans deserialiser
                     tWithLength[2] = 0;
                 ObjectTable.CopyTo(tWithLength, 3);
                 //try
@@ -175,7 +186,6 @@ namespace Exodus.Network.ClientSide
             //    DisconnectedError();
             //}
         }
-
         private static void Receive()
         {
             BinaryReader NetReader = new BinaryReader(client.GetStream());
@@ -203,9 +213,6 @@ namespace Exodus.Network.ClientSide
             }
             NetReader.Close();
         }
-        private static void SendResources()
-        {
-        }
         #endregion
 
         #region Compute
@@ -226,7 +233,7 @@ namespace Exodus.Network.ClientSide
             //}
             if (o is string)
                 chat.InsertMsg((string)o);
-            else if (o is Task)
+            else if (o is Network.Orders.Task)
             {
                 if (o is Orders.Tasks.ReSync)
                 {
@@ -347,6 +354,23 @@ namespace Exodus.Network.ClientSide
             for (int i = 0; i < Long.Length - StartIndex; i++)
                 Short[i] = Long[i + StartIndex];
             return Short;
+        }
+        private static void UpdateStatistics()
+        {
+            while (IsRunning)
+            {
+                SendObject(new Statistics(Data.PlayerInfos.InternetID, PlayGame.Map.PlayerResources, GetArmyValue()));
+                Thread.Sleep(30000);
+            }
+        }
+        private static int GetArmyValue()
+        {
+            Resource r = new Resource(0, 0, 0, 0, 0);
+            foreach (PlayGame.Item i in PlayGame.Map.ListItems.Where(it => it.IdPlayer == Data.Network.IdPlayer))
+            {
+                r += Data.GameInfos.CostsItems[i.GetType()];
+            }
+            return (int)(r.Electricity + 5*r.Graphene + 2*r.Hydrogen + r.Iron + 3*r.Steel);
         }
         #endregion
 

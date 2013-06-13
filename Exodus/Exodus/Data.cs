@@ -49,6 +49,7 @@ namespace Exodus
             public static bool SinglePlayer = true;
             public static int MaxPlayersInCurrentGame = 5;
             public static List<SClient> ConnectedClients = new List<SClient>();
+            public static DateTime GameStartTime = DateTime.MinValue;
         }
         public static class Window
         {

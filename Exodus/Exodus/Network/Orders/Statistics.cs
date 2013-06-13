@@ -6,15 +6,19 @@ using System.Text;
 namespace Exodus.Network.Orders
 {
     [Serializable]
-    class Resources
+    class Statistics
     {
         public int Id,
                    Electricity,
                    Hydrogen,
                    Iron,
                    Graphene,
-                   Steel;
-        public Resources(int Id, PlayGame.Resource resources)
+                   Steel,
+                   UnitsTrained,
+                   UnitsLost,
+                   ArmyValue;
+
+        public Statistics(int Id, PlayGame.Resource resources, int ArmyValue)
         {
             this.Id = Id;
             this.Electricity = (int)resources.Electricity;
@@ -22,6 +26,9 @@ namespace Exodus.Network.Orders
             this.Hydrogen = (int)resources.Hydrogen;
             this.Iron = (int)resources.Iron;
             this.Steel = (int)resources.Steel;
+            UnitsLost = ClientSide.Client.UnitsLost;
+            UnitsTrained = ClientSide.Client.UnitsTrained;
+            this.ArmyValue = ArmyValue;
         }
     }
 }

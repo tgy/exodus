@@ -8,7 +8,7 @@ namespace Exodus.PlayGame.Tasks
     [Serializable]
     class Attack : Task
     {
-        Item Enemy;
+        public Item Enemy;
         public Attack(Item parent, Item enemy) : base(parent, "Attack", "Attack the ennemy")
         {
             if (parent != null)

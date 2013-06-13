@@ -63,7 +63,7 @@ namespace Exodus.GUI.Items
             if (!IsVisible)
                 return;
             _progressBar.Progression = Map.ListSelectedItems[0].TasksList.Count > 0
-                                           ? ((ProductItem)Map.ListSelectedItems[0].TasksList[0]).Progress
+                ? (Map.ListSelectedItems[0].TasksList[0] is ProductItem ? ((ProductItem)Map.ListSelectedItems[0].TasksList[0]).Progress : ((ChangeResource)Map.ListSelectedItems[0].TasksList[0]).Progress)
                                            : 0;
             _big.Item = Map.ListSelectedItems[0];
             base.Update(gameTime);
@@ -72,9 +72,11 @@ namespace Exodus.GUI.Items
                 ((Mini)Components[i]).Texture = null;
                 ((Mini)Components[i]).TextureHover = null;
             }
-            for (int i = 0; i < Map.ListSelectedItems[0].TasksList.Count(s => s is ProductItem); i++)
+            for (int i = 0; i < Map.ListSelectedItems[0].TasksList.Count(s => s is ProductItem || s is ChangeResource); i++)
             {
-                Type name = ((ProductItem)Map.ListSelectedItems[0].TasksList[i]).GetTypeOfProduct();
+                Type name = Map.ListSelectedItems[0].TasksList[i] is ProductItem ?
+                    ((ProductItem)Map.ListSelectedItems[0].TasksList[i]).GetTypeOfProduct() :
+                    ((ChangeResource)Map.ListSelectedItems[0].TasksList[i]).GetType();
                 ((Mini)Components[i]).Texture = Textures.MiniGameItems[name];
                 ((Mini)Components[i]).TextureHover = Textures.MiniGameItems[name];
             }

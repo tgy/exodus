@@ -169,7 +169,7 @@
     <Compile Include="Network\ClientSide\Client.cs" />
     <Compile Include="Network\NetGame.cs" />
     <Compile Include="Network\Game.cs" />
-    <Compile Include="Network\Orders\Resources.cs" />
+    <Compile Include="Network\Orders\Statistics.cs" />
     <Compile Include="Network\Orders\Task.cs" />
     <Compile Include="Network\Orders\DisconnectionMessage.cs" />
     <Compile Include="Network\Orders\GetId.cs" />
@@ -182,6 +182,7 @@
     <Compile Include="Network\Orders\Tasks\Hold.cs" />
     <Compile Include="Network\Orders\Tasks\ProductItem.cs" />
     <Compile Include="Network\Orders\Tasks\Move.cs" />
+    <Compile Include="Network\ServerSide\TwoPStatistics.cs" />
     <Compile Include="Network\ServerSide\SClient.cs" />
     <Compile Include="Network\ServerSide\Server.cs" />
     <Compile Include="Network\ServerSide\SyncClient.cs" />
@@ -192,8 +193,11 @@
     <Compile Include="Player.cs" />
     <Compile Include="PlayGame\AStar.cs" />
     <Compile Include="PlayGame\Camera.cs" />
-    <Compile Include="PlayGame\Items\Obstacles\Creeper.cs" />
     <Compile Include="PlayGame\Items\Buildings\Labo.cs" />
+    <Compile Include="PlayGame\Items\Obstacles\Nothing2x2.cs" />
+    <Compile Include="PlayGame\Items\Obstacles\Nothing1x1.cs" />
+    <Compile Include="PlayGame\Items\Obstacles\Creeper.cs" />
+    <Compile Include="PlayGame\Items\Buildings\University.cs" />
     <Compile Include="PlayGame\Items\Buildings\Habitation.cs" />
     <Compile Include="PlayGame\Items\Obstacles\Gas.cs" />
     <Compile Include="PlayGame\Items\Units\Spider.cs" />
@@ -206,7 +210,11 @@
     <Compile Include="PlayGame\Resources.cs" />
     <Compile Include="PlayGame\Items\Obstacle.cs" />
     <Compile Include="PlayGame\Tasks\Attack.cs" />
+    <Compile Include="PlayGame\Tasks\ChangeResources\HESToG.cs" />
+    <Compile Include="PlayGame\Tasks\ChangeResources\HEIToS.cs" />
     <Compile Include="PlayGame\Tasks\CheatSpawn.cs" />
+    <Compile Include="PlayGame\Tasks\ChangeResources.cs" />
+    <Compile Include="PlayGame\Tasks\ChangeResources\HToE.cs" />
     <Compile Include="PlayGame\Tasks\Die.cs" />
     <Compile Include="PlayGame\Tasks\Hold.cs" />
     <Compile Include="PlayGame\Tasks\Move.cs" />

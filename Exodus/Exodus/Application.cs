@@ -27,6 +27,8 @@ namespace Exodus
         TextBox settings_login,
                 settings_pass1,
                 settings_pass2;
+        TextBox ipJoin;
+        OrangeMenuButton joinGameButton;
         readonly GraphicsDeviceManager _graphics;
         SpriteBatch _spriteBatch;
         ScrollingSelection _scrollingSelection;
@@ -129,16 +131,19 @@ namespace Exodus
 
             #region Game Launcher
             _gameLauncherMenu = BaseMenu(particleMenu);
-            _gameLauncherMenu.Items.Add(new Passive(Textures.Menu["ScrollingSelection"], (Data.Window.WindowWidth - Textures.Menu["ScrollingSelection"].Width) / 2, Data.Window.ScreenCenter.Y - 20, 8 * float.Epsilon));
+            _gameLauncherMenu.Items.Add(new Passive(Textures.Menu["ScrollingSelection"], (Data.Window.WindowWidth - Textures.Menu["ScrollingSelection"].Width) / 2, Data.Window.ScreenCenter.Y - 20, 3 * Data.GameDisplaying.Epsilon));
             MenuHorizontal createGameMenu = new MenuHorizontal(Data.Window.ScreenCenter.X - 330, Data.Window.ScreenCenter.Y - 8, 5);
             OrangeMenuButton createGameButton = new OrangeMenuButton("CREATE A GAME");
             _gameSelectionButton = new OrangeMenuButton("SEARCH INTERNET");
             _gameSelectionButton.DoClick = SwitchSearchingMode;
             createGameButton.DoClick = CreateGame;
             createGameMenu.Create(new List<Component> { createGameButton, _gameSelectionButton });
-            MenuVertical joinGameMenu = new MenuVertical(Data.Window.ScreenCenter.X + 175, Data.Window.ScreenCenter.Y + 250, 0);
-            OrangeMenuButton joinGameButton = new OrangeMenuButton("JOIN THIS GAME");
+            MenuHorizontal joinGameMenu = new MenuHorizontal(Data.Window.ScreenCenter.X + 175, Data.Window.ScreenCenter.Y + 250, 0);
+            joinGameButton = new OrangeMenuButton("JOIN THIS GAME");
             joinGameButton.DoClick = JoinMultiPlay;
+            ipJoin = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, Data.GameDisplaying.Epsilon * 2);
+            MenuHorizontal ipJoinMenu = new MenuHorizontal(Data.Window.ScreenCenter.X - 90, Data.Window.ScreenCenter.Y + 246, 0);
+            ipJoinMenu.Create(new List<Component> { ipJoin });
             joinGameMenu.Create(new List<Component> { joinGameButton });
             MenuVertical refreshMenu = new MenuVertical(Data.Window.ScreenCenter.X + 175, Data.Window.ScreenCenter.Y - 8, 0);
             OrangeMenuButton refreshButton = new OrangeMenuButton("REFRESH");
@@ -149,6 +154,7 @@ namespace Exodus
             _scrollingSelection.Reset(new List<Tuple<string, string, string>>());
             _gameLauncherMenu.Items.Add(_scrollingSelection);
             _gameLauncherMenu.Items.Add(joinGameMenu);
+            _gameLauncherMenu.Items.Add(ipJoinMenu);
             _gameLauncherMenu.Items.Add(createGameMenu);
             _gameLauncherMenu.Items.Add(refreshMenu);
             _gameLauncherMenu.Items.Add(statusBar);
@@ -269,6 +275,16 @@ namespace Exodus
                 else
                     Environment.Exit(0);
             }*/
+            if (ipJoin.Value == "" && joinGameButton.Text != "JOIN THIS GAME")
+            {
+                joinGameButton.Text = "JOIN THIS GAME";
+                joinGameButton.SetPosition();
+            }
+            else if (ipJoin.Value != "" && joinGameButton.Text == "JOIN THIS GAME")
+            {
+                joinGameButton.Text = "JOIN THIS IP";
+                joinGameButton.SetPosition();
+            }
             GameStates.Peek().Update(gameTime);
 
             base.Update(gameTime);
@@ -326,19 +342,40 @@ namespace Exodus
         }
         private void JoinMultiPlay(MenuState m, int i)
         {
-            if (_scrollingSelection.SelectedItem >= 0 && _scrollingSelection.SelectedItem < _scrollingSelection.Entries.Count)
+            statusBar.Text = "JOINING THE GAME";
+            statusBar.Active = true;
+            if (ipJoin.Value == "")
             {
-                Data.Config.currentMap = _scrollingSelection.Entries[_scrollingSelection.SelectedItem].Item2;
-                PlaySinglePlayer(m, i);
-                if (_scrollingSelection.SelectedItem != -1)
+                if (_scrollingSelection.SelectedItem >= 0 && _scrollingSelection.SelectedItem < _scrollingSelection.Entries.Count)
                 {
-                    if (_searchingLAN)
-                        Data.Network.LastIP = Client.ServerList[_scrollingSelection.SelectedItem].IP;
-                    else
-                        Data.Network.LastIP = SyncClient.InternetGames[_scrollingSelection.SelectedItem].IP;
-                    //Data.Network.LastIP = "90.24.210.69";
+                    Data.Config.currentMap = _scrollingSelection.Entries[_scrollingSelection.SelectedItem].Item2;
+                    PlaySinglePlayer(m, i);
+                    if (_scrollingSelection.SelectedItem != -1)
+                    {
+                        if (_searchingLAN)
+                            Data.Network.LastIP = Client.ServerList[_scrollingSelection.SelectedItem].IP;
+                        else
+                            Data.Network.LastIP = SyncClient.InternetGames[_scrollingSelection.SelectedItem].IP;
+                        //Data.Network.LastIP = "90.24.210.69";
+                        Data.Network.SinglePlayer = false;
+                        NetGame.Start("C");
+                    }
+                }
+            }
+            else
+            {
+                System.Net.IPAddress ip;
+                if (System.Net.IPAddress.TryParse(ipJoin.Value, out ip))
+                {
+                    PlaySinglePlayer(m, i);
+                    Data.Network.LastIP = ipJoin.Value;
                     Data.Network.SinglePlayer = false;
                     NetGame.Start("C");
+                }
+                else
+                {
+                    statusBar.Active = false;
+                    statusBar.Text = "NOT A VALID IP";
                 }
             }
         }
@@ -353,6 +390,7 @@ namespace Exodus
         {
             GameState editorState = new MapEditorState(this);
             Push(editorState);
+
         }
         private void RefreshServerLists(MenuState m, int i)
         {

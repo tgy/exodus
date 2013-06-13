@@ -6,25 +6,22 @@ using System.Text;
 namespace Exodus.PlayGame.Items.Buildings
 {
     [Serializable]
-    class Habitation : Building
+    class University : Building
     {
-        public Habitation(int IdPlayer)
+        public University(int IdPlayer)
         {
-            Name = "Photocopieuse";
-            maxLife = 666;
-            maxShield = 666;
+            Name = "La Bo et Le Bete";
+            maxLife = 700;
+            maxShield = 300;
             Width = 2;
             this.IdPlayer = IdPlayer;
             base.Initialize(40, 10, 5, 6);
             this.ItemsProductibles = new List<Type>
             {
-                typeof(PlayGame.Items.Units.Worker),
-                typeof(PlayGame.Items.Units.Gunner),
-                typeof(PlayGame.Items.Units.Spider)
             };
             this.TasksOnMenu = new List<MenuTask>
             {
-                MenuTask.ProductUnits,
+                MenuTask.Research
             };
         }
     }

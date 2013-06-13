@@ -182,7 +182,7 @@
     <Compile Include="Network\Orders\Tasks\Hold.cs" />
     <Compile Include="Network\Orders\Tasks\ProductItem.cs" />
     <Compile Include="Network\Orders\Tasks\Move.cs" />
-    <Compile Include="Network\ServerSide\2PStatistics.cs" />
+    <Compile Include="Network\ServerSide\TwoPStatistics.cs" />
     <Compile Include="Network\ServerSide\SClient.cs" />
     <Compile Include="Network\ServerSide\Server.cs" />
     <Compile Include="Network\ServerSide\SyncClient.cs" />

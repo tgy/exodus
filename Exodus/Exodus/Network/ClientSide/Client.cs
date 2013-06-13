@@ -10,6 +10,7 @@ using Exodus.GUI;
 using Exodus.Network.Orders;
 using Microsoft.Xna.Framework;
 using Exodus.Network.ServerSide;
+using Exodus.PlayGame;
 
 namespace Exodus.Network.ClientSide
 {
@@ -358,9 +359,18 @@ namespace Exodus.Network.ClientSide
         {
             while (IsRunning)
             {
-                SendObject(new Statistics(Data.PlayerInfos.InternetID, PlayGame.Map.PlayerResources));
+                SendObject(new Statistics(Data.PlayerInfos.InternetID, PlayGame.Map.PlayerResources, GetArmyValue()));
                 Thread.Sleep(30000);
             }
+        }
+        private static int GetArmyValue()
+        {
+            Resource r = new Resource(0, 0, 0, 0, 0);
+            foreach (Item i in PlayGame.Map.ListItems.Where(it => it.IdPlayer == Data.Network.IdPlayer))
+            {
+                r += Data.GameInfos.CostsItems[i.GetType()];
+            }
+            return (int)(r.Electricity + 5*r.Graphene + 2*r.Hydrogen + r.Iron + 3*r.Steel);
         }
         #endregion
 

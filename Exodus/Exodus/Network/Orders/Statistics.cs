@@ -15,9 +15,10 @@ namespace Exodus.Network.Orders
                    Graphene,
                    Steel,
                    UnitsTrained,
-                   UnitsLost;
+                   UnitsLost,
+                   ArmyValue;
 
-        public Statistics(int Id, PlayGame.Resource resources)
+        public Statistics(int Id, PlayGame.Resource resources, int ArmyValue)
         {
             this.Id = Id;
             this.Electricity = (int)resources.Electricity;
@@ -27,6 +28,7 @@ namespace Exodus.Network.Orders
             this.Steel = (int)resources.Steel;
             UnitsLost = ClientSide.Client.UnitsLost;
             UnitsTrained = ClientSide.Client.UnitsTrained;
+            this.ArmyValue = ArmyValue;
         }
     }
 }

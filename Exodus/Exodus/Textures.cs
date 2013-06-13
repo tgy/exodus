@@ -83,6 +83,7 @@ namespace Exodus
             GameItems[typeof(Labo) + "1"] = content.Load<Texture2D>("Game/Buildings/labo");
             GameItems[typeof(Labo) + "2"] = content.Load<Texture2D>("Game/Buildings/labo");
             GameItems[typeof(Creeper) + "0"] = content.Load<Texture2D>("Game/Obstacles/Creeper");
+            GameItems[typeof(Gas) + "0"] = content.Load<Texture2D>("Game/Obstacles/Gas");
         }
         public static void LoadMiniGameItems(ContentManager content)
         {
@@ -124,6 +125,7 @@ namespace Exodus
             Game["selectBuilding6"] = content.Load<Texture2D>("Game/Reperes/selectionBuilding/6");
             Game["selectBuilding7"] = content.Load<Texture2D>("Game/Reperes/selectionBuilding/7");
             Game["selectBuilding8"] = content.Load<Texture2D>("Game/Reperes/selectionBuilding/8");
+            Game["minimap-background"] = content.Load<Texture2D>("Game/MinimapBackground");
         }
         public static void LoadGameUI(ContentManager content)
         {

@@ -11,19 +11,30 @@ namespace Exodus.GUI.Components
     {
         private Texture2D minitile;
         private Texture2D borders;
-        int offsetX = 129;
-        int offsetY = 14;
+        private Texture2D background;
+        private Vector2 backgroundPosition;
+        private int offsetX = 129;
+        private int offsetY = 14;
+
         public Minimap(int x, int y, float depth)
         {
-            this.Depth = depth;
-            this.minitile = Textures.GameUI["MiniTile"];
-            this.borders = Textures.GameUI["Minimap"];
-            this.Area = new Rectangle(x, y, borders.Width, borders.Height);
+            Depth = depth;
+
+            minitile = Textures.GameUI["MiniTile"];
+            borders = Textures.GameUI["Minimap"];
+            background = Textures.Game["minimap-background"];
+
+            Area = new Rectangle(x, y, borders.Width, borders.Height);
+            backgroundPosition = new Vector2(Area.X + offsetX, Area.Y + offsetY);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(minitile, new Rectangle(Area.X + offsetX, Area.Y + offsetY, 143, 143), null, new Color(6, 36, 49), 0f, Vector2.Zero, SpriteEffects.None, this.Depth + 2 * Data.GameDisplaying.Epsilon);
+            /*spriteBatch.Draw(minitile, new Rectangle(Area.X + offsetX, Area.Y + offsetY, 143, 143), null,
+                             new Color(6, 36, 49), 0f, Vector2.Zero, SpriteEffects.None,
+                             this.Depth + 2*Data.GameDisplaying.Epsilon);*/
+            spriteBatch.Draw(background, backgroundPosition, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None,
+                             Depth + 5*Data.GameDisplaying.Epsilon);
             spriteBatch.Draw(borders, Area, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, this.Depth);
             for (int i = 0; i < PlayGame.Map.Width; i++)
             {
@@ -53,31 +64,40 @@ namespace Exodus.GUI.Components
                                 else
                                     c = Color.White;
                                 Vector2 pos = ScreenToMiniMap(PlayGame.Map.MapToScreen(i, j));
-                                if (i + j >= PlayGame.Map.Width / 2 && i + j <= PlayGame.Map.Width + PlayGame.Map.Height / 2 && Math.Abs(i - j) <= PlayGame.Map.Width / 2)
-                                    spriteBatch.Draw(minitile, new Rectangle((int)pos.X, (int)pos.Y, 2, 2), null, c, 0f, new Vector2(0, 0), SpriteEffects.None, this.Depth + Data.GameDisplaying.Epsilon);
+                                if (i + j >= PlayGame.Map.Width/2 && i + j <= PlayGame.Map.Width + PlayGame.Map.Height/2 &&
+                                    Math.Abs(i - j) <= PlayGame.Map.Width/2)
+                                    spriteBatch.Draw(minitile, new Rectangle((int) pos.X, (int) pos.Y, 2, 2), null, c,
+                                                     0f, new Vector2(0, 0), SpriteEffects.None,
+                                                     this.Depth + Data.GameDisplaying.Epsilon);
                             }
                         }
                     }
                 } // end for
             } // end for
             Vector2 pos1 = ScreenToMiniMap(new Vector2(PlayGame.Camera.x, PlayGame.Camera.y)),
-                    pos2 = ScreenToMiniMap(new Vector2(PlayGame.Camera.x + Data.Window.WindowWidth, PlayGame.Camera.y + Data.Window.WindowHeight));
-            spriteBatch.Draw(minitile, new Rectangle((int)pos1.X, (int)pos1.Y, (int)(pos2.X - pos1.X + 1), 1), Color.Green);
-            spriteBatch.Draw(minitile, new Rectangle((int)pos1.X, (int)pos2.Y, (int)(pos2.X - pos1.X + 1), 1), Color.Green);
-            spriteBatch.Draw(minitile, new Rectangle((int)pos1.X, (int)pos1.Y, 1, (int)(pos2.Y - pos1.Y + 1)), Color.Green);
-            spriteBatch.Draw(minitile, new Rectangle((int)pos2.X, (int)pos1.Y, 1, (int)(pos2.Y - pos1.Y + 1)), Color.Green);
+                    pos2 =
+                        ScreenToMiniMap(new Vector2(PlayGame.Camera.x + Data.Window.WindowWidth,
+                                                    PlayGame.Camera.y + Data.Window.WindowHeight));
+            spriteBatch.Draw(minitile, new Rectangle((int) pos1.X, (int) pos1.Y, (int) (pos2.X - pos1.X + 1), 1),
+                             Color.Green);
+            spriteBatch.Draw(minitile, new Rectangle((int) pos1.X, (int) pos2.Y, (int) (pos2.X - pos1.X + 1), 1),
+                             Color.Green);
+            spriteBatch.Draw(minitile, new Rectangle((int) pos1.X, (int) pos1.Y, 1, (int) (pos2.Y - pos1.Y + 1)),
+                             Color.Green);
+            spriteBatch.Draw(minitile, new Rectangle((int) pos2.X, (int) pos1.Y, 1, (int) (pos2.Y - pos1.Y + 1)),
+                             Color.Green);
         }
 
         public Vector2 ScreenToMiniMap(Vector2 pos)
         {
             pos.X -= PlayGame.Camera.minX;
             pos.Y -= PlayGame.Camera.minY;
-            pos.X /= PlayGame.Tile.tileWidth / 2;
-            pos.Y /= PlayGame.Tile.tileHeight / 2;
+            pos.X /= PlayGame.Tile.tileWidth/2;
+            pos.Y /= PlayGame.Tile.tileHeight/2;
             pos.X *= 2;
             pos.Y *= 2;
-            pos.X = pos.X * 143 / (PlayGame.Map.Width + PlayGame.Map.Height - 1);
-            pos.Y = pos.Y * 143 / (PlayGame.Map.Width + PlayGame.Map.Height - 1);
+            pos.X = pos.X*143/(PlayGame.Map.Width + PlayGame.Map.Height - 1);
+            pos.Y = pos.Y*143/(PlayGame.Map.Width + PlayGame.Map.Height - 1);
             pos.X += Area.X + offsetX;
             pos.Y += Area.Y + offsetY;
             return pos;

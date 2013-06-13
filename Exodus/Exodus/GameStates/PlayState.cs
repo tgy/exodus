@@ -422,6 +422,22 @@ namespace Exodus.GameStates
                                            !(item is Building && Map.ListSelectedItems.Count == 1);
 
             #endregion
+            if (Network.ClientSide.Client.MustReSync)
+            {
+                Network.Orders.Tasks.ReSync Orders = Network.ClientSide.Client.ReSyncOrder;
+                Network.ClientSide.Client.MustReSync = false;
+                PlayGame.Map.ListItems = Orders.listItems;
+                PlayGame.Map.ListPassiveItems = Orders.listPassives;
+                for (int x = 0; x < PlayGame.Map.Width; x++)
+                    for (int y = 0; y < PlayGame.Map.Height; y++)
+                        PlayGame.Map.MapCells[x, y].ListItems.Clear();
+                for (int i = 0; i < Orders.listItems.Count; i++)
+                    if (Orders.listItems[i].pos != null)
+                        PlayGame.Map.MapCells[Orders.listItems[i].pos.Value.X, Orders.listItems[i].pos.Value.Y].ListItems.Add(Orders.listItems[i]);
+                for (int i = 0; i < Orders.listPassives.Count; i++)
+                    if (Orders.listPassives[i].pos != null)
+                        PlayGame.Map.MapCells[Orders.listPassives[i].pos.Value.X, Orders.listPassives[i].pos.Value.Y].ListItems.Add(Orders.listPassives[i]);
+            }
             base.Update(gameTime);
         }
         public override void UnLoad()

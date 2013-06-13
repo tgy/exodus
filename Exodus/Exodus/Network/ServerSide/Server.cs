@@ -357,10 +357,14 @@ namespace Exodus.Network.ServerSide
                     if (client.Name == "Undefined")
                     {
                         client.Name = ((PlayerName)o).name;
-                        SendToAll("[" + DateTime.Now.ToShortTimeString() + "] * " + client.Name + " has joined the game.");
+                        SendToAll("[" + DateTime.Now.ToShortTimeString() + "] * " + client.Name + " has joined the game as an observer!.");
                     }
                     else
                         throw new Exception("Client " + client.Name + " sent his name two times!");
+                }
+                else if (o is int)
+                {
+                    client.InternetID = (int)o;
                 }
             }
         }

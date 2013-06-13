@@ -30,6 +30,7 @@ namespace Exodus.Network.ClientSide
         public static int UnitsLost = 0;
         public static Orders.Tasks.ReSync ReSyncOrder = null;
         public static bool MustReSync = false;
+
         #region Start
         public static void Start(object ip)
         {

@@ -44,6 +44,7 @@ namespace Exodus.PlayGame
         [NonSerialized]public SoundEffectInstance AttackSound;
         [NonSerialized]public SoundEffectInstance DieSound;
         [NonSerialized]public SoundEffectInstance SelectionSound;
+        public int ElectricityGeneration { get; private set; }
         [OnDeserializedAttribute]
         protected void OnDeserialisation(StreamingContext context)
         {

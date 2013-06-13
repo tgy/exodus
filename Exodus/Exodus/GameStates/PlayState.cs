@@ -88,14 +88,11 @@ namespace Exodus.GameStates
             _listExamples.Add(new PlayGame.Items.Buildings.University(Data.Network.IdPlayer));
             _listExamples.Add(new PlayGame.Items.Buildings.Laboratory(Data.Network.IdPlayer));
             PlayGame.Items.Units.Worker w = new PlayGame.Items.Units.Worker(Data.Network.IdPlayer);
-            w.SetPos(100, 5, true);
+            PlayGame.Items.Obstacles.Gas gasToogy = new PlayGame.Items.Obstacles.Gas();
+            gasToogy.SetPos(100, 11, true);
+            w.SetPos(100, 10, true);
             Map.AddItem(w);
-            PlayGame.Items.Buildings.Laboratory lab = new PlayGame.Items.Buildings.Laboratory(Data.Network.IdPlayer);
-            lab.SetPos(110, 15, true);
-            Map.AddItem(lab);
-            PlayGame.Items.Units.Gunner g2 = new PlayGame.Items.Units.Gunner(Data.Network.IdPlayer + 1);
-            g2.SetPos(100, 100, true);
-            Map.AddItem(g2);
+            Map.ListPassiveItems.Add(gasToogy);
             foreach (Item it in _listExamples)
                 it.Alpha = 0.6f;
             Map.EarningPerSec = new Resource(2, 2, 2, 2, 2);

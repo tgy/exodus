@@ -42,12 +42,42 @@ namespace Exodus.GUI.Items
 
         public override void Update(GameTime gameTime)
         {
-            if (Inputs.PreKeyboardState.IsKeyDown(Keys.Enter) && Inputs.KeyboardState.IsKeyUp(Keys.Enter) && Focused)
+            if (Inputs.KeyPress(Keys.Enter))
             {
                 MenuButton submitter = ((MenuButton) Components[SubmitterId]);
                 submitter.DoClick(submitter.SubMenu, 0);
             }
+
+            if (Inputs.KeyPress(Keys.Tab))
+                TabNext();
+
             base.Update(gameTime);
+        }
+
+        public void TabNext()
+        {
+            if (Components.Count(x => x is TextBox) < 2)
+                return;
+            int index = Components.FindIndex(x => x.Focused);
+            if (index < 0)
+                index = 0;
+            bool b = false;
+            for (int i = index + 1; i < Components.Count; i++)
+                if (Components[i] is TextBox)
+                {
+                    Components[index].Focused = false;
+                    Components[i].Focused = true;
+                    b = true;
+                    break;
+                }
+            if (!b)
+                for (int i = 0; i < index; i++)
+                    if (Components[i] is TextBox)
+                    {
+                        Components[index].Focused = false;
+                        Components[i].Focused = true;
+                        break;
+                    }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

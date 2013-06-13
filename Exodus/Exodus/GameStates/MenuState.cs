@@ -13,13 +13,13 @@ namespace Exodus.GameStates
         public MenuState(Application g)
         {
             Items = new List<Item>();
-            this.game = g;
+            game = g;
         }
 
         public override void LoadContent()
         {
-            this.Music = Audio.MenuMusic;
-            this.Music.Play();
+            Music = Audio.MenuMusic;
+            Music.Play();
         }
 
         public MenuState(List<Item> items)

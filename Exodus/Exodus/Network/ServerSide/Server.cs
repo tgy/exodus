@@ -385,7 +385,11 @@ namespace Exodus.Network.ServerSide
             SendToAll("[" + DateTime.Now.ToShortTimeString() + "] * " + client.Name + " has left the game. (Crash)");
             TheGame.NbPlayers--;
             GameHasChanged = true;
-
+            int id;
+            if (Data.Network.ConnectedClients[0].InternetID == client.InternetID)
+                id = Data.Network.ConnectedClients[1].InternetID;
+            else id = client.InternetID;
+            ThisClientWinns(id);
         }
         private static void ThisClientWinns(int id)
         {
@@ -395,6 +399,7 @@ namespace Exodus.Network.ServerSide
             WinPacket[1] = (byte)(Sint.Length % 256);
             WinPacket[2] = 4;
             Sint.CopyTo(WinPacket, 3);
+            SyncClient.SendDataToGameManager(WinPacket);
         }
         private static int IsSClientAlreadyConnected(SClient client)
         {

@@ -379,18 +379,22 @@ namespace Exodus.GameStates
                                 Point p = new Point((int)mouseMap.X, (int)mouseMap.Y);
                                 bool b = Inputs.KeyboardState.IsKeyUp(Keys.LeftShift) && Inputs.KeyboardState.IsKeyUp(Keys.RightShift);
                                 int i;
+                                Item c;
                                 if (Data.Network.SinglePlayer)
                                 {
                                     for (i = 0; i < Map.ListSelectedItems.Count; i++)
-                                        if (Map.ListSelectedItems[i] is Unit)
-                                            Map.ListSelectedItems[i].AddTask(new PlayGame.Tasks.Move(Map.ListSelectedItems[i], p), b, false);
+                                    {
+                                        c = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[i]);
+                                        if (c is Unit)
+                                            c.AddTask(new PlayGame.Tasks.Move(c, p), b, false);
+                                    }
                                 }
                                 else
                                 {
                                     for (i = 0; i < Map.ListSelectedItems.Count; i++)
-                                        if (Map.ListSelectedItems[i] is Unit)
+                                        if (Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[i]) is Unit)
                                             Network.ClientSide.Client.SendObject(
-                                                new Network.Orders.Tasks.Move(Map.ListSelectedItems[i].PrimaryId, b, p.X, p.Y)
+                                                new Network.Orders.Tasks.Move(Map.ListSelectedItems[i], b, p.X, p.Y)
                                             );
                                 }
                                 #region Attack

@@ -58,18 +58,22 @@ namespace Exodus.GUI.Items
         }
         private void Hold(Type t)
         {
+            PlayGame.Item c;
             if (Data.Network.SinglePlayer)
             {
                 for (int i = 0; i < Map.ListSelectedItems.Count; i++)
-                    if (Map.ListSelectedItems[i] is Unit)
-                        Map.ListSelectedItems[i].AddTask(new PlayGame.Tasks.Hold(Map.ListSelectedItems[i]), true, false);
+                {
+                    c = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[i]);
+                    if (c is Unit)
+                        c.AddTask(new PlayGame.Tasks.Hold(c), true, false);
+                }
             }
             else
             {
                 for (int i = 0; i < Map.ListSelectedItems.Count; i++)
-                    if (Map.ListSelectedItems[i] is Unit)
+                    if (Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[i]) is Unit)
                         Network.ClientSide.Client.SendObject(
-                            new Network.Orders.Tasks.Hold(Map.ListSelectedItems[i].PrimaryId, true)
+                            new Network.Orders.Tasks.Hold(Map.ListSelectedItems[i], true)
                         );
             }
         }
@@ -169,26 +173,28 @@ namespace Exodus.GUI.Items
             for (i = 0; i < falseLeft; i++)
                 taskPossibles[i] = false;
             i = 0;
+            PlayGame.Item c;
             while (i < Map.ListSelectedItems.Count && falseLeft > 0)
             {
-                for (int j = 0; j < Map.ListSelectedItems[i].TasksOnMenu.Count; j++)
-                    if (!taskPossibles[(int)Map.ListSelectedItems[i].TasksOnMenu[j]])
+                c = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[i]);
+                for (int j = 0; j < c.TasksOnMenu.Count; j++)
+                    if (!taskPossibles[(int)c.TasksOnMenu[j]])
                     {
-                        if (Map.ListSelectedItems[i].TasksOnMenu[j] == MenuTask.ProductUnits)
+                        if (c.TasksOnMenu[j] == MenuTask.ProductUnits)
                         {
-                            canProduceUnits.Add(Map.ListSelectedItems[i]);
-                            foreach (Type t in Map.ListSelectedItems[i].ItemsProductibles)
+                            canProduceUnits.Add(c);
+                            foreach (Type t in c.ItemsProductibles)
                                 if (!unitProductibles.Contains(t))
                                     unitProductibles.Add(t);
                         }
-                        else if (Map.ListSelectedItems[i].TasksOnMenu[j] == MenuTask.Build)
+                        else if (c.TasksOnMenu[j] == MenuTask.Build)
                         {
-                            canProduceBuildings.Add(Map.ListSelectedItems[i]);
-                            foreach (Type t in Map.ListSelectedItems[i].ItemsProductibles)
+                            canProduceBuildings.Add(c);
+                            foreach (Type t in c.ItemsProductibles)
                                 if (!buildingsProductibles.Contains(t))
                                     buildingsProductibles.Add(t);
                         }
-                        taskPossibles[(int)Map.ListSelectedItems[i].TasksOnMenu[j]] = true;
+                        taskPossibles[(int)c.TasksOnMenu[j]] = true;
                         falseLeft--;
                     }
                 i++;
@@ -245,12 +251,16 @@ namespace Exodus.GUI.Items
         }
         private void ChangeResource(Type t)
         {
-            PlayGame.Item item = null;
+            PlayGame.Item item = null,
+                          c;
             // = Map.ListSelectedItems.FirstOrDefault(s => s.ItemsProductibles.Exists(ty => ty == t));
             for (int i = 0; i < Map.ListSelectedItems.Count; i++)
-                if (Map.ListSelectedItems[i].TasksOnMenu.Exists(task => task == MenuTask.ChangeResources) &&
-                    (item == null || item.TasksList.Count > Map.ListSelectedItems[i].TasksList.Count))
-                    item = Map.ListSelectedItems[i];
+            {
+                c = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[i]);
+                if (c.TasksOnMenu.Exists(task => task == MenuTask.ChangeResources) &&
+                    (item == null || item.TasksList.Count > c.TasksList.Count))
+                    item = c;
+            }
             if (item != null)
             {
                 if (t == typeof(PlayGame.Tasks.ChangeResources.HToE))
@@ -275,7 +285,7 @@ namespace Exodus.GUI.Items
         }
         private void CreateBuilding(Type t)
         {
-            Data.GameInfos.item = Map.ListSelectedItems.FirstOrDefault(s => s.ItemsProductibles.Exists(ty => ty == t));
+            Data.GameInfos.item = Map.ListItems.Find(v => v.PrimaryId == Map.ListSelectedItems.FirstOrDefault(s => Map.ListItems.Find(u => u.PrimaryId == s).ItemsProductibles.Exists(ty => ty == t)));
             if (Data.GameInfos.item != null)
             {
                 Data.GameInfos.currentMode = Data.GameInfos.ModeGame.Building;
@@ -284,13 +294,15 @@ namespace Exodus.GUI.Items
         }
         private void CreateUnit(Type t)
         {
-            PlayGame.Item item = null;
+            PlayGame.Item item = null,
+                                 c;
             // = Map.ListSelectedItems.FirstOrDefault(s => s.ItemsProductibles.Exists(ty => ty == t));
             for (int i = 0; i < Map.ListSelectedItems.Count; i++)
             {
-                if (Map.ListSelectedItems[i].ItemsProductibles.Exists(ty => ty == t) &&
-                    (item == null || item.TasksList.Count > Map.ListSelectedItems[i].TasksList.Count))
-                    item = Map.ListSelectedItems[i];
+                c = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[i]);
+                if (c.ItemsProductibles.Exists(ty => ty == t) &&
+                    (item == null || item.TasksList.Count > c.TasksList.Count))
+                    item = c;
             }
             if (item != null)
             {
@@ -320,19 +332,25 @@ namespace Exodus.GUI.Items
         }
         public static void Die(Type t)
         {
+            PlayGame.Item c;
             if (Data.Network.SinglePlayer)
             {
                 for (int i = 0; i < Map.ListSelectedItems.Count; i++)
-                    if (Map.ListSelectedItems[i] is Unit)
-                        Map.ListSelectedItems[i].AddTask(new PlayGame.Tasks.Die(Map.ListSelectedItems[i]), true, false);
+                {
+                    c = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[i]);
+                    if (c is Unit)
+                        c.AddTask(new PlayGame.Tasks.Die(c), true, false);
+                }
             }
             else
             {
                 for (int i = 0; i < Map.ListSelectedItems.Count; i++)
-                    if (Map.ListSelectedItems[i] is Unit)
+                {
+                    if (Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[i]) is Unit)
                         Network.ClientSide.Client.SendObject(
-                            new Network.Orders.Tasks.Die(Map.ListSelectedItems[i].PrimaryId, true)
+                            new Network.Orders.Tasks.Die(Map.ListSelectedItems[i], true)
                         );
+                }
             }
         }
         private void DoNothing(Type t)
@@ -352,19 +370,21 @@ namespace Exodus.GUI.Items
             }
             if (enemyIndex < Map.ListItems.Count)
             {
+                PlayGame.Item c;
                 if (Data.Network.SinglePlayer)
                 {
-                    foreach (PlayGame.Item selected in Map.ListSelectedItems)
+                    foreach (int selected in Map.ListSelectedItems)
                     {
-                        selected.AddTask(new PlayGame.Tasks.Attack(selected, Map.ListItems[enemyIndex]), false, false);
+                        c = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[selected]);
+                        c.AddTask(new PlayGame.Tasks.Attack(c, Map.ListItems[enemyIndex]), false, false);
                     }
                 }
                 else
                 {
-                    foreach (PlayGame.Item item in Map.ListSelectedItems)
+                    foreach (int item in Map.ListSelectedItems)
                     {
                         Network.ClientSide.Client.SendObject(
-                            new Network.Orders.Tasks.Attack(item.PrimaryId, enemyIndex, true)
+                            new Network.Orders.Tasks.Attack(item, enemyIndex, true)
                         );
                     }
                 }

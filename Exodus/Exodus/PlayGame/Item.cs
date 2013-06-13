@@ -52,7 +52,7 @@ namespace Exodus.PlayGame
             this.AttackSound = Audio.Attack[GetType()];
             this.DieSound = Audio.Die[GetType()];
             this.SelectionSound = Audio.Selection[GetType()];
-            this.Focused = Map.ListSelectedItems.Contains(this);
+            this.Focused = Map.ListSelectedItems.Contains(this.PrimaryId);
         }
         public string Name { get; protected set; }
         #endregion

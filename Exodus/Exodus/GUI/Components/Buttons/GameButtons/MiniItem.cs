@@ -35,12 +35,11 @@ namespace Exodus.GUI.Components.Buttons.GameButtons
 
         public override void Update(GameTime gameTime)
         {
-            _miniLife.Value = 100*Map.ListSelectedItems[Id].currentLife/Map.ListSelectedItems[Id].maxLife;
+            PlayGame.Item i = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[Id]);
+            _miniLife.Value = 100* i.currentLife/i.maxLife;
 
             if (Focused && Inputs.LeftClick())
-            {
-                Map.ListSelectedItems = new List<PlayGame.Item> {Map.ListSelectedItems[Id]};
-            }
+                Map.ListSelectedItems = new List<int> { i.PrimaryId };
         }
 
         public override void Draw(SpriteBatch spriteBatch)

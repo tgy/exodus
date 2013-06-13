@@ -28,13 +28,13 @@ namespace Exodus.GUI.Components.Buttons.GameButtons
         public override void Update(GameTime gameTime)
         {
             BigLife.Value = 100*Item.currentLife/Item.maxLife;
-
-            _maxLife.Txt = " / " + Map.ListSelectedItems[0].maxLife.ToString();
-            _currentLife.Txt = Map.ListSelectedItems[0].currentLife.ToString();
+            PlayGame.Item current = Map.ListItems.Find(i => i.PrimaryId == Map.ListSelectedItems[0]);
+            _maxLife.Txt = " / " + current.maxLife.ToString();
+            _currentLife.Txt = current.currentLife.ToString();
 
             _currentLife.Pos.X = (int)(_maxLife.Pos.X - Fonts.Arial9.MeasureString(_currentLife.Txt).X);
 
-            int percentage = 100 * Map.ListSelectedItems[0].currentLife / Map.ListSelectedItems[0].maxLife;
+            int percentage = 100 * current.currentLife / current.maxLife;
             Color color;
             if (percentage >= 75)
                 color = new Color(91, 224, 43);

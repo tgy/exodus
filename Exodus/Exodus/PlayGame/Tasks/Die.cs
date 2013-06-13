@@ -20,7 +20,7 @@ namespace Exodus.PlayGame.Tasks
                 Map.ListItems.Remove(Parent);
                 Map.MapCells[Parent.pos.Value.X, Parent.pos.Value.Y]
                     .ListItems.Remove(Parent);
-                Map.ListSelectedItems.Remove(Parent);
+                Map.ListSelectedItems.Remove(Parent.PrimaryId);
                 for (int x = Parent.pos.Value.X, mx = x + Parent.Width; x < mx; x++)
                     for (int y = Parent.pos.Value.Y, my = y + Parent.Width; y < my; y++)
                         Map.ObstacleMap[x, y] = false;

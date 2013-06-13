@@ -24,7 +24,7 @@ namespace Exodus.PlayGame
         public bool Finished { get; protected set; }
         public bool MustStop { protected get; set; }
         public bool Initialized { get; protected set; }
-        public SoundEffectInstance Sound;
+        [NonSerialized]public SoundEffectInstance Sound;
 
         protected Task(Item parent, string name, string description)
         {

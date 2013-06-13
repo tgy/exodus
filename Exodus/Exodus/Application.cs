@@ -102,7 +102,6 @@ namespace Exodus
             Data.Window.WindowHeight = Window.ClientBounds.Height;
             Data.Window.ScreenCenter = new Point((int)(Data.Window.WindowWidth / 2), (int)(Data.Window.WindowHeight / 2));
             GameStates = new Stack<GameState>();
-
             Fonts.Initialize(Content);
 
             base.Initialize();

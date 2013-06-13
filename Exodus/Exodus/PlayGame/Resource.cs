@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Exodus.PlayGame
 {
+    [Serializable]
     public class Resource
     {
         public double Steel;

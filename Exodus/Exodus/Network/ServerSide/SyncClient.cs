@@ -40,7 +40,14 @@ namespace Exodus.Network.ServerSide
         {
             WhatIsIt = 2;
             InitializeConnection();
-            NetReader = new BinaryReader(Client.GetStream());
+            try
+            {
+                NetReader = new BinaryReader(Client.GetStream());
+            }
+            catch
+            {
+                throw new Exception("Could not connect to Exodus Online!");
+            }
             SendIdMessage();
         }
         private static void InitializeConnection()

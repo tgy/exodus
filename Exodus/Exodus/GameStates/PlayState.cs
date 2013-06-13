@@ -85,16 +85,20 @@ namespace Exodus.GameStates
             Map.Load(200, 200);
             Tile.tileSetWidth = (Tile.tileSetTextures[0, 0].Width * (Tile.tileSetTextures.GetLength(0) - 1) + Tile.tileSetTextures[Tile.tileSetTextures.GetLength(0) - 1, 0].Width) / Tile.tileWidth;
             _listExamples.Add(new PlayGame.Items.Buildings.Habitation(Data.Network.IdPlayer));
-            _listExamples.Add(new PlayGame.Items.Buildings.Labo(Data.Network.IdPlayer));
+            _listExamples.Add(new PlayGame.Items.Buildings.University(Data.Network.IdPlayer));
+            _listExamples.Add(new PlayGame.Items.Buildings.Laboratory(Data.Network.IdPlayer));
             PlayGame.Items.Units.Worker w = new PlayGame.Items.Units.Worker(Data.Network.IdPlayer);
-            w.SetPos(20, 25, true);
+            w.SetPos(100, 5, true);
             Map.AddItem(w);
+            PlayGame.Items.Buildings.Laboratory lab = new PlayGame.Items.Buildings.Laboratory(Data.Network.IdPlayer);
+            lab.SetPos(110, 15, true);
+            Map.AddItem(lab);
             PlayGame.Items.Units.Gunner g2 = new PlayGame.Items.Units.Gunner(Data.Network.IdPlayer + 1);
-            g2.SetPos(28, 25, true);
+            g2.SetPos(100, 100, true);
             Map.AddItem(g2);
             foreach (Item it in _listExamples)
                 it.Alpha = 0.6f;
-            Map.EarningPerMin = new Resource(0, 10, 0, 0, 10);
+            Map.EarningPerSec = new Resource(2, 2, 2, 2, 2);
             Map.PlayerResources = new Resource(0, 0, 0, 0, 0);
             base.LoadContent();
         }
@@ -117,7 +121,7 @@ namespace Exodus.GameStates
                                      v,
                                      tile.Item2,
                                      (Data.GameDisplaying.DisplayObstacle && Map.ObstacleMap[x, y]
-                                          ? Color.Lime
+                                          ? Data.GameDisplaying.DisplayingColor
                                           : Color.White),
                                      0f, Vector2.Zero, 1f, SpriteEffects.None, 1f
                         );
@@ -182,7 +186,7 @@ namespace Exodus.GameStates
         }
         public override void Update(GameTime gameTime)
         {
-            Map.PlayerResources = Map.PlayerResources + (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * Map.EarningPerMin;
+            Map.PlayerResources = Map.PlayerResources + (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * Map.EarningPerSec;
             for (int i = 0; i < Map.ListItems.Count; i++)
                 Map.ListItems[i].Update(gameTime);
             if (Data.Window.GameFocus)

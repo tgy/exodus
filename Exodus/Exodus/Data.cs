@@ -63,6 +63,7 @@ namespace Exodus
             public static GraphicsDevice GraphicsDevice;
             public const float Epsilon = 0.000001f;
             public static bool DisplayObstacle = false;
+            public static Color DisplayingColor = Color.Red;
             public static int GraphicQuality = 0;
             public static int PaddingMap = 7;
         }
@@ -112,12 +113,14 @@ namespace Exodus
             GameInfos.timeCreatingItem.Add(typeof(Worker), 1000);
             GameInfos.timeCreatingItem.Add(typeof(Habitation), 1500);
             GameInfos.timeCreatingItem.Add(typeof(Spider), 5000);
-            GameInfos.timeCreatingItem.Add(typeof(Labo), 5000);
+            GameInfos.timeCreatingItem.Add(typeof(University), 5000);
+            GameInfos.timeCreatingItem.Add(typeof(Laboratory), 20000);
             GameInfos.CostsItems.Add(typeof(Gunner), new Resource(100, 50, 0, 0, 20));
             GameInfos.CostsItems.Add(typeof(Worker), new Resource(0, 150, 0, 0, 2));
             GameInfos.CostsItems.Add(typeof(Habitation), new Resource(0, 150, 0, 0, 10));
             GameInfos.CostsItems.Add(typeof(Spider), new Resource(150, 0, 10, 0, 35));
-            GameInfos.CostsItems.Add(typeof(Labo), new Resource(350, 500, 100, 200, 100));
+            GameInfos.CostsItems.Add(typeof(University), new Resource(350, 500, 100, 200, 100));
+            GameInfos.CostsItems.Add(typeof(Laboratory), new Resource(0, 200, 0, 200, 30));
             LoadPlayerConfig();
         }
         static void LoadPlayerConfig()
@@ -125,6 +128,7 @@ namespace Exodus
             try
             {
                 string[] configs = System.IO.File.ReadAllLines(Config.PathConfig);
+                byte a = 255, r = 255, g = 0, b = 0;
                 foreach (
                     string[] array in
                         configs.Select(s => s.Replace(" ", ""))
@@ -157,6 +161,43 @@ namespace Exodus
                         case "Login":
                             Config.Login = SymetricCrypt(array[1]);
                             break;
+                        case "ColorObstacles":
+                            string[] s = array[1].Split(',');
+                            if (s.Length == 4)
+                            {
+                                a = 0;
+                                r = 0;
+                                g = 0;
+                                b = 0;
+                                Byte.TryParse(s[0], out a);
+                                Byte.TryParse(s[1], out r);
+                                Byte.TryParse(s[2], out g);
+                                Byte.TryParse(s[3], out b);
+                                GameDisplaying.DisplayingColor = new Color(r, g, b, a);
+                            }
+                            else if (s.Length == 3)
+                            {
+                                r = 0;
+                                g = 0;
+                                b = 0;
+                                Byte.TryParse(s[0], out r);
+                                Byte.TryParse(s[1], out g);
+                                Byte.TryParse(s[2], out b);
+                                GameDisplaying.DisplayingColor = new Color(r, g, b, Byte.MaxValue);
+                            }
+                            else if (s.Length == 1)
+                            {
+                                r = 0;
+                                g = 0;
+                                b = 0;
+                                if (Byte.TryParse(array[0], out r))
+                                {
+                                    g = r;
+                                    b = g;
+                                }
+                                GameDisplaying.DisplayingColor = new Color(r, g, b, Byte.MaxValue);
+                            }
+                            break;
                     }
                 }
             }
@@ -170,14 +211,16 @@ namespace Exodus
             try
             {
                 System.IO.File.WriteAllText(Config.PathConfig,
-                    "DisplayObstacles="+GameDisplaying.DisplayObstacle+"\n"+
-                    "LevelSound="+Config.LevelSound+"\n"+
-                    "GraphicQuality="+GameDisplaying.GraphicQuality+"\n"+
-                    "PaddingMap="+GameDisplaying.PaddingMap+"\n"+
-                    "LastIP="+Network.LastIP+"\n"+
-                    "Port="+Network.Port+"\n"+
-                    "Login="+SymetricCrypt(Config.Login)+"\n"+
-                    "Pwd="+SymetricCrypt(Config.Pwd));
+                    "DisplayObstacles=" + GameDisplaying.DisplayObstacle + "\n" +
+                    "LevelSound=" + Config.LevelSound + "\n" +
+                    "GraphicQuality=" + GameDisplaying.GraphicQuality + "\n" +
+                    "PaddingMap=" + GameDisplaying.PaddingMap + "\n" +
+                    "LastIP=" + Network.LastIP + "\n" +
+                    "Port=" + Network.Port + "\n" +
+                    "Login=" + SymetricCrypt(Config.Login) + "\n" +
+                    "Pwd=" + SymetricCrypt(Config.Pwd) + "\n" +
+                    "ColorObstacles=" + GameDisplaying.DisplayingColor.A + "," + GameDisplaying.DisplayingColor.R + "," + GameDisplaying.DisplayingColor.G + "," + GameDisplaying.DisplayingColor.B
+                );
             }
             catch
             {

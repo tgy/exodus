@@ -47,7 +47,6 @@ namespace Exodus.PlayGame
         public string Name;
         public string Description;
     }
-
     public enum MenuTask
     {
         Attack,
@@ -56,6 +55,7 @@ namespace Exodus.PlayGame
         Patrol,
         Build,
         ProductUnits,
-        Research
+        Research,
+        ChangeResources
     }
 }

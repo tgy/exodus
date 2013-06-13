@@ -19,7 +19,8 @@ namespace Exodus.PlayGame.Items.Units
             IdPlayer = idPlayer;
             Initialize(40, 76, 9, 10);
             this.ItemsProductibles.Add(typeof(PlayGame.Items.Buildings.Habitation));
-            this.ItemsProductibles.Add(typeof(PlayGame.Items.Buildings.Labo));
+            //this.ItemsProductibles.Add(typeof(PlayGame.Items.Buildings.University));
+            this.ItemsProductibles.Add(typeof(PlayGame.Items.Buildings.Laboratory));
             this.TasksOnMenu.Add(MenuTask.Build);
         }
     }

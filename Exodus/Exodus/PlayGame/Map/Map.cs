@@ -22,7 +22,7 @@ namespace Exodus.PlayGame
     static public class Map
     {
         public static Resource PlayerResources,
-                               EarningPerMin;
+                               EarningPerSec;
         // Notre map
         public static MapCell[,] MapCells;
         // Notre équivalent en booléen d'obstacles

@@ -193,8 +193,11 @@
     <Compile Include="Player.cs" />
     <Compile Include="PlayGame\AStar.cs" />
     <Compile Include="PlayGame\Camera.cs" />
-    <Compile Include="PlayGame\Items\Obstacles\Creeper.cs" />
     <Compile Include="PlayGame\Items\Buildings\Labo.cs" />
+    <Compile Include="PlayGame\Items\Obstacles\Nothing2x2.cs" />
+    <Compile Include="PlayGame\Items\Obstacles\Nothing1x1.cs" />
+    <Compile Include="PlayGame\Items\Obstacles\Creeper.cs" />
+    <Compile Include="PlayGame\Items\Buildings\University.cs" />
     <Compile Include="PlayGame\Items\Buildings\Habitation.cs" />
     <Compile Include="PlayGame\Items\Units\Spider.cs" />
     <Compile Include="PlayGame\Items\Units\Gunner.cs" />
@@ -206,7 +209,11 @@
     <Compile Include="PlayGame\Resources.cs" />
     <Compile Include="PlayGame\Items\Obstacle.cs" />
     <Compile Include="PlayGame\Tasks\Attack.cs" />
+    <Compile Include="PlayGame\Tasks\ChangeResources\HESToG.cs" />
+    <Compile Include="PlayGame\Tasks\ChangeResources\HEIToS.cs" />
     <Compile Include="PlayGame\Tasks\CheatSpawn.cs" />
+    <Compile Include="PlayGame\Tasks\ChangeResources.cs" />
+    <Compile Include="PlayGame\Tasks\ChangeResources\HToE.cs" />
     <Compile Include="PlayGame\Tasks\Die.cs" />
     <Compile Include="PlayGame\Tasks\Hold.cs" />
     <Compile Include="PlayGame\Tasks\Move.cs" />

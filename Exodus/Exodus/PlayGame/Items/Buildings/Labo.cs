@@ -6,22 +6,19 @@ using System.Text;
 namespace Exodus.PlayGame.Items.Buildings
 {
     [Serializable]
-    class Labo : Building
+    class Laboratory : Building
     {
-        public Labo(int IdPlayer)
+        public Laboratory(int IdPlayer)
         {
-            Name = "La Bo et Le Bete";
-            maxLife = 700;
-            maxShield = 300;
-            Width = 2;
+            Name = "Laboratory";
+            maxLife = 357;
+            maxShield = 357;
+            Width = 3;
             this.IdPlayer = IdPlayer;
-            base.Initialize(40, 10, 5, 6);
-            this.ItemsProductibles = new List<Type>
-            {
-            };
+            base.Initialize(40, 21, 7, 8);
             this.TasksOnMenu = new List<MenuTask>
             {
-                MenuTask.Research
+                MenuTask.ChangeResources,
             };
         }
     }

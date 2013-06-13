@@ -69,7 +69,6 @@ namespace Exodus
             Menu["avatarFrame"] = content.Load<Texture2D>("Menu/avatarFrame");
             Menu["bar"] = content.Load<Texture2D>("Menu/bar");
         }
-
         public static void LoadGameItems(ContentManager content)
         {
             GameItems[typeof(Worker) + "1"] = content.Load<Texture2D>("Game/Units/Worker1");
@@ -80,24 +79,35 @@ namespace Exodus
             GameItems[typeof(Spider) + "2"] = content.Load<Texture2D>("Game/Units/Spider");
             GameItems[typeof(Spider) + "1"] = content.Load<Texture2D>("Game/Units/Spider");
             GameItems[typeof(Habitation) + "2"] = content.Load<Texture2D>("Game/Buildings/habitation");
-            GameItems[typeof(Labo) + "1"] = content.Load<Texture2D>("Game/Buildings/labo");
-            GameItems[typeof(Labo) + "2"] = content.Load<Texture2D>("Game/Buildings/labo");
+            GameItems[typeof(University) + "1"] = content.Load<Texture2D>("Game/Buildings/labo-yellow");
+            GameItems[typeof(University) + "2"] = content.Load<Texture2D>("Game/Buildings/labo-yellow");
+            GameItems[typeof(Laboratory) + "1"] = content.Load<Texture2D>("Game/Buildings/labo-yellow");
+            GameItems[typeof(Laboratory) + "2"] = content.Load<Texture2D>("Game/Buildings/labo-blue");
             GameItems[typeof(Creeper) + "0"] = content.Load<Texture2D>("Game/Obstacles/Creeper");
+            GameItems[typeof(Nothing1x1) + "0"] = content.Load<Texture2D>("Game/UI/minitile");
+            GameItems[typeof(Nothing2x2) + "0"] = content.Load<Texture2D>("Game/UI/minitile");
         }
         public static void LoadMiniGameItems(ContentManager content)
         {
             MiniGameItems[typeof(Worker)] = content.Load<Texture2D>("Game/Minis/Worker");
             MiniGameItems[typeof(Habitation)] = content.Load<Texture2D>("Game/Minis/Habitation");
             MiniGameItems[typeof(Gunner)] = content.Load<Texture2D>("Game/Minis/Gunner");
-            MiniGameItems[typeof(Labo)] = content.Load<Texture2D>("Game/Minis/Labo");
+            MiniGameItems[typeof(University)] = content.Load<Texture2D>("Game/Minis/Labo");
+            MiniGameItems[typeof(Laboratory)] = content.Load<Texture2D>("Game/Minis/Labo");
             MiniGameItems[typeof(Creeper)] = content.Load<Texture2D>("Game/Minis/Creeper");
+            MiniGameItems[typeof(Nothing1x1)] = content.Load<Texture2D>("Game/Minis/Creeper");
+            MiniGameItems[typeof(Nothing2x2)] = content.Load<Texture2D>("Game/Minis/Creeper");
             MiniGameItems[typeof(Spider)] = content.Load<Texture2D>("Game/Minis/Spider");
+            MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HToE)] = MiniGameItems[typeof(Worker)];
+            MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HEIToS)] = MiniGameItems[typeof(Gunner)];
+            MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HESToG)] = MiniGameItems[typeof(Spider)];
         }
         public static void LoadBigGameItems(ContentManager content)
         {
             BigGameItems[typeof(Worker)] = content.Load<Texture2D>("Game/Bigs/Worker");
             BigGameItems[typeof(Habitation)] = content.Load<Texture2D>("Game/Bigs/Habitation");
-            BigGameItems[typeof(Labo)] = content.Load<Texture2D>("Game/Bigs/Labo");
+            BigGameItems[typeof(University)] = content.Load<Texture2D>("Game/Bigs/Labo");
+            BigGameItems[typeof(Laboratory)] = content.Load<Texture2D>("Game/Bigs/Labo");
             BigGameItems[typeof(Gunner)] = content.Load<Texture2D>("Game/Bigs/Gunner");
             BigGameItems[typeof(Spider)] = content.Load<Texture2D>("Game/Bigs/Spider");
         }

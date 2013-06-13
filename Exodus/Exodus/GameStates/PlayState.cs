@@ -407,15 +407,16 @@ namespace Exodus.GameStates
                 }
             }
             #region user-interface
+            Item item = Map.ListSelectedItems.Count > 0 ? Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[0]) : null;
 
-            tasksDisplayer.IsVisible = Map.ListSelectedItems.Count > 0 && (Map.ListSelectedItems[0] is Unit || Map.ListSelectedItems[0] is Building);
+            tasksDisplayer.IsVisible = Map.ListSelectedItems.Count > 0 && (item is Unit || item is Building);
 
-            buildingProduction.IsVisible = Map.ListSelectedItems.Count == 1 && Map.ListSelectedItems[0] is Building;
+            buildingProduction.IsVisible = Map.ListSelectedItems.Count == 1 &&  item is Building;
             if (buildingProduction.IsVisible)
-                buildingProduction.Set(Map.ListSelectedItems[0].GetType());
+                buildingProduction.Set(item.GetType());
 
             selectionDisplayer.IsVisible = Map.ListSelectedItems.Count > 0 &&
-                                           !(Map.ListSelectedItems[0] is Building && Map.ListSelectedItems.Count == 1);
+                                           !(item is Building && Map.ListSelectedItems.Count == 1);
 
             #endregion
             base.Update(gameTime);

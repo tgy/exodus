@@ -385,6 +385,16 @@ namespace Exodus.Network.ServerSide
             SendToAll("[" + DateTime.Now.ToShortTimeString() + "] * " + client.Name + " has left the game. (Crash)");
             TheGame.NbPlayers--;
             GameHasChanged = true;
+
+        }
+        private static void ThisClientWinns(int id)
+        {
+            byte[] Sint = Serialize.Serializer.ObjectToByteArray(id);
+            byte[] WinPacket = new byte[Sint.Length + 3];
+            WinPacket[0] = (byte)(Sint.Length / 256);
+            WinPacket[1] = (byte)(Sint.Length % 256);
+            WinPacket[2] = 4;
+            Sint.CopyTo(WinPacket, 3);
         }
         private static int IsSClientAlreadyConnected(SClient client)
         {

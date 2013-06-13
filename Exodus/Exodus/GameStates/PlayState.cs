@@ -21,10 +21,10 @@ namespace Exodus.GameStates
     {
         private GUI.Items.SelectionSquare _selectionSquare;
         Application game;
-        List<Item> _listExamples = new List<Item>();
         Item _currentExample = null;
         TasksDisplayer tasksDisplayer;
         BuildingProduction buildingProduction;
+        ResourcesDisplayer resourcesDisplayer;
         private SelectionDisplayer selectionDisplayer;
         public PlayState(Application g)
         {
@@ -71,6 +71,8 @@ namespace Exodus.GameStates
                     new GUI.Components.Buttons.GameButtons.StandardButton(Menu,t,t,(Data.Window.WindowWidth - t.Width)/2,0)
                 }
             ));
+            resourcesDisplayer = new ResourcesDisplayer();
+            Items.Add(resourcesDisplayer);
             #endregion
 
             Tile.tileSetTextures = new Texture2D[4, 2];
@@ -84,17 +86,12 @@ namespace Exodus.GameStates
             Tile.tileSetTextures[3, 1] = Textures.Game["tileSet-1-3"];
             Map.Load(200, 200);
             Tile.tileSetWidth = (Tile.tileSetTextures[0, 0].Width * (Tile.tileSetTextures.GetLength(0) - 1) + Tile.tileSetTextures[Tile.tileSetTextures.GetLength(0) - 1, 0].Width) / Tile.tileWidth;
-            _listExamples.Add(new PlayGame.Items.Buildings.Habitation(Data.Network.IdPlayer));
-            _listExamples.Add(new PlayGame.Items.Buildings.University(Data.Network.IdPlayer));
-            _listExamples.Add(new PlayGame.Items.Buildings.Laboratory(Data.Network.IdPlayer));
             PlayGame.Items.Units.Worker w = new PlayGame.Items.Units.Worker(Data.Network.IdPlayer);
             PlayGame.Items.Obstacles.Gas gasToogy = new PlayGame.Items.Obstacles.Gas();
             gasToogy.SetPos(100, 11, true);
             w.SetPos(100, 10, true);
             Map.AddItem(w);
             Map.ListPassiveItems.Add(gasToogy);
-            foreach (Item it in _listExamples)
-                it.Alpha = 0.6f;
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
             Map.PlayerResources = new Resource(0, 0, 0, 0, 0);
             base.LoadContent();
@@ -142,12 +139,7 @@ namespace Exodus.GameStates
             spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, Data.Network.Error,
                                    new Vector2(Data.Window.WindowWidth / 2 - 42, Data.Window.WindowHeight / 2), Color.Red,
                                    0f, Vector2.Zero, 1f, SpriteEffects.None, float.Epsilon);
-            string txt = "Elect:" + Math.Ceiling(Map.PlayerResources.Electricity) +
-                         " Iron:" + Math.Ceiling(Map.PlayerResources.Iron) +
-                         " Steel:" + Math.Ceiling(Map.PlayerResources.Steel) +
-                         " Graph:" + Math.Ceiling(Map.PlayerResources.Graphene) +
-                         " Hydr:" + Math.Ceiling(Map.PlayerResources.Hydrogen);
-            spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, txt, new Vector2(Data.Window.WindowWidth - GUI.Fonts.Eurostile12Bold.MeasureString(txt).X - 5, 3), Color.White);
+            resourcesDisplayer.Set(PlayGame.Map.PlayerResources);
             int Client_Count = 1;
             while (Client_Count <= Data.Network.ConnectedClients.Count)
             {
@@ -191,6 +183,14 @@ namespace Exodus.GameStates
                     Map.EarningPerSec += Map.ListItems[i].resourcesGeneration;
                 Map.ListItems[i].Update(gameTime);
             }
+            if (Data.GameInfos.currentMode == Data.GameInfos.ModeGame.Building
+                && (_currentExample == null || _currentExample.GetType() != Data.GameInfos.type))
+            {
+                _currentExample = PlayGame.Items.Loader.LoadBuilding(Data.GameInfos.type, Data.Network.IdPlayer);
+                _currentExample.Alpha = 0.6f;
+                if (_currentExample == null)
+                    Data.GameInfos.currentMode = Data.GameInfos.ModeGame.Normal;
+            }
             if (Data.Window.GameFocus)
             {
                 Camera.Update(gameTime);
@@ -217,15 +217,6 @@ namespace Exodus.GameStates
                                 Data.GameInfos.currentMode = Data.GameInfos.ModeGame.Normal;
                             else
                             {
-                                if (_currentExample == null)
-                                {
-                                    _currentExample = _listExamples.Find(s => s.GetType() == Data.GameInfos.type);
-                                    if (_currentExample == null)
-                                    {
-                                        Data.GameInfos.currentMode = Data.GameInfos.ModeGame.Normal;
-                                        break;
-                                    }
-                                }
                                 mousePos = Map.ScreenToMap(Inputs.MouseState.X + Camera.x, Inputs.MouseState.Y + Camera.y);
                                 _currentExample.Update(gameTime);
                                 if (Inputs.LeftClick())

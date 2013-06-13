@@ -20,6 +20,7 @@ namespace Exodus.GUI.Items
             textbox = new Components.TextBox((Data.Window.WindowWidth - Textures.Menu["ChatTextBox"].Width)/2,
                                              Data.Window.WindowHeight - 190, "", "ChatTextBox", new Padding(12, 0), 50,
                                              2*Data.GameDisplaying.Epsilon);
+            textbox.SetPosition();
             textbox.SetColor(16, 99, 146);
             textbox.maxChars = 60;
             Components.Add(textbox);

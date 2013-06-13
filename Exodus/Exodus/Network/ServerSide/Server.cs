@@ -22,6 +22,7 @@ namespace Exodus.Network.ServerSide
         private static Thread Observer_reading;
         private static int PrimaryKey = 2;
         private static bool GameHasChanged = true;
+        private static TwoPStatistics TPStats;
 
         #region Start
         public static void Start()
@@ -53,6 +54,7 @@ namespace Exodus.Network.ServerSide
             ReSyncAuto.Name = "ReSyncAuto";
             ReSyncAuto.Start();
             SClient Accepted;
+            TPStats = new TwoPStatistics();
             while (IsRunning)
             {
                 TcpClient client;
@@ -318,7 +320,7 @@ namespace Exodus.Network.ServerSide
                 client.SendInternetIDToGameManager();
             }
             else if (o is Statistics)
-                TwoPStatistics.AddStatistic((Statistics)o);
+                TPStats.AddStatistic((Statistics)o);
             else
                 throw new Exception("Dah hell is that object?");
         }
@@ -420,6 +422,7 @@ namespace Exodus.Network.ServerSide
             IsRunning = false;
             PrimaryKey = 0;
             KillAllSClients();
+            TPStats.Reset();
             server.Stop();
             SyncClient.Stop();
         }

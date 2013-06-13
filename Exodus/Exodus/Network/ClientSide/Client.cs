@@ -233,7 +233,7 @@ namespace Exodus.Network.ClientSide
             //}
             if (o is string)
                 chat.InsertMsg((string)o);
-            else if (o is Task)
+            else if (o is Network.Orders.Task)
             {
                 if (o is Orders.Tasks.ReSync)
                 {
@@ -366,7 +366,7 @@ namespace Exodus.Network.ClientSide
         private static int GetArmyValue()
         {
             Resource r = new Resource(0, 0, 0, 0, 0);
-            foreach (Item i in PlayGame.Map.ListItems.Where(it => it.IdPlayer == Data.Network.IdPlayer))
+            foreach (PlayGame.Item i in PlayGame.Map.ListItems.Where(it => it.IdPlayer == Data.Network.IdPlayer))
             {
                 r += Data.GameInfos.CostsItems[i.GetType()];
             }

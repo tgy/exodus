@@ -375,7 +375,7 @@ namespace Exodus.GUI.Items
                 {
                     foreach (int selected in Map.ListSelectedItems)
                     {
-                        c = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[selected]);
+                        c = Map.ListItems.Find(u => u.PrimaryId == selected);
                         c.AddTask(new PlayGame.Tasks.Attack(c, Map.ListItems[enemyIndex]), false, false);
                     }
                 }

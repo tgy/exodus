@@ -87,6 +87,8 @@ namespace Exodus
             GameItems[typeof(Gas) + "0"] = content.Load<Texture2D>("Game/Obstacles/Gas");
             GameItems[typeof(Nothing1x1) + "0"] = content.Load<Texture2D>("Game/UI/minitile");
             GameItems[typeof(Nothing2x2) + "0"] = content.Load<Texture2D>("Game/UI/minitile");
+            GameItems[typeof(Laserman) + "1"] = content.Load<Texture2D>("Game/Units/Laserman1");
+            GameItems[typeof(Laserman) + "2"] = content.Load<Texture2D>("Game/Units/Laserman2");
         }
         public static void LoadMiniGameItems(ContentManager content)
         {
@@ -99,6 +101,7 @@ namespace Exodus
             MiniGameItems[typeof(Nothing1x1)] = content.Load<Texture2D>("Game/Minis/Creeper");
             MiniGameItems[typeof(Nothing2x2)] = content.Load<Texture2D>("Game/Minis/Creeper");
             MiniGameItems[typeof(Spider)] = content.Load<Texture2D>("Game/Minis/Spider");
+            MiniGameItems[typeof(Laserman)] = content.Load<Texture2D>("Game/Minis/LaserMini");
             MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HToE)] = MiniGameItems[typeof(Worker)];
             MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HEIToS)] = MiniGameItems[typeof(Gunner)];
             MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HESToG)] = MiniGameItems[typeof(Spider)];
@@ -111,6 +114,7 @@ namespace Exodus
             BigGameItems[typeof(Laboratory)] = content.Load<Texture2D>("Game/Bigs/Labo");
             BigGameItems[typeof(Gunner)] = content.Load<Texture2D>("Game/Bigs/Gunner");
             BigGameItems[typeof(Spider)] = content.Load<Texture2D>("Game/Bigs/Spider");
+            BigGameItems[typeof(Laserman)] = content.Load<Texture2D>("Game/Bigs/LaserBig");
         }
         public static void LoadGame(ContentManager content)
         {

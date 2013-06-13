@@ -193,10 +193,11 @@ namespace Exodus.PlayGame
 
         private Direction GetDir(Point pos, Point oldPos)
         {
-            switch (pos.X - oldPos.X)
+            Point dir = new Point(pos.X == oldPos.X ? 0 : (pos.X - oldPos.X) / Math.Abs(pos.X - oldPos.X), pos.Y == oldPos.Y ? 0 : (pos.Y - oldPos.Y) / Math.Abs(pos.Y - oldPos.Y));
+            switch (dir.X)
             {
                 case -1:
-                    switch (pos.Y - oldPos.Y)
+                    switch (dir.Y)
                     {
                         case -1:
                             return Direction.Left;
@@ -205,7 +206,7 @@ namespace Exodus.PlayGame
                         case 1:
                             return Direction.Bottom;
                         default:
-                            throw new Exception("L'unite essaye d'acceder a une case non voisine");
+                            throw new Exception("Not possible");
                     }
                 case 0:
                     switch (pos.Y - oldPos.Y)
@@ -217,7 +218,7 @@ namespace Exodus.PlayGame
                         case 1:
                             return Direction.BottomRight;
                         default:
-                            throw new Exception("L'unite essaye d'acceder a une case non voisine");
+                            throw new Exception("Not possible");
                     }
                 case 1:
                     switch (pos.Y - oldPos.Y)
@@ -229,10 +230,10 @@ namespace Exodus.PlayGame
                         case 1:
                             return Direction.Right;
                         default:
-                            throw new Exception("L'unite essaye d'acceder a une case non voisine");
+                            throw new Exception("Not possible");
                     }
                 default:
-                    throw new Exception("L'unite essaye d'acceder a une case non voisine");
+                    throw new Exception("Not possible");
             }
         }
     }

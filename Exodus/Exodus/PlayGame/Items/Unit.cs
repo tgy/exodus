@@ -188,6 +188,7 @@ namespace Exodus.PlayGame
             this.AttackSound = Audio.Attack[GetType()];
             this.DieSound = Audio.Die[GetType()];
             this.SelectionSound = Audio.Selection[GetType()];
+            this.Focused = Map.ListSelectedItems.Contains(this);
         }
 
         private Direction GetDir(Point pos, Point oldPos)

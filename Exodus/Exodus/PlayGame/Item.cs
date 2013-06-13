@@ -39,8 +39,7 @@ namespace Exodus.PlayGame
         public int Width { get; protected set; }
         [NonSerialized]public GUI.Components.BigLife bigLife;
         [NonSerialized]protected Texture2D _texture;
-        [NonSerialized]
-        protected Texture2D _selectionCircle;
+        [NonSerialized]protected Texture2D _selectionCircle;
         [NonSerialized]public SoundEffectInstance AttackSound;
         [NonSerialized]public SoundEffectInstance DieSound;
         [NonSerialized]public SoundEffectInstance SelectionSound;
@@ -53,12 +52,13 @@ namespace Exodus.PlayGame
             this.AttackSound = Audio.Attack[GetType()];
             this.DieSound = Audio.Die[GetType()];
             this.SelectionSound = Audio.Selection[GetType()];
+            this.Focused = Map.ListSelectedItems.Contains(this);
         }
         public string Name { get; protected set; }
         #endregion
 
         #region ConfigInfos
-        public bool Focused = false;
+        [NonSerialized]public bool Focused = false;
         // Représente la position de la texture à l'écran
         protected Rectangle screenPos;
         // Représente la position du cercle de sélection si l'unité est dessinée

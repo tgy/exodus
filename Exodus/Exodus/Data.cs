@@ -112,12 +112,14 @@ namespace Exodus
             GameInfos.timeCreatingItem.Add(typeof(Worker), 1000);
             GameInfos.timeCreatingItem.Add(typeof(Habitation), 1500);
             GameInfos.timeCreatingItem.Add(typeof(Spider), 5000);
-            GameInfos.timeCreatingItem.Add(typeof(Labo), 5000);
+            GameInfos.timeCreatingItem.Add(typeof(University), 5000);
+            GameInfos.timeCreatingItem.Add(typeof(Laboratory), 20000);
             GameInfos.CostsItems.Add(typeof(Gunner), new Resource(100, 50, 0, 0, 20));
             GameInfos.CostsItems.Add(typeof(Worker), new Resource(0, 150, 0, 0, 2));
             GameInfos.CostsItems.Add(typeof(Habitation), new Resource(0, 150, 0, 0, 10));
             GameInfos.CostsItems.Add(typeof(Spider), new Resource(150, 0, 10, 0, 35));
-            GameInfos.CostsItems.Add(typeof(Labo), new Resource(350, 500, 100, 200, 100));
+            GameInfos.CostsItems.Add(typeof(University), new Resource(350, 500, 100, 200, 100));
+            GameInfos.CostsItems.Add(typeof(Laboratory), new Resource(0, 200, 0, 200, 30));
             LoadPlayerConfig();
         }
         static void LoadPlayerConfig()

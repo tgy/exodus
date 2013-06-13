@@ -38,7 +38,7 @@ namespace Exodus.GameStates
             typeof(PlayGame.Items.Units.Worker),
             typeof(PlayGame.Items.Units.Spider),
             typeof(PlayGame.Items.Buildings.Habitation),
-            typeof(PlayGame.Items.Buildings.Labo)
+            typeof(PlayGame.Items.Buildings.Laboratory)
         };
         List<Texture2D> _tilesList = new List<Texture2D>();
         enum itemType

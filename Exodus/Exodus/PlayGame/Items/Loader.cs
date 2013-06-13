@@ -24,8 +24,10 @@ namespace Exodus.PlayGame.Items
         {
             if (t == typeof(Habitation))
                 return new Habitation(IdPlayer);
-            if (t == typeof(Labo))
-                return new Labo(IdPlayer);
+            if (t == typeof(University))
+                return new University(IdPlayer);
+            if (t == typeof(Laboratory))
+                return new Laboratory(IdPlayer);
             return null;
         }
         public static Obstacle LoadObstacle(Type t)

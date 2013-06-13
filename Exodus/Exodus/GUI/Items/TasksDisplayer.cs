@@ -126,7 +126,8 @@ namespace Exodus.GUI.Items
             }
             if (taskPossibles[(int)MenuTask.Research])
             {
-                t = Textures.GameUI["Research"]; display.Add(
+                t = Textures.GameUI["Research"];
+                display.Add(
                      new Mini(AddResearchs, default(Type), t, Textures.GameUI["Researchhover"], currentX, Area.Y + 14)
                      );
                 currentX += t.Width + _step;
@@ -139,6 +140,14 @@ namespace Exodus.GUI.Items
                     );
                 currentX += t.Width + _step;
             }
+            if (taskPossibles[(int)MenuTask.ChangeResources])
+            {
+                t = Textures.GameUI["Research"];
+                display.Add(
+                    new Mini(AddRessourcesChange, default(Type), t, Textures.GameUI["Researchhover"], currentX, Area.Y + 14)
+                );
+                currentX += t.Width + _step;
+            }
             if (display.Count == 1)
             {
                 if (taskPossibles[(int)MenuTask.ProductUnits])
@@ -147,6 +156,8 @@ namespace Exodus.GUI.Items
                     AddBuildings(default(Type));
                 else if (taskPossibles[(int)MenuTask.ProductUnits])
                     AddResearchs(default(Type));
+                else if (taskPossibles[(int)MenuTask.ChangeResources])
+                    AddRessourcesChange(default(Type));
             }
             else
                 Push(display);
@@ -190,7 +201,7 @@ namespace Exodus.GUI.Items
             int currentX = Area.X + 9;
             Texture2D te;
             foreach (Type ty in buildingsProductibles)
-                if (ty == typeof(Habitation) || ty == typeof(Labo))
+                //if (ty == typeof(Habitation) || ty == typeof(University))
                 {
                     te = Textures.MiniGameItems[ty];
                     result.Add(new Mini(CreateBuilding, ty, te, te, currentX, Area.Y + 14));
@@ -214,10 +225,57 @@ namespace Exodus.GUI.Items
         }
         private void AddResearchs(Type t)
         {
+
+        }
+        private void AddRessourcesChange(Type t)
+        {
+            List<Component> result = new List<Component>();
+            int currentX = Area.X + 9;
+            Texture2D te;
+            te = Textures.MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HToE)];
+            result.Add(new Mini(ChangeResource, typeof(PlayGame.Tasks.ChangeResources.HToE), te, te, currentX, Area.Y + 14));
+            currentX += te.Width + _step;
+            te = Textures.MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HEIToS)];
+            result.Add(new Mini(ChangeResource, typeof(PlayGame.Tasks.ChangeResources.HEIToS), te, te, currentX, Area.Y + 14));
+            currentX += te.Width + _step;
+            te = Textures.MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HESToG)];
+            result.Add(new Mini(ChangeResource, typeof(PlayGame.Tasks.ChangeResources.HESToG), te, te, currentX, Area.Y + 14));
+            currentX += te.Width + _step;
+            Push(result);
+        }
+        private void ChangeResource(Type t)
+        {
+            PlayGame.Item item = null;
+            // = Map.ListSelectedItems.FirstOrDefault(s => s.ItemsProductibles.Exists(ty => ty == t));
+            for (int i = 0; i < Map.ListSelectedItems.Count; i++)
+                if (Map.ListSelectedItems[i].TasksOnMenu.Exists(task => task == MenuTask.ChangeResources) &&
+                    (item == null || item.TasksList.Count > Map.ListSelectedItems[i].TasksList.Count))
+                    item = Map.ListSelectedItems[i];
+            if (item != null)
+            {
+                if (t == typeof(PlayGame.Tasks.ChangeResources.HToE))
+                    item.AddTask(
+                        new PlayGame.Tasks.ChangeResources.HToE(item),
+                        false,
+                        false
+                    );
+                else if (t == typeof(PlayGame.Tasks.ChangeResources.HEIToS))
+                    item.AddTask(
+                        new PlayGame.Tasks.ChangeResources.HEIToS(item),
+                        false,
+                        false
+                    );
+                else if (t == typeof(PlayGame.Tasks.ChangeResources.HESToG))
+                    item.AddTask(
+                        new PlayGame.Tasks.ChangeResources.HESToG(item),
+                        false,
+                        false
+                    );
+            }
         }
         private void CreateBuilding(Type t)
         {
-            Data.GameInfos.item = Map.ListSelectedItems.FirstOrDefault(s => s is Unit);
+            Data.GameInfos.item = Map.ListSelectedItems.FirstOrDefault(s => s.ItemsProductibles.Exists(ty => ty == t));
             if (Data.GameInfos.item != null)
             {
                 Data.GameInfos.currentMode = Data.GameInfos.ModeGame.Building;

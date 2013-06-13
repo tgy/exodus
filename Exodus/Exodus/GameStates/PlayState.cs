@@ -94,9 +94,13 @@ namespace Exodus.GameStates
             PlayGame.Items.Units.Laserman l = new PlayGame.Items.Units.Laserman(Data.Network.IdPlayer);
             l.SetPos(100, 30, true);
             Map.AddItem(l);
-            PlayGame.Items.Units.Gunner g = new PlayGame.Items.Units.Gunner(Data.Network.IdPlayer + 1);
-            g.SetPos(100, 20, true);
-            Map.AddItem(g);
+            for (int y = 40; y < 60; y++)
+                for (int x = 90; x < 110; x++)
+            {
+                PlayGame.Items.Units.Gunner g = new PlayGame.Items.Units.Gunner(Data.Network.IdPlayer + 1);
+                g.SetPos(x, y, true);
+                Map.AddItem(g);
+            }
             Map.ListPassiveItems.Add(gasToogy);
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
             Map.PlayerResources = new Resource(0, 0, 0, 0, 0);

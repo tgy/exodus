@@ -14,14 +14,14 @@ namespace Exodus.PlayGame
     {
         protected enum Animation
         {
-            MovTop = 5,
-            MovTopRight = 4,
-            MovRight = 3,
-            MovDownRight = 2,
-            MovDown = 1,
             MovDownLeft = 0,
-            MovLeft = 7,
+            MovDown = 1,
+            MovDownRight = 2,
+            MovRight = 3,
+            MovTopRight = 4,
+            MovTop = 5,
             MovTopLeft = 6,
+            MovLeft = 7,
             StandDownLeft = 8,
             StandDown = 9,
             StandDownRight = 10,
@@ -30,6 +30,14 @@ namespace Exodus.PlayGame
             StandTop = 13,
             StandTopLeft = 14,
             StandLeft = 15,
+            AttackDownLeft = 16,
+            AttackDown = 17,
+            AttackDownRight = 18,
+            AttackRight = 19,
+            AttackTopRight = 20,
+            AttackTop = 21,
+            AttackTopLeft = 22,
+            AttackLeft = 7
         }
         public Point? oldPos { get; set; }
         public float mediumPos { private get; set; }
@@ -61,95 +69,83 @@ namespace Exodus.PlayGame
                 UpdateScreenPosition(p);
 
                 // changing direction depending on the next position
-                switch (this.pos.Value.X - this.oldPos.Value.X)
-                {
-                    case -1:
-                        switch (this.pos.Value.Y - this.oldPos.Value.Y)
-                        {
-                            case -1:
-                                this.dir = Direction.Left;
-                                break;
-                            case 0:
-                                this.dir = Direction.BottomLeft;
-                                break;
-                            case 1:
-                                this.dir = Direction.Bottom;
-                                break;
-                            default:
-                                throw new Exception("L'unite essaye d'acceder a une case non voisine");
-                        }
-                        break;
-                    case 0:
-                        switch (this.pos.Value.Y - this.oldPos.Value.Y)
-                        {
-                            case -1:
-                                this.dir = Direction.TopLeft;
-                                break;
-                            case 0:
-                                break;
-                            case 1:
-                                this.dir = Direction.BottomRight;
-                                break;
-                            default:
-                                throw new Exception("L'unite essaye d'acceder a une case non voisine");
-                        }
-                        break;
-                    case 1:
-                        switch (this.pos.Value.Y - this.oldPos.Value.Y)
-                        {
-                            case -1:
-                                this.dir = Direction.Top;
-                                break;
-                            case 0:
-                                this.dir = Direction.TopRight;
-                                break;
-                            case 1:
-                                this.dir = Direction.Right;
-                                break;
-                            default:
-                                throw new Exception("L'unite essaye d'acceder a une case non voisine");
-                        }
-                        break;
-                    default:
-                        throw new Exception("L'unite essaye d'acceder a une case non voisine");
-                }
+                this.dir = GetDir(this.pos.Value, this.oldPos.Value);
             }
         }
         protected override void UpdateAnim()
         {
             if (TasksList.Count > 0)
-                #region MàJ anim en mouvement
-                switch (dir)
+            {
+                if (TasksList[0] is Tasks.Move)
                 {
-                    case Direction.Left:
-                        anim = (int)Animation.MovLeft;
-                        break;
-                    case Direction.Right:
-                        anim = (int)Animation.MovRight;
-                        break;
-                    case Direction.Top:
-                        anim = (int)Animation.MovTop;
-                        break;
-                    case Direction.Bottom:
-                        anim = (int)Animation.MovDown;
-                        break;
-                    case Direction.BottomLeft:
-                        anim = (int)Animation.MovDownLeft;
-                        break;
-                    case Direction.BottomRight:
-                        anim = (int)Animation.MovDownRight;
-                        break;
-                    case Direction.TopLeft:
-                        anim = (int)Animation.MovTopLeft;
-                        break;
-                    case Direction.TopRight:
-                        anim = (int)Animation.MovTopRight;
-                        break;
-                    default:
-                        throw new Exception("Statut de l'animation inconnu");
-
+                    #region MàJ anim en mouvement
+                    switch (dir)
+                    {
+                        case Direction.Left:
+                            anim = (int)Animation.MovLeft;
+                            break;
+                        case Direction.Right:
+                            anim = (int)Animation.MovRight;
+                            break;
+                        case Direction.Top:
+                            anim = (int)Animation.MovTop;
+                            break;
+                        case Direction.Bottom:
+                            anim = (int)Animation.MovDown;
+                            break;
+                        case Direction.BottomLeft:
+                            anim = (int)Animation.MovDownLeft;
+                            break;
+                        case Direction.BottomRight:
+                            anim = (int)Animation.MovDownRight;
+                            break;
+                        case Direction.TopLeft:
+                            anim = (int)Animation.MovTopLeft;
+                            break;
+                        case Direction.TopRight:
+                            anim = (int)Animation.MovTopRight;
+                            break;
+                        default:
+                            throw new Exception("Statut de l'animation inconnu");
+                    }
                 }
                 #endregion
+                else if (TasksList[0] is Tasks.Attack)
+                {
+                    this.dir = GetDir(((Tasks.Attack)TasksList[0]).Enemy.pos.Value, this.pos.Value);
+                    #region MàJ anim attack
+                    switch (dir)
+                    {
+                        case Direction.Left:
+                            anim = (int)Animation.AttackLeft;
+                            break;
+                        case Direction.Right:
+                            anim = (int)Animation.AttackRight;
+                            break;
+                        case Direction.Top:
+                            anim = (int)Animation.AttackTop;
+                            break;
+                        case Direction.Bottom:
+                            anim = (int)Animation.AttackDown;
+                            break;
+                        case Direction.BottomLeft:
+                            anim = (int)Animation.AttackDownLeft;
+                            break;
+                        case Direction.BottomRight:
+                            anim = (int)Animation.AttackDownRight;
+                            break;
+                        case Direction.TopLeft:
+                            anim = (int)Animation.AttackTopLeft;
+                            break;
+                        case Direction.TopRight:
+                            anim = (int)Animation.AttackTopRight;
+                            break;
+                        default:
+                            throw new Exception("Statut de l'animation inconnu");
+                    }
+                    #endregion
+                }
+            }
             else
                 #region Màj anim immobile
                 switch (dir)
@@ -180,7 +176,6 @@ namespace Exodus.PlayGame
                         break;
                     default:
                         throw new Exception("Statut de l'animation inconnu");
-
                 }
                 #endregion
         }
@@ -193,6 +188,51 @@ namespace Exodus.PlayGame
             this.AttackSound = Audio.Attack[GetType()];
             this.DieSound = Audio.Die[GetType()];
             this.SelectionSound = Audio.Selection[GetType()];
+        }
+
+        private Direction GetDir(Point pos, Point oldPos)
+        {
+            switch (pos.X - oldPos.X)
+            {
+                case -1:
+                    switch (pos.Y - oldPos.Y)
+                    {
+                        case -1:
+                            return Direction.Left;
+                        case 0:
+                            return Direction.BottomLeft;
+                        case 1:
+                            return Direction.Bottom;
+                        default:
+                            throw new Exception("L'unite essaye d'acceder a une case non voisine");
+                    }
+                case 0:
+                    switch (pos.Y - oldPos.Y)
+                    {
+                        case -1:
+                            return Direction.TopLeft;
+                        case 0:
+                            return this.dir;
+                        case 1:
+                            return Direction.BottomRight;
+                        default:
+                            throw new Exception("L'unite essaye d'acceder a une case non voisine");
+                    }
+                case 1:
+                    switch (pos.Y - oldPos.Y)
+                    {
+                        case -1:
+                            return Direction.Top;
+                        case 0:
+                            return Direction.TopRight;
+                        case 1:
+                            return Direction.Right;
+                        default:
+                            throw new Exception("L'unite essaye d'acceder a une case non voisine");
+                    }
+                default:
+                    throw new Exception("L'unite essaye d'acceder a une case non voisine");
+            }
         }
     }
 }

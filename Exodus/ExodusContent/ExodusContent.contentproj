@@ -415,13 +415,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Units\spider.png">
-      <Name>spider</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Menu\Buttons\multiButton2.png">
       <Name>multiButton2</Name>
       <Importer>TextureImporter</Importer>
@@ -943,6 +936,13 @@
     </Compile>
     <Compile Include="Game\Buildings\labo-yellow.png">
       <Name>labo-yellow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\Units\spider.png">
+      <Name>spider</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

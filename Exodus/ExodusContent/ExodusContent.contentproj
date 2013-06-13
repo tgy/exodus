@@ -649,13 +649,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Units\Worker1.png">
-      <Name>Worker1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Game\UI\Actions\Attack.png">
       <Name>Attack</Name>
       <Importer>TextureImporter</Importer>
@@ -690,13 +683,6 @@
   <ItemGroup>
     <Compile Include="Game\Reperes\circleSelectUnitHover.png">
       <Name>circleSelectUnitHover</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Game\Units\Worker2.png">
-      <Name>Worker2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -993,6 +979,20 @@
   <ItemGroup>
     <Compile Include="Game\UI\Resources\background.png">
       <Name>background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\Units\Worker1.png">
+      <Name>Worker1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\Units\Worker2.png">
+      <Name>Worker2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -91,6 +91,8 @@ namespace Exodus.GameStates
             PlayGame.Items.Obstacles.Gas gasToogy = new PlayGame.Items.Obstacles.Gas();
             gasToogy.SetPos(100, 11, true);
             w.SetPos(100, 10, true);
+            Map.AddItem(w);
+            Map.ListPassiveItems.Add(gasToogy);
             foreach (Item it in _listExamples)
                 it.Alpha = 0.6f;
             Map.EarningPerSec = new Resource(2, 2, 2, 2, 2);

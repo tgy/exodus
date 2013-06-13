@@ -25,7 +25,7 @@ namespace Exodus.Network.ServerSide
         {
             if (P1InternetID == -1)
                 P1InternetID = PlayerStats.Id;
-            else if (P2InternetID == -1)
+            else if (P2InternetID == -1 && P1InternetID != PlayerStats.Id)
                 P2InternetID = PlayerStats.Id;
             if (P1InternetID == PlayerStats.Id)
             {

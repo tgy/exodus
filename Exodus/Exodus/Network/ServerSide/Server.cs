@@ -38,6 +38,7 @@ namespace Exodus.Network.ServerSide
                 return;
             }
             TheGame = new Game(LocalIP(), "Default");
+            Data.Network.GameStartTime = DateTime.Now;
         }
         public static void Run()
         {

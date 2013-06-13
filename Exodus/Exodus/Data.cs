@@ -47,7 +47,7 @@ namespace Exodus
             public static string OnlineSync = "";
             public static string Error = "";
             public static bool SinglePlayer = true;
-            public static int MaxPlayersInCurrentGame = 5;
+            public static int MaxPlayersInCurrentGame = 2;
             public static List<SClient> ConnectedClients = new List<SClient>();
             public static DateTime GameStartTime = DateTime.MinValue;
         }

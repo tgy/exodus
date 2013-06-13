@@ -8,7 +8,7 @@ namespace Exodus.Network.Orders
     [Serializable]
     class Statistics
     {
-        public int Id,
+        public int InternetId,
                    Electricity,
                    Hydrogen,
                    Iron,
@@ -18,9 +18,9 @@ namespace Exodus.Network.Orders
                    UnitsLost,
                    ArmyValue;
 
-        public Statistics(int Id, PlayGame.Resource resources, int ArmyValue)
+        public Statistics(int InternetId, PlayGame.Resource resources, int ArmyValue)
         {
-            this.Id = Id;
+            this.InternetId = InternetId;
             this.Electricity = (int)resources.Electricity;
             this.Graphene = (int)resources.Graphene;
             this.Hydrogen = (int)resources.Hydrogen;

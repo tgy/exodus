@@ -9,54 +9,62 @@ namespace Exodus.Network.ServerSide
     [Serializable]
     class TwoPStatistics
     {
-        private static int P1InternetID = -1;
-        private static int P2InternetID = -1;
-        private static int P1ArmyValue = -1;
-        private static int P2ArmyValue = -1;
-        private static string P1ResourcesValue = "";
-        private static string P2ResourcesValue = "";
-        private static int P1TrainedCount = -1;
-        private static int P2TrainedCount = -1;
-        private static int P1LostCount = -1;
-        private static int P2LostCount = -1;
-        private static string TimeElapsed = "";
+        private int P1InternetID = -1;
+        private int P2InternetID = -1;
+        private int P1ArmyValue = -1;
+        private int P2ArmyValue = -1;
+        private string P1ResourcesValue = "";
+        private string P2ResourcesValue = "";
+        private int P1TrainedCount = -1;
+        private int P2TrainedCount = -1;
+        private int P1LostCount = -1;
+        private int P2LostCount = -1;
+        private string TimeElapsed = "";
+        private bool P1Sended = false;
+        private bool P2Sended = false;
 
         public void AddStatistic(Statistics PlayerStats)
         {
             if (P1InternetID == -1)
-                P1InternetID = PlayerStats.Id;
-            else if (P2InternetID == -1 && P1InternetID != PlayerStats.Id)
-                P2InternetID = PlayerStats.Id;
-            if (P1InternetID == PlayerStats.Id)
+                P1InternetID = PlayerStats.InternetId;
+            else if (P2InternetID == -1 && P1InternetID != PlayerStats.InternetId)
+                P2InternetID = PlayerStats.InternetId;
+            if (P1InternetID == PlayerStats.InternetId)
             {
                 P1ArmyValue = PlayerStats.ArmyValue;
                 P1ResourcesValue = PlayerStats.Electricity + "-" + PlayerStats.Iron + "-" + PlayerStats.Hydrogen + "-" + PlayerStats.Steel + "-" + PlayerStats.Graphene + ";";
                 P1TrainedCount = PlayerStats.UnitsTrained;
                 P1LostCount = PlayerStats.UnitsLost;
-                TimeElapsed = DateTime.Now.Subtract(Data.Network.GameStartTime).ToString();
-                if (P2InternetID != -1)
-                {
-                    byte[] SStats = Serialize.Serializer.ObjectToByteArray(this);
-                    byte[] SStatsPlusThree = new byte[SStats.Length + 3];
-                    SStatsPlusThree[0] = (byte)((SStats.Length + 1) / 256);
-                    SStatsPlusThree[1] = (byte)((SStats.Length + 1) % 256);
-                    SStatsPlusThree[2] = 2;
-                    SyncClient.SendDataToGameManager(SStatsPlusThree);
-                }
+                P1Sended = true;
             }
-            else if (P2InternetID == PlayerStats.Id)
+            else if (P2InternetID == PlayerStats.InternetId)
             {
                 P2ArmyValue = PlayerStats.ArmyValue;
                 P2ResourcesValue = PlayerStats.Electricity + "-" + PlayerStats.Iron + "-" + PlayerStats.Hydrogen + "-" + PlayerStats.Steel + "-" + PlayerStats.Graphene + ";";
                 P2TrainedCount = PlayerStats.UnitsTrained;
                 P2LostCount = PlayerStats.UnitsLost;
+                TimeElapsed = DateTime.Now.Subtract(Data.Network.GameStartTime).ToString();
+                P2Sended = true;
             }
             else throw new Exception("Something went wrong...");
+            if (P1Sended && P2Sended)
+            {
+                byte[] SStats = Serialize.Serializer.ObjectToByteArray(this);
+                byte[] SStatsPlusThree = new byte[SStats.Length + 3];
+                SStats.CopyTo(SStatsPlusThree, 3);
+                SStatsPlusThree[0] = (byte)((SStats.Length + 1) / 256);
+                SStatsPlusThree[1] = (byte)((SStats.Length + 1) % 256);
+                SStatsPlusThree[2] = 2;
+                SyncClient.SendDataToGameManager(SStatsPlusThree);
+                Reset();
+            }
         }
         public void Reset()
         {
-            P1InternetID = -1;
-            P2InternetID = -1;
+            //P1InternetID = -1;
+            //P2InternetID = -1;
+            P1Sended = false;
+            P2Sended = false;
             P1ArmyValue = -1;
             P2ArmyValue = -1;
             P1ResourcesValue = "";

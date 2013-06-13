@@ -213,6 +213,7 @@
     <Compile Include="PlayGame\Tasks\CheatSpawn.cs" />
     <Compile Include="PlayGame\Tasks\ChangeResources.cs" />
     <Compile Include="PlayGame\Tasks\ChangeResources\HToE.cs" />
+    <Compile Include="PlayGame\Tasks\DoNothing.cs" />
     <Compile Include="PlayGame\Tasks\Die.cs" />
     <Compile Include="PlayGame\Tasks\Hold.cs" />
     <Compile Include="PlayGame\Tasks\Move.cs" />

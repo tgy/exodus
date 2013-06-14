@@ -43,8 +43,8 @@ namespace Exodus.GUI
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            foreach (var component in Components)
-                component.Draw(spriteBatch);
+            for (int i = 0; i < Components.Count; i++)
+                Components[i].Draw(spriteBatch);
         }
     }
 }

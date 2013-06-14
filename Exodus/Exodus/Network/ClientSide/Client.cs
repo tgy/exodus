@@ -235,11 +235,14 @@ namespace Exodus.Network.ClientSide
             else if (o is int)
             {
                 int Id = (int)o;
-                PlayerOpponent.avatarURL = SyncClient.SendSQLRequest("SELECT `avatar` FROM `user` WHERE `id` = " + Id)[0][0];
-                PlayerOpponent.rank = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + Id + ")"))[0][0]) + 1;
-                PlayerOpponent.victories = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + Id))[0][0]);
-                PlayerOpponent.defeats = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + Id + " AND (`P1ID`=" + Id + " OR `P2ID`=" + Id + ")"))[0][0]);
-                player1.Reset(PlayerOpponent.avatarURL, PlayerOpponent.rank, PlayerOpponent.victories, PlayerOpponent.defeats, false);
+                if (!Server.IsRunning)
+                {
+                    PlayerOpponent.avatarURL = SyncClient.SendSQLRequest("SELECT `avatar` FROM `user` WHERE `id` = " + Id)[0][0];
+                    PlayerOpponent.rank = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + Id + ")"))[0][0]) + 1;
+                    PlayerOpponent.victories = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + Id))[0][0]);
+                    PlayerOpponent.defeats = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + Id + " AND (`P1ID`=" + Id + " OR `P2ID`=" + Id + ")"))[0][0]);
+                    player1.Reset(PlayerOpponent.avatarURL, PlayerOpponent.rank, PlayerOpponent.victories, PlayerOpponent.defeats, false);
+                }
             }
             else if (o is Network.Orders.Task)
             {

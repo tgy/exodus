@@ -56,15 +56,15 @@ namespace Exodus.Network.ClientSide
             sender = new BinaryWriter(client.GetStream());
             Data.Network.ServerIP = "Connected to " + IP + ":" + Data.Network.Port;
             IsRunning = true;
-            Receive();
+            SendObject(new PlayerName(Data.PlayerInfos.Name));
             SendObject(Data.PlayerInfos.InternetID);
+            Receive();
         }
         public static void RunGame()
         {
             Thread Stats = new Thread(UpdateStatistics);
             Stats.Name = "Stats Update";
             Stats.Start();
-            SendObject(new PlayerName(Data.PlayerInfos.Name));
         }
         #endregion
 

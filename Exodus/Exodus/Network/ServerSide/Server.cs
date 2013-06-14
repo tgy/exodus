@@ -20,6 +20,7 @@ namespace Exodus.Network.ServerSide
         public static bool IsRunning;
         private static Thread Client_reading;
         private static Thread Observer_reading;
+        private static Thread SyncObservers = null;
         private static int PrimaryKey = 2;
         private static bool GameHasChanged = true;
         private static TwoPStatistics TPStats;
@@ -47,7 +48,11 @@ namespace Exodus.Network.ServerSide
             //
             Thread BroadcastSignal = new Thread(Broadcast);
             BroadcastSignal.Name = "BroadcastSignal";
-            BroadcastSignal.Start(); SClient Accepted;
+            BroadcastSignal.Start();
+            SyncObservers = new Thread(SyncObserversAuto);
+            SyncObservers.Name = "Sync Observers";
+            SyncObservers.Start();
+            SClient Accepted;
             while (IsRunning)
             {
                 TcpClient client;
@@ -98,6 +103,8 @@ namespace Exodus.Network.ServerSide
             Thread ReSyncAuto = new Thread(ReSyncTimer);
             ReSyncAuto.Name = "ReSyncAuto";
             ReSyncAuto.Start();
+            if (SyncObservers != null)
+                SyncObservers.Abort();
         }
         #endregion
 
@@ -385,6 +392,13 @@ namespace Exodus.Network.ServerSide
             {
                 Resync();
                 Thread.Sleep(10000);
+            }
+        }
+        private static void SyncObserversAuto()
+        {
+            while (IsRunning)
+            {
+                Thread.Sleep(100);
             }
         }
         #endregion

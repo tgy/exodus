@@ -40,6 +40,7 @@ namespace Exodus
         StatusBar statusBar;
         ConnectionOrangeButton settings_sound;
         Label observer1, observer2, observer3;
+        PlayerInfosLaunching player1, player2;
         public void Push(GameState g)
         {
             g.Initialize();
@@ -146,7 +147,12 @@ namespace Exodus
             }));
             ResetObservers("Toogy", "Zehir", "RustyCrowbar");
             gameLaunching.Items.Add(launching);
+            player1 = new PlayerInfosLaunching(Data.Window.ScreenCenter.X - 385, Data.Window.ScreenCenter.Y, Data.GameDisplaying.Epsilon * 3, false);
+            player2 = new PlayerInfosLaunching(Data.Window.ScreenCenter.X + 90, Data.Window.ScreenCenter.Y, Data.GameDisplaying.Epsilon * 3, true);
+            gameLaunching.Items.Add(player1);
+            gameLaunching.Items.Add(player2);
             #endregion
+
             #region Game Launcher
             _gameLauncherMenu = BaseMenu(particleMenu);
             _gameLauncherMenu.Items.Add(new Passive(Textures.Menu["ScrollingSelection"], (Data.Window.WindowWidth - Textures.Menu["ScrollingSelection"].Width) / 2, Data.Window.ScreenCenter.Y - 20, 3 * Data.GameDisplaying.Epsilon));

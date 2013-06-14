@@ -288,8 +288,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Units\gunner.png">
-      <Name>gunner</Name>
+    <Compile Include="Game\Units\gunner2.png">
+      <Name>gunner2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -1057,6 +1057,13 @@
   <ItemGroup>
     <Compile Include="Menu\Backgrounds\BGLaunchGame.jpg">
       <Name>BGLaunchGame</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\Units\gunner1.png">
+      <Name>gunner1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

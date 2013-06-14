@@ -84,7 +84,7 @@ namespace Exodus.Network.ServerSide
             SQLAnswer = null;
             ConnectToSendRequest();
             //Player.ConnectionState = 2;
-            SendDBCMDToGameManager("SELECT * FROM `user` WHERE `name`=\"" + UserName + "\" AND `password`=\""+ Data.Security.SHA1(Password) +"\"");
+            SendDBCMDToGameManager("SELECT * FROM `user` WHERE `name`=\"" + UserName + "\" AND `password`=\"" + Data.Security.SHA1(Password) + "\"");
             Receive();
             for (byte b = 0; b < 10; b++)
             {
@@ -206,7 +206,7 @@ namespace Exodus.Network.ServerSide
 
                 case 2:
                     IsRunning = false;
-                    ProcessSQLRequest(ShortenArray(data,1));
+                    ProcessSQLRequest(ShortenArray(data, 1));
                     break;
 
                 //case 3:
@@ -229,7 +229,7 @@ namespace Exodus.Network.ServerSide
                 Thread.Sleep(100);
             }
         }
-        private static void ProcessSQLRequest(byte[]data)
+        private static void ProcessSQLRequest(byte[] data)
         {
             SQLAnswer = (string[][])Serialize.Serializer.ByteArrayToObject(data);
         }

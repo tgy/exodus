@@ -209,7 +209,7 @@ namespace Exodus.PlayGame
                             throw new Exception("Not possible");
                     }
                 case 0:
-                    switch (pos.Y - oldPos.Y)
+                    switch (dir.Y)
                     {
                         case -1:
                             return Direction.TopLeft;
@@ -221,7 +221,7 @@ namespace Exodus.PlayGame
                             throw new Exception("Not possible");
                     }
                 case 1:
-                    switch (pos.Y - oldPos.Y)
+                    switch (dir.Y)
                     {
                         case -1:
                             return Direction.Top;

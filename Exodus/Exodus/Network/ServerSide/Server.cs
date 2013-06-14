@@ -23,7 +23,7 @@ namespace Exodus.Network.ServerSide
         private static int PrimaryKey = 2;
         private static bool GameHasChanged = true;
         private static TwoPStatistics TPStats;
-
+        public static GUI.Items.PlayerInfosLaunching player2;
         #region Start
         public static void Start()
         {
@@ -319,6 +319,11 @@ namespace Exodus.Network.ServerSide
             {
                 client.InternetID = (int)o;
                 client.SendInternetIDToGameManager();
+                PlayerOpponent.avatarURL = SyncClient.SendSQLRequest("SELECT `avatar` FROM `user` WHERE `id` = " + client.InternetID)[0][0];
+                PlayerOpponent.rank = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + client.InternetID + ")"))[0][0]) + 1;
+                PlayerOpponent.victories = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + client.InternetID))[0][0]);
+                PlayerOpponent.defeats = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + client.InternetID + " AND (`P1ID`=" + client.InternetID + " OR `P2ID`=" + client.InternetID + ")"))[0][0]);
+                player2.Reset(PlayerOpponent.avatarURL, PlayerOpponent.rank, PlayerOpponent.victories, PlayerOpponent.defeats, false);
             }
             else if (o is Statistics)
                 TPStats.AddStatistic((Statistics)o);

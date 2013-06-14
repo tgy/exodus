@@ -131,26 +131,7 @@ namespace Exodus
                 Data.Window.WindowWidth / 2, Data.Window.WindowHeight / 2, 0);
 
             #region Game Launching
-            MenuState gameLaunching = BaseRedMenu(particleMenu);
-            t = Textures.Menu["Observers"];
-            gameLaunching.Items.Add(new Passive(t,(Data.Window.WindowWidth - t.Width) / 2, Data.Window.ScreenCenter.Y + 215, Data.GameDisplaying.Epsilon * 4));
-            MenuButton m = new LaunchingOrangeButton("");
-            m.DoClick = CreateGame;
-            MenuHorizontal launching = new MenuHorizontal(Data.Window.ScreenCenter.X - 118, Data.Window.ScreenCenter.Y + 180, 0);
-            launching.Create(new List<Component> { m });
-            observer1 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 231);
-            observer2 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 272);
-            observer3 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 313);
-            gameLaunching.Items.Add(new Container(new List<Component>
-            {
-                observer1, observer2, observer3
-            }));
-            ResetObservers("Toogy", "Zehir", "RustyCrowbar");
-            gameLaunching.Items.Add(launching);
-            player1 = new PlayerInfosLaunching(Data.Window.ScreenCenter.X - 385, Data.Window.ScreenCenter.Y, Data.GameDisplaying.Epsilon * 3, false);
-            player2 = new PlayerInfosLaunching(Data.Window.ScreenCenter.X + 90, Data.Window.ScreenCenter.Y, Data.GameDisplaying.Epsilon * 3, true);
-            gameLaunching.Items.Add(player1);
-            gameLaunching.Items.Add(player2);
+            MenuState gameLaunching = LaunchinGameMenu(true, particleMenu);
             #endregion
 
             #region Game Launcher
@@ -604,6 +585,30 @@ namespace Exodus
             observer1.Pos.X = (Data.Window.WindowWidth - GUI.Fonts.Eurostile12.MeasureString(s1).X) / 2;
             observer2.Pos.X = (Data.Window.WindowWidth - GUI.Fonts.Eurostile12.MeasureString(s2).X) / 2;
             observer3.Pos.X = (Data.Window.WindowWidth - GUI.Fonts.Eurostile12.MeasureString(s3).X) / 2;
+        }
+        private MenuState LaunchinGameMenu(bool CanLaunch, ParticleEngine.ParticleEngine particleMenu)
+        {
+            MenuState gameLaunching = BaseRedMenu(particleMenu);
+            Texture2D t = Textures.Menu["Observers"];
+            gameLaunching.Items.Add(new Passive(t, (Data.Window.WindowWidth - t.Width) / 2, Data.Window.ScreenCenter.Y + 215, Data.GameDisplaying.Epsilon * 4));
+            MenuButton m = new LaunchingOrangeButton("");
+            m.DoClick = CreateGame;
+            MenuHorizontal launching = new MenuHorizontal(Data.Window.ScreenCenter.X - 118, Data.Window.ScreenCenter.Y + 180, 0);
+            launching.Create(new List<Component> { m });
+            observer1 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 231);
+            observer2 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 272);
+            observer3 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 313);
+            gameLaunching.Items.Add(new Container(new List<Component>
+            {
+                observer1, observer2, observer3
+            }));
+            ResetObservers("Toogy", "Zehir", "RustyCrowbar");
+            gameLaunching.Items.Add(launching);
+            player1 = new PlayerInfosLaunching(Data.Window.ScreenCenter.X - 385, Data.Window.ScreenCenter.Y, Data.GameDisplaying.Epsilon * 3, false);
+            player2 = new PlayerInfosLaunching(Data.Window.ScreenCenter.X + 90, Data.Window.ScreenCenter.Y, Data.GameDisplaying.Epsilon * 3, true);
+            gameLaunching.Items.Add(player1);
+            gameLaunching.Items.Add(player2);
+            return gameLaunching;
         }
     }
 }

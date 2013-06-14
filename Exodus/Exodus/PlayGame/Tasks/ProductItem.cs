@@ -47,7 +47,7 @@ namespace Exodus.PlayGame.Tasks
                         tempItem = this.Parent;
                         Move m = new Move(
                                 this.Parent,
-                                AStar.closestFreePoint(IsPlaceAvailable, this.pos));
+                                AStar.closestFreePoint(IsPlaceAvailable, this.pos, this.pos));
                         m.Initialize();
                         if (m.path == null)
                             Finished = true;
@@ -87,7 +87,7 @@ namespace Exodus.PlayGame.Tasks
                     if (moveToBuildingPoint)
                         p = pos;
                     else
-                        p = AStar.closestFreePoint(IsPlaceAvailable, pos);
+                        p = AStar.closestFreePoint(IsPlaceAvailable, pos, pos);
                     // si cette place existe, alors on ajoute l'item, sinon on envoie voir n.n
                     if (p != null)
                     {

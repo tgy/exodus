@@ -34,7 +34,7 @@ namespace Exodus.PlayGame
         public static LinkedList<Point> Pathfind(Point Start, Point Arrival)
         {
             // Si la case n'est pas valable ou est un obstacle
-            Arrival = closestFreePoint(x => ValidCase(x.X, x.Y), Arrival);
+            Arrival = closestFreePoint(x => ValidCase(x.X, x.Y), Arrival, Start);
             if (Arrival.X == -1 && Arrival.Y == -1 || !ValidCase(Arrival.X, Arrival.Y))
                 return null;
             BinaryHeap<CellInfos> openSet = new BinaryHeap<CellInfos>(
@@ -151,8 +151,9 @@ namespace Exodus.PlayGame
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static Point closestFreePoint(Func<Point, bool> ValidPoint, Point p)
+        public static Point closestFreePoint(Func<Point, bool> ValidPoint, Point p, Point start)
         {
+            Point min = new Point(-1, -1);
             if (ValidPoint(p))
                 return p;
             else
@@ -168,7 +169,13 @@ namespace Exodus.PlayGame
                 {
                     current = openSet.First();
                     if (ValidPoint(current))
-                        return current;
+                    {
+                        int d = Heuristic(current, min)  - Heuristic(start, min);
+                        if (d < 0)
+                            min = current;
+                        else if (d > 0)
+                            return min;
+                    }
                     closedSet.Add(new CellInfos(current.X, current.Y, 0, 0));
                     openSet.Remove(current);
                     openSet2.Remove(new CellInfos(current.X, current.Y, 0, 0));

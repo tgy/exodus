@@ -33,10 +33,14 @@ namespace Exodus.PlayGame
         static public Texture2D MouseMap;
         // Nos listes d'unité/obstacles sur la map
         public static List<Item> ListItems = new List<Item>();
+        static int primaryKey = 0;
         public static void AddItem(Item i)
         {
             if (Data.Network.SinglePlayer)
-                i.PrimaryId = ListItems.Count;
+            {
+                i.PrimaryId = primaryKey;
+                primaryKey++;
+            }
             ListItems.Add(i);
         }
         public static List<Item> ListPassiveItems = new List<Item>();

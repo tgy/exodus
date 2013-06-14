@@ -13,7 +13,7 @@ namespace Exodus.PlayGame.Items.Units
             Name = "Laserman";
             maxLife = 4242;
             maxShield = 4242;
-            Speed = 520;
+            Speed = 300;
             AttackStrength = 69;
             AttackDelayMax = 10;
             currentAttackDelay = AttackDelayMax;

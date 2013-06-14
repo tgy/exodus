@@ -401,7 +401,11 @@ namespace Exodus.GameStates
                                             && i.Intersect(Inputs.MouseState.X, Inputs.MouseState.Y))
                                             current = i;
                                     if (current != null)
+                                    {
                                         Map.AddItemsToSelection(new List<Item> { current });
+                                        if (current.SelectionSound != null)
+                                            current.SelectionSound.Play();
+                                    }
                                 }
 
                                 #endregion

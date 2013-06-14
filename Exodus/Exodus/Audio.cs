@@ -53,9 +53,9 @@ namespace Exodus
             Die[typeof(Laserman)] = null;
             Die[typeof(Iron)] = null;
             Die[typeof(HydrogenExtractor)] = null;
-            Selection[typeof(Gunner)] = null;
+            Selection[typeof(Gunner)] = LoadAudio(content, "Audio/gunner-selection", false);
             Selection[typeof(Spider)] = null;
-            Selection[typeof(Worker)] = null;
+            Selection[typeof(Worker)] = LoadAudio(content, "Audio/worker-selection", false);
             Selection[typeof(Creeper)] = null;
             Selection[typeof(Nothing1x1)] = null;
             Selection[typeof(Nothing2x2)] = null;

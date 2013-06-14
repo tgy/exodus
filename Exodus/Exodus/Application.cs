@@ -38,7 +38,6 @@ namespace Exodus
         Stack<GameState> GameStates;
         PlayerInfos PlayerInfos;
         StatusBar statusBar;
-        ConnectionOrangeButton settings_sound;
         Label observer1 = null, observer2 = null, observer3 = null;
         PlayerInfosLaunching player1 = null, player2 = null;
         public void Push(GameState g)
@@ -170,7 +169,7 @@ namespace Exodus
             #region Settings
             MenuState settingsMenu = BaseMenu(particleMenu);
             settingsMenu.Items.Add(statusBar);
-            Form settingsForm = new Form(Data.Window.ScreenCenter.X - 140, Data.Window.ScreenCenter.Y - 25,
+            Form settingsForm = new Form(Data.Window.ScreenCenter.X - 140, Data.Window.ScreenCenter.Y - 45,
                                            new Padding(14, 17), 8, 4 * Data.GameDisplaying.Epsilon);
             settingsForm.Components.Add(new JustTexture(Textures.Menu["Settings"], settingsForm.Area.X,
                                                            settingsForm.Area.Y, settingsForm.Depth));
@@ -184,14 +183,15 @@ namespace Exodus
             settings_pass2 = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
             settings_pass2.Hidden = true;
             settingsForm.Components.Add(settings_pass2);
+            SoundButton soundButton = new SoundButton(0, 0, new Padding(14, -6), 2 * Data.GameDisplaying.Epsilon);
+            soundButton.DoClick = SaveSound;
+            settingsForm.Components.Add(new Label(Fonts.Eurostile12, "CHANGE SOUND LEVEL", 0, 0, Data.GameDisplaying.Epsilon));
+            settingsForm.Components.Add(soundButton);
             ConnectionOrangeButton settingsFormSubmitter = new ConnectionOrangeButton("SAVE YOUR CHANGES")
             {
                 SubMenu = null,
                 DoClick = SaveSettings
             };
-            settings_sound = new ConnectionOrangeButton(Data.Config.LevelSound == 100 ? "DISABLE SOUND" : "ENABLE SOUND");
-            settings_sound.DoClick = ToogleSound;
-            settingsForm.Components.Add(settings_sound);
             settingsForm.SubmitterId = settingsForm.Components.Count;
             settingsForm.Components.Add(settingsFormSubmitter);
             settingsForm.Initialize();
@@ -550,21 +550,12 @@ namespace Exodus
                 _isChangingSettings = false;
             }
         }
-        void ToogleSound(MenuState m, int i)
+        void SaveSound(int i)
         {
 
             statusBar.Text = "SAVING SOUND";
             statusBar.Active = true;
-            if (Data.Config.LevelSound == 100)
-            {
-                Data.Config.LevelSound = 0;
-                settings_sound.Text = "ENABLE SOUND";
-            }
-            else
-            {
-                Data.Config.LevelSound = 100;
-                settings_sound.Text = "DISABLE SOUND";
-            }
+            Data.Config.LevelSound = i;
             Data.SavePlayerConfig();
             statusBar.Text = "SOUND SAVED";
             statusBar.Active = false;

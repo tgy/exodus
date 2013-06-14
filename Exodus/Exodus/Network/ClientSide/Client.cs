@@ -237,11 +237,13 @@ namespace Exodus.Network.ClientSide
                 int Id = (int)o;
                 if (!Server.IsRunning)
                 {
-                    PlayerOpponent.avatarURL = SyncClient.SendSQLRequest("SELECT `avatar` FROM `user` WHERE `id` = " + Id)[0][0];
+                    string[][] result = SyncClient.SendSQLRequest("SELECT `name`, `avatar` FROM `user` WHERE `id` = " + Id);
+                    PlayerOpponent.name = result[0][0];
+                    PlayerOpponent.avatarURL = result[0][1];
                     PlayerOpponent.rank = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + Id + ")"))[0][0]) + 1;
                     PlayerOpponent.victories = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + Id))[0][0]);
                     PlayerOpponent.defeats = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + Id + " AND (`P1ID`=" + Id + " OR `P2ID`=" + Id + ")"))[0][0]);
-                    player1.Reset(PlayerOpponent.avatarURL, PlayerOpponent.rank, PlayerOpponent.victories, PlayerOpponent.defeats, false);
+                    player1.Reset(PlayerOpponent.name, PlayerOpponent.avatarURL, PlayerOpponent.rank, PlayerOpponent.victories, PlayerOpponent.defeats, false);
                 }
             }
             else if (o is Network.Orders.Task)

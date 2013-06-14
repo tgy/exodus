@@ -199,15 +199,16 @@ namespace Exodus.GameStates
             {
                 if (Map.ListItems[i].IdPlayer == Data.Network.IdPlayer)
                 {
-                    Map.EarningPerSec += Map.ListItems[i].resourcesGeneration;
                     if (!(Map.ListItems[i] is PlayGame.Items.Buildings.HydrogenExtractor && Map.ListItems[i].currentResource.Hydrogen <= 0))
                     {
-                        Map.PlayerResources = Map.PlayerResources + (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * Map.EarningPerSec;
-                        Map.ListItems[i].currentResource -= (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * Map.EarningPerSec;
+                        Map.EarningPerSec += Map.ListItems[i].resourcesGeneration;
+                        Map.ListItems[i].currentResource -= (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * Map.ListItems[i].resourcesGeneration;
                     }
                 }
                 Map.ListItems[i].Update(gameTime);
             }
+
+            Map.PlayerResources += (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * Map.EarningPerSec;
             for (int i = 0; i < Map.ListPassiveItems.Count; i++)
                 Map.ListPassiveItems[i].Update(gameTime);
             if (Data.GameInfos.currentMode == Data.GameInfos.ModeGame.Building

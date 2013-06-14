@@ -95,6 +95,9 @@ namespace Exodus.GameStates
             w = new PlayGame.Items.Units.Worker(1);
             w.SetPos(100, 20, true);
             Map.AddItem(w);
+            PlayGame.Items.Buildings.Habitation h = new PlayGame.Items.Buildings.Habitation(Data.Network.IdPlayer + 1);
+            h.SetPos(100, 40, true);
+            Map.AddItem(h);
             Map.ListPassiveItems.Add(gasToogy);
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
             Map.PlayerResources = new Resource(0, 0, 0, 0, 0);

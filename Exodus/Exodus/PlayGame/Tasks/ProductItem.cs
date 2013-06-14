@@ -43,7 +43,9 @@ namespace Exodus.PlayGame.Tasks
                     else
                     {
                         // On réserve l'espace !
-                        //MakeObstacleCHildPos(true);
+                        for (int i = pos.X, mi = i + tempItem.Width; i < mi; i++)
+                            for (int j = pos.Y, mj = j + tempItem.Width; j < mj; j++)
+                                Map.MapCells[i, j].ListItems.Add(new PlayGame.Items.Obstacles.Nothing1x1());
                         tempItem = this.Parent;
                         Move m = new Move(
                                 this.Parent,

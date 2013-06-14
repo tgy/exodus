@@ -102,7 +102,7 @@ namespace Exodus.GameStates
             h.SetPos(100, 10, true);
             Map.AddItem(h);
             PlayGame.Items.Buildings.Habitation h2 = new PlayGame.Items.Buildings.Habitation(2);
-            h.SetPos(100, 20, true);
+            h2.SetPos(100, 20, true);
             Map.AddItem(h2);
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
             Map.PlayerResources = new Resource(0, 0, 0, 0, 0);

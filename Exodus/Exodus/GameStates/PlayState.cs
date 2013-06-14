@@ -98,12 +98,11 @@ namespace Exodus.GameStates
             //w = new PlayGame.Items.Units.Worker(1);
             //w.SetPos(100, 20, true);
             //Map.ListPassiveItems.Add(gasToogy);
-            PlayGame.Items.Buildings.Habitation h = new PlayGame.Items.Buildings.Habitation(1);
-            h.SetPos(100, 10, true);
-            Map.AddItem(h);
-            PlayGame.Items.Buildings.Habitation h2 = new PlayGame.Items.Buildings.Habitation(2);
-            h2.SetPos(100, 20, true);
-            Map.AddItem(h2);
+            if (!Data.Network.SinglePlayer)
+            {
+                Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 1, 100, 10));
+                Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 2, 100, 20));
+            }
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
             Map.PlayerResources = new Resource(0, 0, 0, 0, 0);
             base.LoadContent();

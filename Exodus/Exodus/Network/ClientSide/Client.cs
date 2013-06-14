@@ -105,7 +105,7 @@ namespace Exodus.Network.ClientSide
             for (int i = 0; i < 10; i++)
             {
                 GamePlusTwo = BroadcastListener.Receive(ref EndPoint);
-                Game NewGame = (Game)Serialize.Serializer.ByteArrayToObject(ShortenArray(GamePlusTwo, 2));
+                Game NewGame = (Game)Serialize.Serializer.ByteArrayToObject(/*ShortenArray(*/GamePlusTwo/*, 2)*/);
                 if (!IsGameAlreadyInList(NewGame))
                     ServerList.Add(NewGame);
             }

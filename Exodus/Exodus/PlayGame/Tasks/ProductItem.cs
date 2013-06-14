@@ -100,6 +100,22 @@ namespace Exodus.PlayGame.Tasks
                 Finished = true;
             }
         }// Regarde si la possibilité de construction à la position (x,y) est valide
+        public override void BruteFinish()
+        {
+            if (!Finished)
+            {
+                if (Initialized)
+                {
+                    if (moveToBuildingPoint)
+                    {
+                        for (int i = pos.X, mi = i + child.Width; i < mi; i++)
+                            for (int j = pos.Y, mj = j + child.Width; j < mj; j++)
+                                Map.MapCells[i, j].ListItems.RemoveAll(item => item is PlayGame.Items.Obstacles.Nothing1x1);
+                    }
+                }
+                Map.PlayerResources += Data.GameInfos.CostsItems[child.GetType()];
+            }
+        }
         bool IsPlaceAvailable(Point p)
         {
             if (p.X < 0 || p.Y < 0 || p.X + tempItem.Width >= Map.Width || p.Y + tempItem.Width >= Map.Height)

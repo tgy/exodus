@@ -207,9 +207,9 @@ namespace Exodus.PlayGame
             if (this.currentLife < 0)
                 this.AddTask(new PlayGame.Tasks.Die(this), true, false);
             #endregion
-            this.bigLife.Area.X = this.screenPos.X + this.screenPos.Width / 2 - this.bigLife.Area.Width / 2 + this.marginX;
-            this.bigLife.Area.Y = this.screenPos.Y;
             this.bigLife.Value = 100 * currentLife / maxLife;
+            this.bigLife.Area.X = this.screenPos.X + this.screenPos.Width / 2 - this.bigLife.Area.Width / 2;
+            this.bigLife.Area.Y = this.screenPos.Y;
             this.bigLife.Update(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch)

@@ -194,12 +194,18 @@ namespace Exodus.GameStates
         }
         public override void Update(GameTime gameTime)
         {
-            Map.PlayerResources = Map.PlayerResources + (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * Map.EarningPerSec;
             Map.EarningPerSec.Reset();
             for (int i = 0; i < Map.ListItems.Count; i++)
             {
                 if (Map.ListItems[i].IdPlayer == Data.Network.IdPlayer)
+                {
                     Map.EarningPerSec += Map.ListItems[i].resourcesGeneration;
+                    if (!(Map.ListItems[i] is PlayGame.Items.Buildings.HydrogenExtractor && Map.ListItems[i].currentResource.Hydrogen <= 0))
+                    {
+                        Map.PlayerResources = Map.PlayerResources + (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * Map.EarningPerSec;
+                        Map.ListItems[i].currentResource -= (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * Map.EarningPerSec;
+                    }
+                }
                 Map.ListItems[i].Update(gameTime);
             }
             for (int i = 0; i < Map.ListPassiveItems.Count; i++)

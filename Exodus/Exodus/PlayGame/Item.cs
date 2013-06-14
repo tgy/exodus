@@ -90,6 +90,7 @@ namespace Exodus.PlayGame
         public List<Type> ItemsProductibles { get; protected set; }
         public int IdPlayer { get; protected set; }
         public int PrimaryId;
+        public Resource currentResource;
         #endregion
 
         #region Fonctions
@@ -125,6 +126,7 @@ namespace Exodus.PlayGame
             this.DieSound = Audio.Die[GetType()];
             this.SelectionSound = Audio.Selection[GetType()];
             this.resourcesGeneration = new Resource(0,0,0,0,0);
+            this.currentResource = new Resource(Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue);
         }
         /// <summary>
         /// Initialise la position de l'unité

@@ -15,7 +15,9 @@ namespace Exodus.Network.ServerSide
         private static bool IsRunning;
         //public static bool IsAuthenticated;
         private static byte WhatIsIt;
-        private static BinaryWriter sender;
+        private static BinaryWriter ServerSender;
+        private static BinaryWriter DBTalker;
+        private static BinaryWriter ClientSender;
         private static BinaryReader NetReader;
         private static TcpClient Client;
         static bool _MySQLConnection = false;
@@ -23,18 +25,24 @@ namespace Exodus.Network.ServerSide
 
         public static void ConnectAsServer()
         {
-            WhatIsIt = 0;
-            InitializeConnection();
-            SendIdMessage();
-            Data.Network.Server = "Server (synchronized): Connected clients:";
+            if (ServerSender == null)
+            {
+                WhatIsIt = 0;
+                InitializeConnection();
+                SendIdMessage();
+                Data.Network.Server = "Server (synchronized): Connected clients:";
+            }
         }
         public static void ConnectAsClient()
         {
-            WhatIsIt = 1;
-            InitializeConnection();
-            NetReader = new BinaryReader(Client.GetStream());
-            SendIdMessage();
-            Receive();
+            if (ClientSender == null)
+            {
+                WhatIsIt = 1;
+                InitializeConnection();
+                NetReader = new BinaryReader(Client.GetStream());
+                SendIdMessage();
+                Receive();
+            }
         }
         public static void ConnectToSendRequest()
         {
@@ -52,12 +60,12 @@ namespace Exodus.Network.ServerSide
         }
         private static void InitializeConnection()
         {
-            if (IsRunning)
-            {
-                Stop();
-                Thread.Sleep(10);
-                //throw new Exception("Why was it already started?");
-            }
+            //if (IsRunning)
+            //{
+            //    Stop();
+            //    Thread.Sleep(10);
+            //    //throw new Exception("Why was it already started?");
+            //}
             try
             {
                 //Client = new TcpClient(Dns.GetHostAddresses("thefirsthacker.myftp.org")[0].ToString(), 4000);
@@ -70,14 +78,28 @@ namespace Exodus.Network.ServerSide
             {
                 return;
             }
-            sender = new BinaryWriter(Client.GetStream());
-            IsRunning = true;
-            if (WhatIsIt != 2)
+            Thread Pinger;
+            switch (WhatIsIt)
             {
-                Thread Pinger = new Thread(Ping);
-                Pinger.Name = "SyncClientPing";
-                Pinger.Start();
+                case 0:
+                    ServerSender = new BinaryWriter(Client.GetStream());
+                    Pinger = new Thread(new ParameterizedThreadStart(Ping));
+                    Pinger.Name = "SyncClientPing";
+                    Pinger.Start(ServerSender);
+                    break;
+                case 1:
+                    ClientSender = new BinaryWriter(Client.GetStream());
+                    Pinger = new Thread(new ParameterizedThreadStart(Ping));
+                    Pinger.Name = "SyncClientPing";
+                    Pinger.Start();
+                    break;
+                case 2:
+                    DBTalker = new BinaryWriter(Client.GetStream());
+                    break;
+                default:
+                    throw new Exception("This never happends...");
             }
+            IsRunning = true;
         }
         public static int UserIsValid(string UserName, string Password)
         {
@@ -132,9 +154,22 @@ namespace Exodus.Network.ServerSide
             for (byte i = 0; i < 10; i++)
                 if (!IsRunning)
                     Thread.Sleep(10);
-            sender.Write(WhatIsIt);
+            switch (WhatIsIt)
+            {
+                case 0: //Server
+                    ServerSender.Write(WhatIsIt);
+                    break;
+                case 1: //Client
+                    ClientSender.Write(WhatIsIt);
+                    break;
+                case 2:
+                    DBTalker.Write(WhatIsIt);
+                    break;
+                default:
+                    throw new Exception("This never happends...");
+            }
         }
-        public static void SendDBCMDToGameManager(string command)
+        private static void SendDBCMDToGameManager(string command)
         {
             while (IsRunning)
             {
@@ -148,7 +183,7 @@ namespace Exodus.Network.ServerSide
                     Serialized.CopyTo(cmd, 2);
                     cmd[0] = (byte)(Serialized.Length / 256);
                     cmd[1] = (byte)(Serialized.Length % 256);
-                    SendDataToGameManager(cmd);
+                    DBTalker.Write(cmd);
                     _MySQLConnection = false;
                     break;
                 }
@@ -156,6 +191,7 @@ namespace Exodus.Network.ServerSide
         }
         public static void SendGame(byte[] SGame)
         {
+            ConnectAsServer();
             //byte[] SGame = Serialize.Serializer.ObjectToByteArray(Server.TheGame);
             byte[] GamePlusThree = new byte[SGame.Length + 3];
             SGame.CopyTo(GamePlusThree, 3);
@@ -165,7 +201,7 @@ namespace Exodus.Network.ServerSide
             for (byte i = 0; i < 10; i++)
                 if (!IsRunning)
                     Thread.Sleep(100);
-            SendDataToGameManager(GamePlusThree);
+            ServerSender.Write(GamePlusThree);
         }
         private static void Receive()
         {
@@ -185,10 +221,10 @@ namespace Exodus.Network.ServerSide
                     Thread.Sleep(100);
             }
         }
-        public static void SendDataToGameManager(byte[] data)
+        public static void SendDataToGameManagerAsServer(byte[] data)
         {
-            //InitializeConnection();
-            sender.Write(data);
+            ConnectAsServer();
+            ServerSender.Write(data);
         }
         private static void ProcessData(byte[] data)
         {
@@ -216,8 +252,9 @@ namespace Exodus.Network.ServerSide
                     throw new Exception("What (the hell) was that?");
             }
         }
-        private static void Ping()
+        private static void Ping(object bw)
         {
+            BinaryWriter bla = (BinaryWriter)bw;
             byte[] ping = new byte[3];
             ping[0] = 0;
             ping[1] = 1;
@@ -225,7 +262,7 @@ namespace Exodus.Network.ServerSide
             Thread.Sleep(100);
             while (IsRunning)
             {
-                //sender.Write(ping);
+                bla.Write(ping);
                 Thread.Sleep(100);
             }
         }
@@ -244,10 +281,12 @@ namespace Exodus.Network.ServerSide
         {
             IsRunning = false;
             if (NetReader != null)
-            {
                 NetReader.Close();
-                sender.Close();
-            }
+            DBTalker.Close();
+            if (ClientSender != null)
+                ClientSender.Close();
+            if (ServerSender != null)
+                ServerSender.Close();
             InternetGames.Clear();
         }
     }

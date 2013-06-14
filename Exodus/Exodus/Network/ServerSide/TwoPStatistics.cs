@@ -55,7 +55,7 @@ namespace Exodus.Network.ServerSide
                 SStatsPlusThree[0] = (byte)((SStats.Length + 1) / 256);
                 SStatsPlusThree[1] = (byte)((SStats.Length + 1) % 256);
                 SStatsPlusThree[2] = 2;
-                SyncClient.SendDataToGameManager(SStatsPlusThree);
+                SyncClient.SendDataToGameManagerAsServer(SStatsPlusThree);
                 Reset();
             }
         }

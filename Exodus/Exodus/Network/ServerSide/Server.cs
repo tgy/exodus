@@ -410,7 +410,7 @@ namespace Exodus.Network.ServerSide
             WinPacket[1] = (byte)(Sint.Length % 256);
             WinPacket[2] = 4;
             Sint.CopyTo(WinPacket, 3);
-            SyncClient.SendDataToGameManager(WinPacket);
+            SyncClient.SendDataToGameManagerAsServer(WinPacket);
         }
         private static int IsSClientAlreadyConnected(SClient client)
         {

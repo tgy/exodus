@@ -56,8 +56,8 @@ namespace Exodus.Network.ClientSide
             sender = new BinaryWriter(client.GetStream());
             Data.Network.ServerIP = "Connected to " + IP + ":" + Data.Network.Port;
             IsRunning = true;
-            Receive();
             SendObject(Data.PlayerInfos.InternetID);
+            Receive();
         }
         public static void RunGame()
         {

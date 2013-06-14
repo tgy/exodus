@@ -40,7 +40,7 @@ namespace Exodus.Network.ServerSide
             msg[1] = 2;
             msg[2] = 3;
             msg[3] = (byte)InternetID;
-            SyncClient.SendDataToGameManager(msg);
+            SyncClient.SendDataToGameManagerAsServer(msg);
         }
 
         //private void UpdateConnectionStatus()

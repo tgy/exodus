@@ -200,6 +200,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="PlayGame\AStar.cs" />
     <Compile Include="PlayGame\Camera.cs" />
+    <Compile Include="PlayGame\Items\Buildings\HydrogenExtractor.cs" />
     <Compile Include="PlayGame\Items\Buildings\Labo.cs" />
     <Compile Include="PlayGame\Items\Obstacles\Iron.cs" />
     <Compile Include="PlayGame\Items\Obstacles\Nothing2x2.cs" />

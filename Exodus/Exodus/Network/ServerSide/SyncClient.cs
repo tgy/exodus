@@ -91,7 +91,7 @@ namespace Exodus.Network.ServerSide
                     ClientSender = new BinaryWriter(Client.GetStream());
                     Pinger = new Thread(new ParameterizedThreadStart(Ping));
                     Pinger.Name = "SyncClientPing";
-                    Pinger.Start();
+                    Pinger.Start(ClientSender);
                     break;
                 case 2:
                     DBTalker = new BinaryWriter(Client.GetStream());

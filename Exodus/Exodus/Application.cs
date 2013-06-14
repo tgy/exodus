@@ -396,11 +396,20 @@ namespace Exodus
         }
         private void BeginGame(MenuState m, int i)
         {
+            BeginGame();
+        }
+        private bool BeginGame()
+        {
             GameState playState = new PlayState(this);
             Push(playState);
             if (Server.IsRunning)
                 Server.RunGame();
             Client.RunGame();
+            return true;
+        }
+        private void LaunchGame(MenuState m, int i)
+        {
+            Client.SendObject(new Network.Orders.LaunchGame());
         }
         private void Editor(MenuState m, int i)
         {
@@ -587,7 +596,7 @@ namespace Exodus
                                                 5 * Data.GameDisplaying.Epsilon));
             return baseMenuState;
         }
-        private void ResetObservers(string s1, string s2, string s3)
+        private bool ResetObservers(string s1, string s2, string s3)
         {
             observer1.Txt = s1;
             observer2.Txt = s2;
@@ -595,6 +604,7 @@ namespace Exodus
             observer1.Pos.X = (Data.Window.WindowWidth - GUI.Fonts.Eurostile12.MeasureString(s1).X) / 2;
             observer2.Pos.X = (Data.Window.WindowWidth - GUI.Fonts.Eurostile12.MeasureString(s2).X) / 2;
             observer3.Pos.X = (Data.Window.WindowWidth - GUI.Fonts.Eurostile12.MeasureString(s3).X) / 2;
+            return true;
         }
         private MenuState LaunchingGameMenu(bool CanLaunch, ParticleEngine.ParticleEngine particleMenu)
         {
@@ -602,7 +612,7 @@ namespace Exodus
             Texture2D t = Textures.Menu["Observers"];
             gameLaunching.Items.Add(new Passive(t, (Data.Window.WindowWidth - t.Width) / 2, Data.Window.ScreenCenter.Y + 215, Data.GameDisplaying.Epsilon * 4));
             MenuButton m = new LaunchingOrangeButton("");
-            m.DoClick = BeginGame;
+            m.DoClick = LaunchGame;
             MenuHorizontal launching = new MenuHorizontal(Data.Window.ScreenCenter.X - 118, Data.Window.ScreenCenter.Y + 180, 0);
             launching.Create(new List<Component> { m });
             if (observer1 == null)
@@ -611,12 +621,16 @@ namespace Exodus
                 observer2 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 272);
             if (observer3 == null)
                 observer3 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 313);
+            if (Network.ClientSide.Client.resetObservers == null)
+                Network.ClientSide.Client.resetObservers = ResetObservers;
             gameLaunching.Items.Add(new Container(new List<Component>
             {
                 observer1, observer2, observer3
             }));
             if (CanLaunch)
                 gameLaunching.Items.Add(launching);
+            if (Client.RunGameFunc == null)
+                Client.RunGameFunc = BeginGame;
             if (player1 == null)
             {
                 player1 = new PlayerInfosLaunching(Data.Window.ScreenCenter.X - 385, Data.Window.ScreenCenter.Y, Data.GameDisplaying.Epsilon * 3, false);

@@ -18,6 +18,7 @@ namespace Exodus.Network.ServerSide
         public static Game TheGame;
         private static TcpListener server;
         public static bool IsRunning;
+        public static bool GameRunned;
         private static Thread Client_reading;
         private static Thread Observer_reading;
         private static Thread SyncObservers = null;
@@ -41,6 +42,7 @@ namespace Exodus.Network.ServerSide
             TheGame = new Game(LocalIP(), "Default");
             Data.Network.GameStartTime = DateTime.Now;
             IsRunning = true;
+            GameRunned = false;
             //SyncClient
             Thread OnlineSynchronyzation = new Thread(SyncClient.ConnectAsServer);
             OnlineSynchronyzation.Name = "OnlineSynchronyzation";
@@ -99,10 +101,10 @@ namespace Exodus.Network.ServerSide
         }
         public static void RunGame()
         {
+            GameRunned = true;
             TPStats = new TwoPStatistics();
             Thread ReSyncAuto = new Thread(ReSyncTimer);
             ReSyncAuto.Name = "ReSyncAuto";
-            ReSyncAuto.Start();
             if (SyncObservers != null)
                 SyncObservers.Abort();
         }
@@ -290,6 +292,8 @@ namespace Exodus.Network.ServerSide
             }
             if (o is string)
                 SendToAll("[" + DateTime.Now.ToShortTimeString() + "] <" + client.Name + "> " + (string)o);
+            else if (o is LaunchGame)
+                SendToAll(o);
             else if (o is DisconnectionMessage)
             {
                 client.Stop();
@@ -325,14 +329,17 @@ namespace Exodus.Network.ServerSide
             else if (o is int)
             {
                 client.InternetID = (int)o;
-                client.SendInternetIDToGameManager();
-                string[][] result = SyncClient.SendSQLRequest("SELECT `name`, `avatar` FROM `user` WHERE `id` = " + client.InternetID);
-                PlayerOpponent.name = result[0][0];
-                PlayerOpponent.avatarURL = result[0][1];
-                PlayerOpponent.rank = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + client.InternetID + ")"))[0][0]) + 1;
-                PlayerOpponent.victories = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + client.InternetID))[0][0]);
-                PlayerOpponent.defeats = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + client.InternetID + " AND (`P1ID`=" + client.InternetID + " OR `P2ID`=" + client.InternetID + ")"))[0][0]);
-                player2.Reset(PlayerOpponent.name, PlayerOpponent.avatarURL, PlayerOpponent.rank, PlayerOpponent.victories, PlayerOpponent.defeats, false);
+                if (client.InternetID != Data.PlayerInfos.InternetID)
+                {
+                    client.SendInternetIDToGameManager();
+                    string[][] result = SyncClient.SendSQLRequest("SELECT `name`, `avatar` FROM `user` WHERE `id` = " + client.InternetID);
+                    PlayerOpponent.name = result[0][0];
+                    PlayerOpponent.avatarURL = result[0][1];
+                    PlayerOpponent.rank = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + client.InternetID + ")"))[0][0]) + 1;
+                    PlayerOpponent.victories = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + client.InternetID))[0][0]);
+                    PlayerOpponent.defeats = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + client.InternetID + " AND (`P1ID`=" + client.InternetID + " OR `P2ID`=" + client.InternetID + ")"))[0][0]);
+                    player2.Reset(PlayerOpponent.name, PlayerOpponent.avatarURL, PlayerOpponent.rank, PlayerOpponent.victories, PlayerOpponent.defeats, false);
+                }
             }
             else if (o is Statistics)
                 TPStats.AddStatistic((Statistics)o);
@@ -366,6 +373,8 @@ namespace Exodus.Network.ServerSide
                     TheGame.NbObservers--;
                     GameHasChanged = true;
                 }
+                else if (o is LaunchGame)
+                    SendToAll(o);
                 else if (o is PlayerName)
                 {
                     if (client.Name == "Undefined")
@@ -396,9 +405,13 @@ namespace Exodus.Network.ServerSide
         }
         private static void SyncObserversAuto()
         {
-            while (IsRunning)
+            while (IsRunning && !GameRunned)
             {
-                Thread.Sleep(100);
+                UpdaterObservers<string> r = new UpdaterObservers<string>();
+                for (int i = Data.Network.MaxPlayersInCurrentGame; i < Data.Network.ConnectedClients.Count && r.Count < 3; i++)
+                    r.Add(Data.Network.ConnectedClients[i].Name);
+                SendToAll(r);
+                Thread.Sleep(1000);
             }
         }
         #endregion
@@ -424,7 +437,7 @@ namespace Exodus.Network.ServerSide
             WinPacket[1] = (byte)(Sint.Length % 256);
             WinPacket[2] = 4;
             Sint.CopyTo(WinPacket, 3);
-            SyncClient.SendDataToGameManager(WinPacket);
+            SyncClient.SendDataToGameManagerAsServer(WinPacket);
         }
         private static int IsSClientAlreadyConnected(SClient client)
         {

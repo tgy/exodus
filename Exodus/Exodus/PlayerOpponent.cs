@@ -8,6 +8,7 @@ namespace Exodus
 {
     public static class PlayerOpponent
     {
+        public static string name = "";
         public static byte ConnectionState = 2;
         public static Texture2D avatar = null;
         public static string avatarURL = "";

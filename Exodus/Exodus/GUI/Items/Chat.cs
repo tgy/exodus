@@ -17,13 +17,13 @@ namespace Exodus.GUI.Items
             Area.X = x;
             Area.Y = y;
             _listMsg = new List<string>();
-            textbox = new Components.TextBox((Data.Window.WindowWidth - Textures.Menu["ChatTextBox"].Width)/2,
+            textbox = new Components.TextBox((Data.Window.WindowWidth - Textures.Menu["ChatTextBox"].Width) / 2,
                                              Data.Window.WindowHeight - 190, "", "ChatTextBox", new Padding(12, 0), 50,
-                                             2*Data.GameDisplaying.Epsilon);
+                                             2 * Data.GameDisplaying.Epsilon);
             textbox.SetPosition();
             textbox.SetColor(16, 99, 146);
             textbox.maxChars = 60;
-            Components.Add(textbox);
+            //Components.Add(textbox);
         }
         public void InsertMsg(string msg)
         {
@@ -34,11 +34,25 @@ namespace Exodus.GUI.Items
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             base.Update(gameTime);
-            if (textbox.Focused && Inputs.KeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Enter) &&
-                Inputs.PreKeyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Enter))
+            if (Inputs.KeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Enter) && Inputs.PreKeyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Enter))
             {
-                Network.ClientSide.Client.SendObject(textbox.Value);
-                textbox.ResetValue();
+                if (textbox.Focused)
+                {
+                    if (textbox.Value != "")
+                    {
+                        string s = textbox.Value;
+                        textbox.ResetValue();
+                        Network.ClientSide.Client.SendObject(s);
+                    }
+                    textbox.Focused = false;
+                }
+                if (Components.Contains(textbox))
+                    Components.Remove(textbox);
+                else
+                {
+                    Components.Add(textbox);
+                    textbox.Focus();
+                }
             }
         }
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)

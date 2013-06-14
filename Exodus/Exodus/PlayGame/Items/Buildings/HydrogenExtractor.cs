@@ -7,9 +7,11 @@ namespace Exodus.PlayGame.Items.Buildings
 {
     class HydrogenExtractor : Building
     {
+        public int Value;
         public HydrogenExtractor(int IdPlayer)
         {
             Name = "Hydrogen extractor";
+            this.Value = 0;
             maxLife = 666;
             maxShield = 666;
             Width = 2;

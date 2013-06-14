@@ -8,7 +8,6 @@ namespace Exodus.PlayGame.Items.Obstacles
     [Serializable]
     class Gas : Obstacle
     {
-        public int Hydrogen = 5000;
         public Gas()
         {
             Name = "Gas";
@@ -16,11 +15,12 @@ namespace Exodus.PlayGame.Items.Obstacles
             maxShield = 666;
             Width = 2;
             base.Initialize(40, 24, 25, 24);
+            this.currentResource = new Resource(0, 0, 0, 50, 0);
         }
 
         protected override void UpdateAnim()
         {
-            anim = (int)(Hydrogen > 0 ? Animation.Anim : Animation.Stand);
+            anim = (int)(this.currentResource.Hydrogen > 0 ? Animation.Anim : Animation.Stand);
         }
     }
 }

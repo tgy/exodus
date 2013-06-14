@@ -38,14 +38,25 @@ namespace Exodus.PlayGame.Tasks
                 {
                     tempItem = this.child;
                     // Si la place est prise, alors on oublie :/
-                    if (!IsPlaceAvailable(pos) && !(this.child is PlayGame.Items.Buildings.HydrogenExtractor))
+                    if (!IsPlaceAvailable(pos) && !(this.child is Items.Buildings.HydrogenExtractor))
                         Finished = true;
                     else
                     {
-                        // On réserve l'espace !
-                        for (int i = pos.X, mi = i + tempItem.Width; i < mi; i++)
-                            for (int j = pos.Y, mj = j + tempItem.Width; j < mj; j++)
-                                Map.MapCells[i, j].ListItems.Add(new PlayGame.Items.Obstacles.Nothing1x1());
+                        if (this.child is Items.Buildings.HydrogenExtractor)
+                        {
+                            Items.Obstacles.Gas gas = (Items.Obstacles.Gas)Map.MapCells[this.pos.X, this.pos.Y].ListItems.FirstOrDefault(x => x is Items.Obstacles.Gas);
+                            if (gas != null)
+                            {
+                                this.child.currentResource = gas.currentResource;
+                            }
+                        }
+                        else
+                        {
+                            // On réserve l'espace !
+                            for (int i = pos.X, mi = i + tempItem.Width; i < mi; i++)
+                                for (int j = pos.Y, mj = j + tempItem.Width; j < mj; j++)
+                                    Map.MapCells[i, j].ListItems.Add(new PlayGame.Items.Obstacles.Nothing1x1());
+                        }
                         tempItem = this.Parent;
                         Move m = new Move(
                                 this.Parent,

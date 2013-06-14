@@ -170,6 +170,7 @@ namespace Exodus.Network.ClientSide
                     obj is DisconnectionMessage ||
                     obj is PlayerName ||
                     obj is Orders.Tasks.ProductItem ||
+                    obj is Orders.Tasks.CheatSpawn ||
                     obj is int ||
                     obj is Statistics ||
                     obj is LaunchGame)

@@ -128,6 +128,7 @@
     <Compile Include="GUI\Components\Buttons\GameButtons\Mini.cs" />
     <Compile Include="GUI\Components\Buttons\MenuButtons\ConnectionOrangeButton.cs" />
     <Compile Include="GUI\Components\Buttons\MenuButtons\ConnectionGreenButton.cs" />
+    <Compile Include="GUI\Components\Buttons\MenuButtons\LaunchingOrangeButton.cs" />
     <Compile Include="GUI\Components\Buttons\MenuButtons\OrangeMenuButton.cs" />
     <Compile Include="GUI\Components\JustTextureRectangle.cs" />
     <Compile Include="GUI\Components\Minimap.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="GUI\Components\Label.cs" />
     <Compile Include="GUI\Components\ProgressBar.cs" />
     <Compile Include="GUI\Components\ScrollBar.cs" />
+    <Compile Include="GUI\Items\PlayerInfosLaunching.cs" />
     <Compile Include="GUI\Items\PlayerInfos.cs" />
     <Compile Include="GUI\Items\Form.cs" />
     <Compile Include="GUI\Items\ScrollingListButtons.cs" />

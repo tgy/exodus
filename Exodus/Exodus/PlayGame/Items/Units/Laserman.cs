@@ -13,12 +13,12 @@ namespace Exodus.PlayGame.Items.Units
             Name = "Laserman";
             maxLife = 4242;
             maxShield = 4242;
-            Speed = 200;
+            Speed = 520;
             AttackStrength = 69;
             AttackDelayMax = 10;
             currentAttackDelay = AttackDelayMax;
             this.IdPlayer = IdPlayer;
-            Initialize(40, 24, -47, -5);
+            Initialize(20, 24, -47, -5);
         }
     }
 }

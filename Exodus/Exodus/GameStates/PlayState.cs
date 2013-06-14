@@ -89,6 +89,7 @@ namespace Exodus.GameStates
             PlayGame.Items.Units.Worker w = new PlayGame.Items.Units.Worker(2);
             PlayGame.Items.Obstacles.Gas gasToogy = new PlayGame.Items.Obstacles.Gas();
             gasToogy.SetPos(100, 11, true);
+            Map.AddItem(gasToogy);
             w.SetPos(100, 10, true);
             Map.AddItem(w);
             w = new PlayGame.Items.Units.Worker(1);
@@ -117,7 +118,7 @@ namespace Exodus.GameStates
                     spriteBatch.Draw(tile.Item1,
                                      v,
                                      tile.Item2,
-                                     (Data.GameDisplaying.DisplayObstacle && Map.ObstacleMap[x, y]
+                                     (Data.GameDisplaying.DisplayObstacle && Map.MapCells[x, y].ListItems.Count > 0
                                           ? Data.GameDisplaying.DisplayingColor
                                           : Color.White),
                                      0f, Vector2.Zero, 1f, SpriteEffects.None, 1f
@@ -414,7 +415,7 @@ namespace Exodus.GameStates
 
             tasksDisplayer.IsVisible = Map.ListSelectedItems.Count > 0 && (item is Unit || item is Building);
 
-            buildingProduction.IsVisible = Map.ListSelectedItems.Count == 1 &&  item is Building;
+            buildingProduction.IsVisible = Map.ListSelectedItems.Count == 1 && item is Building;
             if (buildingProduction.IsVisible)
                 buildingProduction.Set(item.GetType());
 
@@ -426,6 +427,8 @@ namespace Exodus.GameStates
             {
                 Network.Orders.Tasks.ReSync Orders = Network.ClientSide.Client.ReSyncOrder;
                 Network.ClientSide.Client.MustReSync = false;
+
+
                 PlayGame.Map.ListItems = Orders.listItems;
                 PlayGame.Map.ListPassiveItems = Orders.listPassives;
                 for (int x = 0; x < PlayGame.Map.Width; x++)
@@ -433,10 +436,14 @@ namespace Exodus.GameStates
                         PlayGame.Map.MapCells[x, y].ListItems.Clear();
                 for (int i = 0; i < Orders.listItems.Count; i++)
                     if (Orders.listItems[i].pos != null)
-                        PlayGame.Map.MapCells[Orders.listItems[i].pos.Value.X, Orders.listItems[i].pos.Value.Y].ListItems.Add(Orders.listItems[i]);
+                        for (int y = Orders.listItems[i].pos.Value.Y, mY = y + Orders.listItems[i].Width; y < mY; y++)
+                            for (int x = Orders.listItems[i].pos.Value.X, mX = x + Orders.listItems[i].Width; x < mX; x++)
+                                PlayGame.Map.MapCells[x, y].ListItems.Add(Orders.listItems[i]);
                 for (int i = 0; i < Orders.listPassives.Count; i++)
                     if (Orders.listPassives[i].pos != null)
-                        PlayGame.Map.MapCells[Orders.listPassives[i].pos.Value.X, Orders.listPassives[i].pos.Value.Y].ListItems.Add(Orders.listPassives[i]);
+                        for (int y = Orders.listItems[i].pos.Value.Y, mY = y + Orders.listItems[i].Width; y < mY; y++)
+                            for (int x = Orders.listItems[i].pos.Value.X, mX = x + Orders.listItems[i].Width; x < mX; x++)
+                                PlayGame.Map.MapCells[x, y].ListItems.Add(Orders.listPassives[i]);
             }
             base.Update(gameTime);
         }

@@ -39,7 +39,7 @@ namespace Exodus
         PlayerInfos PlayerInfos;
         StatusBar statusBar;
         ConnectionOrangeButton settings_sound;
-        Label observer1, observer2, observer3;
+        Label observer1 = null, observer2 = null, observer3 = null;
         PlayerInfosLaunching player1 = null, player2 = null;
         public void Push(GameState g)
         {
@@ -365,8 +365,11 @@ namespace Exodus
                             Data.Network.LastIP = SyncClient.InternetGames[_scrollingSelection.SelectedItem].IP;
                         //Data.Network.LastIP = "90.24.210.69";
                         Data.Network.SinglePlayer = false;
+                        player2.Reset(Exodus.Player.avatarURL, Exodus.Player.rank, Exodus.Player.victories, Exodus.Player.defeats, true);
                         NetGame.Start("C");
                         Push(m);
+                        statusBar.Active = true;
+                        statusBar.Text = "WAITING";
                     }
                 }
             }
@@ -378,8 +381,11 @@ namespace Exodus
                     PlaySinglePlayer(m, i);
                     Data.Network.LastIP = ipJoin.Value;
                     Data.Network.SinglePlayer = false;
+                    player2.Reset(Exodus.Player.avatarURL, Exodus.Player.rank, Exodus.Player.victories, Exodus.Player.defeats, true);
                     NetGame.Start("C");
                     Push(m);
+                    statusBar.Active = true;
+                    statusBar.Text = "WAITING FOR PLAYERS";
                 }
                 else
                 {
@@ -599,14 +605,16 @@ namespace Exodus
             m.DoClick = BeginGame;
             MenuHorizontal launching = new MenuHorizontal(Data.Window.ScreenCenter.X - 118, Data.Window.ScreenCenter.Y + 180, 0);
             launching.Create(new List<Component> { m });
-            observer1 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 231);
-            observer2 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 272);
-            observer3 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 313);
+            if (observer1 == null)
+                observer1 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 231);
+            if (observer2 == null)
+                observer2 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 272);
+            if (observer3 == null)
+                observer3 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 313);
             gameLaunching.Items.Add(new Container(new List<Component>
             {
                 observer1, observer2, observer3
             }));
-            ResetObservers("Toogy", "Zehir", "RustyCrowbar");
             gameLaunching.Items.Add(launching);
             if (player1 == null)
             {
@@ -616,9 +624,11 @@ namespace Exodus
             if (player2 == null)
             {
                 player2 = new PlayerInfosLaunching(Data.Window.ScreenCenter.X + 90, Data.Window.ScreenCenter.Y, Data.GameDisplaying.Epsilon * 3, true);
+                Server.player2 = player2;
             }
             gameLaunching.Items.Add(player1);
             gameLaunching.Items.Add(player2);
+            gameLaunching.Items.Add(statusBar);
             return gameLaunching;
         }
         private void LaunchGameMenu(MenuState m, int i)
@@ -627,6 +637,8 @@ namespace Exodus
             player1.Reset(Exodus.Player.avatarURL, Exodus.Player.rank, Exodus.Player.victories, Exodus.Player.defeats, true);
             Data.Network.SinglePlayer = false;
             NetGame.Start("SC");
+            statusBar.Active = true;
+            statusBar.Text = "WAITING FOR PLAYERS";
         }
     }
 }

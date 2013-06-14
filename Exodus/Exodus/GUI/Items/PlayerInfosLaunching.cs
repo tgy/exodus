@@ -106,7 +106,7 @@ namespace Exodus.GUI.Items
                     _avatar = Exodus.Player.avatar;
                 if (avatar != null)
                     Components.Remove(avatar);
-                avatar = new JustTexture(_avatar, avatarFrame.Area.X + (_avatarFrame.Width - _avatar.Width) / 2 - 1 + _step1, avatarFrame.Area.Y + (_avatarFrame.Height - _avatar.Height) / 2 - 1, layerDepth);
+                avatar = new JustTexture(_avatar, avatarFrame.Area.X + (_avatarFrame.Width - _avatar.Width) / 2 - 1, avatarFrame.Area.Y + (_avatarFrame.Height - _avatar.Height) / 2 - 1, layerDepth);
                 Components.Add(avatar);
             }
             catch

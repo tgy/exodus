@@ -280,7 +280,7 @@ namespace Exodus.Network.ClientSide
                 if (o is Orders.Tasks.CheatSpawn)
                 {
                     Orders.Tasks.CheatSpawn Orders = (Orders.Tasks.CheatSpawn)o;
-                    new PlayGame.Tasks.CheatSpawn(null, 0, PlayGame.Items.Loader.LoadItem(Orders.child, Orders.IdPlayer), new Point(Orders.x, Orders.y)).Initialize();
+                    new PlayGame.Tasks.CheatSpawn(null, 0, PlayGame.Items.Loader.LoadItem(Orders.child, Orders.IdPlayer), new Point(Orders.x, Orders.y), Orders.nextId).Initialize();
                 }
                 else if (o is Orders.Tasks.Move)
                 {

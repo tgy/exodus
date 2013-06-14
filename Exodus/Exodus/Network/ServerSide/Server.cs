@@ -22,7 +22,7 @@ namespace Exodus.Network.ServerSide
         private static Thread Client_reading;
         private static Thread Observer_reading;
         private static Thread SyncObservers = null;
-        private static int PrimaryKey = 2;
+        private static int PrimaryKey = 0;
         private static bool GameHasChanged = false;
         private static TwoPStatistics TPStats;
         public static GUI.Items.PlayerInfosLaunching player2;

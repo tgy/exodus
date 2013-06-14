@@ -12,6 +12,12 @@ namespace Exodus.PlayGame.Tasks
     {
         PlayGame.Item child;
         Point pos;
+        int primaryId = 0;
+        public CheatSpawn(Item parent, int timer, Item child, Point pos, int primaryId)
+            : this(parent, timer, child, pos)
+        {
+            this.primaryId = primaryId;
+        }
         public CheatSpawn(Item parent, int timer, Item child, Point pos)
             : base(parent)
         {
@@ -21,6 +27,7 @@ namespace Exodus.PlayGame.Tasks
         public override void Initialize()
         {
             child.SetPos(pos.X, pos.Y, true);
+            child.PrimaryId = primaryId;
             Map.AddItem(child);
             Finished = true;
         }

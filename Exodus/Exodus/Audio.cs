@@ -37,7 +37,7 @@ namespace Exodus
             Attack[typeof(University)] = null;
             Attack[typeof(Laboratory)] = null;
             Attack[typeof (Gas)] = null;
-            Attack[typeof(Laserman)] = null;
+            Attack[typeof(Laserman)] = LoadAudio(content, "Audio/laserman-attack", true);
             Attack[typeof(Iron)] = null;
             Attack[typeof(HydrogenExtractor)] = null;
             Die[typeof(Gunner)] = null;

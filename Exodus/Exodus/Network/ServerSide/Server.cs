@@ -73,9 +73,9 @@ namespace Exodus.Network.ServerSide
                         //throw new Exception("Client " + Accepted.IP + " was already connected! (two clients started with the same IP?)");
                     }
 
+                    Data.Network.ConnectedClients.Add(Accepted);
                     if (Data.Network.ConnectedClients.Count < Data.Network.MaxPlayersInCurrentGame)
                     {
-                        Data.Network.ConnectedClients.Add(Accepted);
                         TheGame.NbPlayers++;
                         GameHasChanged = true;
                         Client_reading = new Thread(new ParameterizedThreadStart(ReceivePlayer));
@@ -87,13 +87,12 @@ namespace Exodus.Network.ServerSide
                     }
                     else
                     {
-                        Data.Network.ConnectedClients.Add(Accepted);
                         TheGame.NbObservers++;
+                        GameHasChanged = true;
                         Observer_reading = new Thread(new ParameterizedThreadStart(ReceiveObserver));
                         Observer_reading.Name = "Receiver (" + Accepted.IP + ") (Observer)";
                         Observer_reading.Start(Accepted);
                     }
-                    GameHasChanged = true;
                 }
                 else
                     Thread.Sleep(100);

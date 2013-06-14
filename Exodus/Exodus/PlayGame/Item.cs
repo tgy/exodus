@@ -292,12 +292,26 @@ namespace Exodus.PlayGame
                     // Si on doit arrêter toutes les tasks
                     if (overrideTasks)
                     {
-                        if (TasksList.Count >= 1)
+                        /*if (TasksList.Count >= 1)
                         {
                             Task temp = TasksList[0];
                             temp.MustStop = true;
                             TasksList.Clear();
                             TasksList.Add(temp);
+                        }*/
+                        for (int i = 0; i < TasksList.Count; )
+                        {
+                            if (i == 0)
+                            {
+                                TasksList[0].MustStop = true;
+                                i++;
+                            }
+                            else
+                            {
+                                TasksList[i].BruteFinish();
+                                TasksList.RemoveAt(i);
+                            }
+
                         }
                     }
                     if (TasksList.Count == 0)
@@ -321,7 +335,10 @@ namespace Exodus.PlayGame
                 if (Position == 0)
                     TasksList[0].MustStop = true;
                 else
+                {
+                    TasksList[Position].BruteFinish();
                     TasksList.RemoveAt(Position);
+                }
             }
         }
         #endregion

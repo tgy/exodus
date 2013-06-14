@@ -306,27 +306,34 @@ namespace Exodus.GUI.Items
             }
             if (item != null)
             {
-
-                if (Data.Network.SinglePlayer)
+                if (!(PlayGame.Map.PlayerResources >= Data.GameInfos.CostsItems[t]))
                 {
-                    item.AddTask(
-                        new PlayGame.Tasks.ProductItem(item, Data.GameInfos.timeCreatingItem[t],
-                                                       PlayGame.Items.Loader.LoadUnit(t, item.IdPlayer), item.pos.Value, true, true, false),
-                        false, false);
+                    Network.ClientSide.Client.chat.InsertMsg("Not enough resources: you are missing" + (PlayGame.Map.PlayerResources - Data.GameInfos.CostsItems[t]).ToString());
                 }
                 else
                 {
-                    Network.ClientSide.Client.SendObject(
-                        new Network.Orders.Tasks.ProductItem(
-                            item.PrimaryId,
-                            false,
-                            t,
-                            item.pos.Value.X,
-                            item.pos.Value.Y,
-                            true,
-                            true,
-                            false)
-                    );
+                    PlayGame.Map.PlayerResources -= Data.GameInfos.CostsItems[t];
+                    if (Data.Network.SinglePlayer)
+                    {
+                        item.AddTask(
+                            new PlayGame.Tasks.ProductItem(item, Data.GameInfos.timeCreatingItem[t],
+                                                           PlayGame.Items.Loader.LoadUnit(t, item.IdPlayer), item.pos.Value, true, true, false),
+                            false, false);
+                    }
+                    else
+                    {
+                        Network.ClientSide.Client.SendObject(
+                            new Network.Orders.Tasks.ProductItem(
+                                item.PrimaryId,
+                                false,
+                                t,
+                                item.pos.Value.X,
+                                item.pos.Value.Y,
+                                true,
+                                true,
+                                false)
+                        );
+                    }
                 }
             }
         }

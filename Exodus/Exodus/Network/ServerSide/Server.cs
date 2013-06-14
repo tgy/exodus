@@ -23,7 +23,7 @@ namespace Exodus.Network.ServerSide
         private static Thread Observer_reading;
         private static Thread SyncObservers = null;
         private static int PrimaryKey = 2;
-        private static bool GameHasChanged = true;
+        private static bool GameHasChanged = false;
         private static TwoPStatistics TPStats;
         public static GUI.Items.PlayerInfosLaunching player2;
         #region Start
@@ -48,13 +48,13 @@ namespace Exodus.Network.ServerSide
             OnlineSynchronyzation.Name = "OnlineSynchronyzation";
             OnlineSynchronyzation.Start();
             //
-            Thread BroadcastSignal = new Thread(Broadcast);
-            BroadcastSignal.Name = "BroadcastSignal";
-            BroadcastSignal.Start();
             SyncObservers = new Thread(SyncObserversAuto);
             SyncObservers.Name = "Sync Observers";
             SyncObservers.Start();
             SClient Accepted;
+            Thread BroadcastSignal = new Thread(Broadcast);
+            BroadcastSignal.Name = "BroadcastSignal";
+            BroadcastSignal.Start();
             while (IsRunning)
             {
                 TcpClient client;
@@ -73,9 +73,9 @@ namespace Exodus.Network.ServerSide
                         //throw new Exception("Client " + Accepted.IP + " was already connected! (two clients started with the same IP?)");
                     }
 
+                    Data.Network.ConnectedClients.Add(Accepted);
                     if (Data.Network.ConnectedClients.Count < Data.Network.MaxPlayersInCurrentGame)
                     {
-                        Data.Network.ConnectedClients.Add(Accepted);
                         TheGame.NbPlayers++;
                         GameHasChanged = true;
                         Client_reading = new Thread(new ParameterizedThreadStart(ReceivePlayer));
@@ -87,13 +87,12 @@ namespace Exodus.Network.ServerSide
                     }
                     else
                     {
-                        Data.Network.ConnectedClients.Add(Accepted);
                         TheGame.NbObservers++;
+                        GameHasChanged = true;
                         Observer_reading = new Thread(new ParameterizedThreadStart(ReceiveObserver));
                         Observer_reading.Name = "Receiver (" + Accepted.IP + ") (Observer)";
                         Observer_reading.Start(Accepted);
                     }
-                    GameHasChanged = true;
                 }
                 else
                     Thread.Sleep(100);
@@ -209,19 +208,21 @@ namespace Exodus.Network.ServerSide
         {
             UdpClient BroadCaster = new UdpClient();
             BroadCaster.EnableBroadcast = true;
-            byte[] message = Serialize.Serializer.ObjectToByteArray(TheGame);
-            byte[] temp;
+            byte[] temp = new byte[0]; //= Serialize.Serializer.ObjectToByteArray(TheGame);
+            byte[] message = new byte[0];
             NetworkInterface[] NetInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+            while (!GameHasChanged)
+                Thread.Sleep(10);
             while (IsRunning)
             {
                 if (GameHasChanged)
                 {
                     temp = Serialize.Serializer.ObjectToByteArray(TheGame);
                     GameHasChanged = false;
-                    message = new byte[temp.Length + 2];
-                    message[0] = (byte)(temp.Length / 256);
-                    message[1] = (byte)(temp.Length % 256);
-                    temp.CopyTo(message, 2);
+                    //message = new byte[temp.Length + 2];
+                    //message[0] = (byte)(temp.Length / 256);
+                    //message[1] = (byte)(temp.Length % 256);
+                    //temp.CopyTo(message, 2);
                     SyncClient.SendGame(temp);
                 }
 
@@ -232,7 +233,7 @@ namespace Exodus.Network.ServerSide
                     {
                         if (unicastIPAddressInformation.Address.AddressFamily == AddressFamily.InterNetwork && unicastIPAddressInformation.IPv4Mask != null)
                         {
-                            BroadCaster.Send(message, message.Length, IPAddress.Broadcast.ToString(), 4269);
+                            BroadCaster.Send(temp/*message*/, temp.Length, IPAddress.Broadcast.ToString(), 4269);
                         }
                     }
                 }

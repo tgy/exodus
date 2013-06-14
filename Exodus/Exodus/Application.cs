@@ -239,7 +239,7 @@ namespace Exodus
             pass = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, 2 * Data.GameDisplaying.Epsilon);
             pass.Hidden = true;
             connectionForm.Components.Add(pass);
-            ConnectionOrangeButton connectionFormSubmitter = new ConnectionOrangeButton("CONNECT TO EXODUS")
+            ConnectionOrangeButton connectionFormSubmitter = new ConnectionOrangeButton("CONNECT TO EXODUS ONLINE")
             {
                 SubMenu = mainMenu,
                 DoClick = ConnectionFormSubmit
@@ -247,7 +247,7 @@ namespace Exodus
             connectionForm.SubmitterId = connectionForm.Components.Count;
             connectionForm.Components.Add(connectionFormSubmitter);
             ConnectionGreenButton connectionFormSignup = new ConnectionGreenButton("GET AN ACCOUNT FOR FREE");
-            // connectionFormSignup.DoClick = FIX ME (lance une page html vers la page d'inscription du site)
+            connectionFormSignup.DoClick = ConnectionForm;//FIX ME (lance une page html vers la page d'inscription du site)
             connectionForm.Components.Add(connectionFormSignup);
             connectionForm.Initialize();
             login.ResetValue(Data.Config.Login);
@@ -409,7 +409,7 @@ namespace Exodus
         }
         private void LaunchGame(MenuState m, int i)
         {
-            if (Data.Network.ConnectedClients.Count > 1)
+            //if (Data.Network.ConnectedClients.Count > 1)
                 Client.SendObject(new Network.Orders.LaunchGame());
         }
         private void Editor(MenuState m, int i)
@@ -451,6 +451,10 @@ namespace Exodus
         {
             _temp = m;
             new Thread(ConnectionFormSubmit).Start();
+        }
+        void ConnectionForm(MenuState m, int i)
+        {
+            System.Diagnostics.Process.Start("http://3ten.fr");
         }
         bool _isConnecting = false;
         MenuState _temp;

@@ -102,12 +102,24 @@ namespace Exodus.Network.ClientSide
                 throw new Exception("Another Socket is alreading using the port 4269!");
             }
             EndPoint = new IPEndPoint(IPAddress.Any, 4269);
-            for (int i = 0; i < 10; i++)
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    GamePlusTwo = BroadcastListener.Receive(ref EndPoint);
+            //    Game NewGame = (Game)Serialize.Serializer.ByteArrayToObject(/*ShortenArray(*/GamePlusTwo/*, 2)*/);
+            //    if (!IsGameAlreadyInList(NewGame))
+            //        ServerList.Add(NewGame);
+            //}
+            while (ServerList.Count < 5 && IsRefreshing)
             {
-                GamePlusTwo = BroadcastListener.Receive(ref EndPoint);
-                Game NewGame = (Game)Serialize.Serializer.ByteArrayToObject(ShortenArray(GamePlusTwo, 2));
-                if (!IsGameAlreadyInList(NewGame))
-                    ServerList.Add(NewGame);
+                if (BroadcastListener.Available != 0)
+                {
+                    GamePlusTwo = BroadcastListener.Receive(ref EndPoint);
+                    Game NewGame = (Game)Serialize.Serializer.ByteArrayToObject(/*ShortenArray(*/GamePlusTwo/*, 2)*/);
+                    if (!IsGameAlreadyInList(NewGame))
+                        ServerList.Add(NewGame);
+                }
+                else
+                    Thread.Sleep(100);
             }
             BroadcastListener.Close();
             IsRefreshing = false;
@@ -414,6 +426,7 @@ namespace Exodus.Network.ClientSide
             //Todo: Send disconecting message
             SendObject(new DisconnectionMessage("Requested by user"));
             IsRunning = false;
+            IsRefreshing = false;
             // BroadcastListener.Close();
             sender.Close();
             client.Close();

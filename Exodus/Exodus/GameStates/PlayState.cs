@@ -105,7 +105,10 @@ namespace Exodus.GameStates
                 w = new PlayGame.Items.Units.Worker(1);
                 w.SetPos(100, 20, true);
                 Map.AddItem(w);
-                Map.ListPassiveItems.Add(iron); 
+                Map.ListPassiveItems.Add(iron);
+                PlayGame.Items.Obstacles.Gas g = new PlayGame.Items.Obstacles.Gas();
+                g.SetPos(110, 50, true);
+                Map.ListPassiveItems.Add(g);
             
             }
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
@@ -245,37 +248,41 @@ namespace Exodus.GameStates
 
                                     if (newItem != null && Data.GameInfos.item != null)
                                     {
-                                        if (Data.Network.SinglePlayer)
+                                        // on ne fait rien si le batiment est un extracteur d'hydrogene et qu'on essaye de le poser autre part que sur un puit de gaz
+                                        if (!(newItem is PlayGame.Items.Buildings.HydrogenExtractor && Map.MapCells[(int)mousePos.X, (int)mousePos.Y].ListItems.FirstOrDefault(x => x is PlayGame.Items.Obstacles.Gas) == null))
                                         {
-                                            Data.GameInfos.item.AddTask(
-                                                new PlayGame.Tasks.ProductItem(
-                                                    Data.GameInfos.item,
-                                                    Data.GameInfos.timeCreatingItem[newItem.GetType()],
-                                                    newItem,
-                                                    new Point((int)mousePos.X, (int)mousePos.Y),
-                                                    true,
-                                                    false,
-                                                    true
-                                                ),
-                                                !Inputs.KeyboardState.IsKeyDown(Keys.LeftShift) && !Inputs.KeyboardState.IsKeyDown(Keys.RightShift),
-                                                false
-                                            );
-                                        }
-                                        else
-                                        {
-                                            Network.ClientSide.Client.SendObject(
-                                                new Network.Orders.Tasks.ProductItem(
-                                                    Data.GameInfos.item.PrimaryId,
-                                                    false,
-                                                    _currentExample.GetType(),
-                                                    (int)mousePos.X,
-                                                    (int)mousePos.Y,
-                                                    true,
-                                                    false,
-                                                    true
-                                                )
-                                            );
-                                            //throw new Exception("GO IMPLEMENTER CA EN MULTIPLAYER, SPECE DE GLANDU");
+                                            if (Data.Network.SinglePlayer)
+                                            {
+                                                Data.GameInfos.item.AddTask(
+                                                    new PlayGame.Tasks.ProductItem(
+                                                        Data.GameInfos.item,
+                                                        Data.GameInfos.timeCreatingItem[newItem.GetType()],
+                                                        newItem,
+                                                        new Point((int)mousePos.X, (int)mousePos.Y),
+                                                        true,
+                                                        false,
+                                                        true
+                                                    ),
+                                                    !Inputs.KeyboardState.IsKeyDown(Keys.LeftShift) && !Inputs.KeyboardState.IsKeyDown(Keys.RightShift),
+                                                    false
+                                                );
+                                            }
+                                            else
+                                            {
+                                                Network.ClientSide.Client.SendObject(
+                                                    new Network.Orders.Tasks.ProductItem(
+                                                        Data.GameInfos.item.PrimaryId,
+                                                        false,
+                                                        _currentExample.GetType(),
+                                                        (int)mousePos.X,
+                                                        (int)mousePos.Y,
+                                                        true,
+                                                        false,
+                                                        true
+                                                    )
+                                                );
+                                                //throw new Exception("GO IMPLEMENTER CA EN MULTIPLAYER, SPECE DE GLANDU");
+                                            }
                                         }
                                     }
                                 }

@@ -85,7 +85,7 @@ namespace Exodus
             GameItems[typeof(Gunner) + "2"] = content.Load<Texture2D>("Game/Units/gunner2");
             GameItems[typeof(Spider) + "2"] = content.Load<Texture2D>("Game/Units/Spider");
             GameItems[typeof(Spider) + "1"] = content.Load<Texture2D>("Game/Units/Spider");
-            GameItems[typeof(Habitation) + "2"] = content.Load<Texture2D>("Game/Buildings/habitation");
+            GameItems[typeof(Habitation) + "2"] = content.Load<Texture2D>("Game/Buildings/habitationBlue");
             GameItems[typeof(University) + "1"] = content.Load<Texture2D>("Game/Buildings/labo-yellow");
             GameItems[typeof(University) + "2"] = content.Load<Texture2D>("Game/Buildings/labo-yellow");
             GameItems[typeof(Laboratory) + "1"] = content.Load<Texture2D>("Game/Buildings/labo-yellow");

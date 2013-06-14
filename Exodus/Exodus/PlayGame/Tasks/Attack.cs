@@ -33,6 +33,8 @@ namespace Exodus.PlayGame.Tasks
             }
             else
             {
+                if (!(this.Enemy.TasksList.Count > 0 && this.Enemy.TasksList[0] is Attack))
+                    this.Enemy.AddTask(new Attack(this.Enemy, this.Parent), true, false);
                 this.Parent.currentAttackDelay -= (int)gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (this.Parent.currentAttackDelay < 0)
                 {

@@ -81,7 +81,7 @@ namespace Exodus.GUI.Items
         }
         public void Reset(string pseudo, string avatarURL, int rank, int victories, int defeats, bool isOur)
         {
-            Player.Txt = pseudo;
+            Player.Txt = pseudo.ToUpper();
             Reset(avatarURL, rank, victories, defeats, isOur);
         }
         public void Reset(string avatarURL, int rank, int victories, int defeats, bool IsOur)
@@ -133,7 +133,6 @@ namespace Exodus.GUI.Items
                 FrontPercentage.Width = (int)currentFrontPercentage;
                 Percentage.Txt = (int)(100 * currentFrontPercentage / BackPercentage.Width) + "%";
             }
-            Player.Txt = Data.PlayerInfos.Name.ToUpper();
             base.Update(gameTime);
         }
     }

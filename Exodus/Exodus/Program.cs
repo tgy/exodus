@@ -10,11 +10,6 @@ namespace Exodus
         /// </summary>
         static void Main(string[] args)
        {
-            PlayGame.Researchs.Research r = PlayGame.Researchs.Attack;
-            for (int i = 1; i < 20; i++)
-            {
-                r.Level = i;
-            }
             using (Application game = new Application())
             {
                 game.Run();

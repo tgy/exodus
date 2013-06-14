@@ -74,7 +74,7 @@ namespace Exodus.Network.ServerSide
                     }
 
                     Data.Network.ConnectedClients.Add(Accepted);
-                    if (Data.Network.ConnectedClients.Count < Data.Network.MaxPlayersInCurrentGame)
+                    if (Data.Network.ConnectedClients.Count <= Data.Network.MaxPlayersInCurrentGame)
                     {
                         TheGame.NbPlayers++;
                         GameHasChanged = true;
@@ -390,6 +390,8 @@ namespace Exodus.Network.ServerSide
                 {
                     client.InternetID = (int)o;
                 }
+                else
+                    throw new Exception("This action is forbidden!"); ;
             }
         }
         private static void Resync()

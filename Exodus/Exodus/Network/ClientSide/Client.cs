@@ -30,6 +30,7 @@ namespace Exodus.Network.ClientSide
         public static int UnitsLost = 0;
         public static Orders.Tasks.ReSync ReSyncOrder = null;
         public static bool MustReSync = false;
+        public static GUI.Items.PlayerInfosLaunching player1;
 
         #region Start
         public static void Start(object ip)
@@ -54,20 +55,16 @@ namespace Exodus.Network.ClientSide
             IP = ip;
             sender = new BinaryWriter(client.GetStream());
             Data.Network.ServerIP = "Connected to " + IP + ":" + Data.Network.Port;
-            Thread Init = new Thread(InitialMessages);
-            Init.Start();
-            Init.Name = "Init";
             IsRunning = true;
+            Receive();
+            SendObject(Data.PlayerInfos.InternetID);
+        }
+        public static void RunGame()
+        {
             Thread Stats = new Thread(UpdateStatistics);
             Stats.Name = "Stats Update";
             Stats.Start();
-            Receive();
-        }
-        private static void InitialMessages()
-        {
-            SendObject(Data.PlayerInfos.InternetID);
             SendObject(new PlayerName(Data.PlayerInfos.Name));
-            SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Units.Worker), Data.Network.IdPlayer, 0, Data.Network.IdPlayer));
         }
         #endregion
 
@@ -235,6 +232,15 @@ namespace Exodus.Network.ClientSide
             //}
             if (o is string)
                 chat.InsertMsg((string)o);
+            else if (o is int)
+            {
+                int Id = (int)o;
+                PlayerOpponent.avatarURL = SyncClient.SendSQLRequest("SELECT `avatar` FROM `user` WHERE `id` = " + Id)[0][0];
+                PlayerOpponent.rank = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + Id + ")"))[0][0]) + 1;
+                PlayerOpponent.victories = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + Id))[0][0]);
+                PlayerOpponent.defeats = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + Id + " AND (`P1ID`=" + Id + " OR `P2ID`=" + Id + ")"))[0][0]);
+                player1.Reset(PlayerOpponent.avatarURL, PlayerOpponent.rank, PlayerOpponent.victories, PlayerOpponent.defeats, false);
+            }
             else if (o is Network.Orders.Task)
             {
                 if (o is Orders.Tasks.ReSync)

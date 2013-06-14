@@ -89,7 +89,15 @@ namespace Exodus.GUI.Items
                 Stream s = new FileStream("Content/" + avatarURL, FileMode.Open);
                 _avatar = Texture2D.FromStream(Data.GameDisplaying.GraphicsDevice, s);
                 if (avatar != null)
+                {
                     Components.Remove(avatar);
+                    
+                }
+                Exodus.Player.avatar = _avatar;
+                Exodus.Player.avatarURL = avatarURL;
+                Exodus.Player.defeats = defeats;
+                Exodus.Player.rank = rank;
+                Exodus.Player.victories = victories;
                 avatar = new JustTexture(_avatar, avatarFrame.Area.X + (_avatarFrame.Width - _avatar.Width) / 2 - 1, avatarFrame.Area.Y + (_avatarFrame.Height - _avatar.Height) / 2 - 1, layerDepth);
                 Components.Add(avatar);
             }

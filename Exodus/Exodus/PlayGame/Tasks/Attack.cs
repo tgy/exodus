@@ -24,6 +24,8 @@ namespace Exodus.PlayGame.Tasks
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            if (MustStop)
+                this.Finished = true;
             // si l'ennemi n'est plus juste a côté
             if (Math.Abs(Enemy.pos.Value.X - this.Parent.pos.Value.X) + Math.Abs(Enemy.pos.Value.Y - this.Parent.pos.Value.Y) > 2)
             {

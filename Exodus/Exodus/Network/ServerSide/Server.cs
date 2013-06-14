@@ -17,13 +17,13 @@ namespace Exodus.Network.ServerSide
     {
         public static Game TheGame;
         private static TcpListener server;
-        private static bool IsRunning;
+        public static bool IsRunning;
         private static Thread Client_reading;
         private static Thread Observer_reading;
         private static int PrimaryKey = 2;
         private static bool GameHasChanged = true;
         private static TwoPStatistics TPStats;
-
+        public static GUI.Items.PlayerInfosLaunching player2;
         #region Start
         public static void Start()
         {
@@ -39,9 +39,6 @@ namespace Exodus.Network.ServerSide
             }
             TheGame = new Game(LocalIP(), "Default");
             Data.Network.GameStartTime = DateTime.Now;
-        }
-        public static void Run()
-        {
             IsRunning = true;
             //SyncClient
             Thread OnlineSynchronyzation = new Thread(SyncClient.ConnectAsServer);
@@ -50,12 +47,7 @@ namespace Exodus.Network.ServerSide
             //
             Thread BroadcastSignal = new Thread(Broadcast);
             BroadcastSignal.Name = "BroadcastSignal";
-            BroadcastSignal.Start();
-            Thread ReSyncAuto = new Thread(ReSyncTimer);
-            ReSyncAuto.Name = "ReSyncAuto";
-            ReSyncAuto.Start();
-            SClient Accepted;
-            TPStats = new TwoPStatistics();
+            BroadcastSignal.Start(); SClient Accepted;
             while (IsRunning)
             {
                 TcpClient client;
@@ -84,6 +76,7 @@ namespace Exodus.Network.ServerSide
                         Client_reading.Start(Accepted);
                         Accepted.Id = Data.Network.ConnectedClients.Count;
                         SendToClient(Accepted, new GetId(Accepted.Id));
+                        SendToClient(Accepted, Data.PlayerInfos.InternetID);
                     }
                     else
                     {
@@ -98,6 +91,13 @@ namespace Exodus.Network.ServerSide
                 else
                     Thread.Sleep(100);
             }
+        }
+        public static void RunGame()
+        {
+            TPStats = new TwoPStatistics();
+            Thread ReSyncAuto = new Thread(ReSyncTimer);
+            ReSyncAuto.Name = "ReSyncAuto";
+            ReSyncAuto.Start();
         }
         #endregion
 
@@ -319,6 +319,11 @@ namespace Exodus.Network.ServerSide
             {
                 client.InternetID = (int)o;
                 client.SendInternetIDToGameManager();
+                PlayerOpponent.avatarURL = SyncClient.SendSQLRequest("SELECT `avatar` FROM `user` WHERE `id` = " + client.InternetID)[0][0];
+                PlayerOpponent.rank = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + client.InternetID + ")"))[0][0]) + 1;
+                PlayerOpponent.victories = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + client.InternetID))[0][0]);
+                PlayerOpponent.defeats = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + client.InternetID + " AND (`P1ID`=" + client.InternetID + " OR `P2ID`=" + client.InternetID + ")"))[0][0]);
+                player2.Reset(PlayerOpponent.avatarURL, PlayerOpponent.rank, PlayerOpponent.victories, PlayerOpponent.defeats, false);
             }
             else if (o is Statistics)
                 TPStats.AddStatistic((Statistics)o);

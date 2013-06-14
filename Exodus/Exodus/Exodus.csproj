@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audio.cs" />
+    <Compile Include="PlayerOpponent.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="GameMouse.cs" />
     <Compile Include="GameState.cs" />

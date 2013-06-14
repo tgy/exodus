@@ -79,7 +79,7 @@ namespace Exodus.GUI.Items
             Components.Add(BackPercentage);
             this.layerDepth = layerDepth;
         }
-        public void Reset(string avatarURL, int rank, int victories, int defeats)
+        public void Reset(string avatarURL, int rank, int victories, int defeats, bool IsOur)
         {
             Rank.Txt = rank.ToString();
             gPlayed.Txt = (victories + defeats).ToString();
@@ -96,12 +96,17 @@ namespace Exodus.GUI.Items
             WebClient Client = new WebClient();
             try
             {
-                Client.DownloadFile(Data.PlayerInfos.beginAvatar + avatarURL, "Content/" + avatarURL);
-                Stream s = new FileStream("Content/" + avatarURL, FileMode.Open);
-                _avatar = Texture2D.FromStream(Data.GameDisplaying.GraphicsDevice, s);
+                if (!IsOur)
+                {
+                    Client.DownloadFile(Data.PlayerInfos.beginAvatar + avatarURL, "Content/" + avatarURL);
+                    Stream s = new FileStream("Content/" + avatarURL, FileMode.Open);
+                    _avatar = Texture2D.FromStream(Data.GameDisplaying.GraphicsDevice, s);
+                }
+                else
+                    _avatar = Exodus.Player.avatar;
                 if (avatar != null)
                     Components.Remove(avatar);
-                avatar = new JustTexture(_avatar, avatarFrame.Area.X + (_avatarFrame.Width - _avatar.Width) / 2 - 1 + _step1, avatarFrame.Area.Y + (_avatarFrame.Height - _avatar.Height) / 2 - 1, layerDepth);
+                avatar = new JustTexture(_avatar, avatarFrame.Area.X + (_avatarFrame.Width - _avatar.Width) / 2 - 1, avatarFrame.Area.Y + (_avatarFrame.Height - _avatar.Height) / 2 - 1, layerDepth);
                 Components.Add(avatar);
             }
             catch

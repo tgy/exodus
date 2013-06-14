@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Exodus
 {
-    public static class Player
+    public static class PlayerOpponent
     {
         public static byte ConnectionState = 2;
         public static Texture2D avatar = null;

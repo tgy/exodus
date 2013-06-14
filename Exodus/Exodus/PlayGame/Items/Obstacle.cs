@@ -12,7 +12,7 @@ namespace Exodus.PlayGame
     [Serializable]
     public abstract class Obstacle : Item
     {
-        enum Animation
+        protected enum Animation
         {
             Stand = 0,
             Anim = 1

@@ -225,7 +225,7 @@ namespace Exodus.Network.ServerSide
             Thread.Sleep(100);
             while (IsRunning)
             {
-                //sender.Write(ping);
+                sender.Write(ping);
                 Thread.Sleep(100);
             }
         }

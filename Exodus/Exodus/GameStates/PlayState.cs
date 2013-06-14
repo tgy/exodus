@@ -190,6 +190,8 @@ namespace Exodus.GameStates
                     Map.EarningPerSec += Map.ListItems[i].resourcesGeneration;
                 Map.ListItems[i].Update(gameTime);
             }
+            for (int i = 0; i < Map.ListPassiveItems.Count; i++)
+                Map.ListPassiveItems[i].Update(gameTime);
             if (Data.GameInfos.currentMode == Data.GameInfos.ModeGame.Building
                 && (_currentExample == null || _currentExample.GetType() != Data.GameInfos.type))
             {

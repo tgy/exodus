@@ -105,7 +105,10 @@ namespace Exodus.GameStates
                 w = new PlayGame.Items.Units.Worker(1);
                 w.SetPos(100, 20, true);
                 Map.AddItem(w);
-                Map.ListPassiveItems.Add(iron); 
+                Map.ListPassiveItems.Add(iron);
+                PlayGame.Items.Obstacles.Gas g = new PlayGame.Items.Obstacles.Gas();
+                g.SetPos(110, 50, true);
+                Map.ListPassiveItems.Add(g);
             
             }
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
@@ -245,6 +248,7 @@ namespace Exodus.GameStates
 
                                     if (newItem != null && Data.GameInfos.item != null)
                                     {
+                                        if (!(newItem is PlayGame.Items.Buildings.HydrogenExtractor && Map.MapCells[(int)mousePos.X, (int)mousePos.Y].ListItems.FirstOrDefault(x => x is PlayGame.Items.Obstacles.Gas) == null))
                                         if (Data.Network.SinglePlayer)
                                         {
                                             Data.GameInfos.item.AddTask(

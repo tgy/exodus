@@ -40,7 +40,7 @@ namespace Exodus
         StatusBar statusBar;
         ConnectionOrangeButton settings_sound;
         Label observer1, observer2, observer3;
-        PlayerInfosLaunching player1, player2;
+        PlayerInfosLaunching player1 = null, player2 = null;
         public void Push(GameState g)
         {
             g.Initialize();
@@ -114,7 +114,6 @@ namespace Exodus
             this.IsMouseVisible = false;
             Inputs.Initialise();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Texture2D t;
             Data.Load();
             Audio.LoadAudio(Content);
             Textures.LoadParticles(Content);
@@ -131,7 +130,8 @@ namespace Exodus
                 Data.Window.WindowWidth / 2, Data.Window.WindowHeight / 2, 0);
 
             #region Game Launching
-            MenuState gameLaunching = LaunchinGameMenu(true, particleMenu);
+            MenuState gameLaunchingServer = LaunchingGameMenu(true, particleMenu);
+            MenuState gameLaunchingClient = LaunchingGameMenu(false, particleMenu);
             #endregion
 
             #region Game Launcher
@@ -141,12 +141,13 @@ namespace Exodus
             OrangeMenuButton createGameButton = new OrangeMenuButton("CREATE A GAME");
             _gameSelectionButton = new OrangeMenuButton("SEARCH INTERNET");
             _gameSelectionButton.DoClick = SwitchSearchingMode;
-            createGameButton.DoClick = LaunchLobby;
-            createGameButton.SubMenu = gameLaunching;
+            createGameButton.DoClick = LaunchGameMenu;
+            createGameButton.SubMenu = gameLaunchingServer;
             createGameMenu.Create(new List<Component> { createGameButton, _gameSelectionButton });
             MenuHorizontal joinGameMenu = new MenuHorizontal(Data.Window.ScreenCenter.X + 175, Data.Window.ScreenCenter.Y + 250, 0);
             joinGameButton = new OrangeMenuButton("JOIN THIS GAME");
             joinGameButton.DoClick = JoinMultiPlay;
+            joinGameButton.SubMenu = gameLaunchingClient;
             ipJoin = new TextBox(0, 0, "", "ConnectionTextBox", new Padding(14, -6), 30, Data.GameDisplaying.Epsilon * 2);
             MenuHorizontal ipJoinMenu = new MenuHorizontal(Data.Window.ScreenCenter.X - 90, Data.Window.ScreenCenter.Y + 246, 0);
             ipJoinMenu.Create(new List<Component> { ipJoin });
@@ -365,6 +366,7 @@ namespace Exodus
                         //Data.Network.LastIP = "90.24.210.69";
                         Data.Network.SinglePlayer = false;
                         NetGame.Start("C");
+                        Push(m);
                     }
                 }
             }
@@ -377,6 +379,7 @@ namespace Exodus
                     Data.Network.LastIP = ipJoin.Value;
                     Data.Network.SinglePlayer = false;
                     NetGame.Start("C");
+                    Push(m);
                 }
                 else
                 {
@@ -385,12 +388,13 @@ namespace Exodus
                 }
             }
         }
-        private void CreateGame(MenuState m, int i)
+        private void BeginGame(MenuState m, int i)
         {
             GameState playState = new PlayState(this);
             Push(playState);
-            Data.Network.SinglePlayer = false;
-            NetGame.Start("SC");
+            if (Server.IsRunning)
+                Server.RunGame();
+            Client.RunGame();
         }
         private void Editor(MenuState m, int i)
         {
@@ -586,13 +590,13 @@ namespace Exodus
             observer2.Pos.X = (Data.Window.WindowWidth - GUI.Fonts.Eurostile12.MeasureString(s2).X) / 2;
             observer3.Pos.X = (Data.Window.WindowWidth - GUI.Fonts.Eurostile12.MeasureString(s3).X) / 2;
         }
-        private MenuState LaunchinGameMenu(bool CanLaunch, ParticleEngine.ParticleEngine particleMenu)
+        private MenuState LaunchingGameMenu(bool CanLaunch, ParticleEngine.ParticleEngine particleMenu)
         {
             MenuState gameLaunching = BaseRedMenu(particleMenu);
             Texture2D t = Textures.Menu["Observers"];
             gameLaunching.Items.Add(new Passive(t, (Data.Window.WindowWidth - t.Width) / 2, Data.Window.ScreenCenter.Y + 215, Data.GameDisplaying.Epsilon * 4));
             MenuButton m = new LaunchingOrangeButton("");
-            m.DoClick = CreateGame;
+            m.DoClick = BeginGame;
             MenuHorizontal launching = new MenuHorizontal(Data.Window.ScreenCenter.X - 118, Data.Window.ScreenCenter.Y + 180, 0);
             launching.Create(new List<Component> { m });
             observer1 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 231);
@@ -604,11 +608,25 @@ namespace Exodus
             }));
             ResetObservers("Toogy", "Zehir", "RustyCrowbar");
             gameLaunching.Items.Add(launching);
-            player1 = new PlayerInfosLaunching(Data.Window.ScreenCenter.X - 385, Data.Window.ScreenCenter.Y, Data.GameDisplaying.Epsilon * 3, false);
-            player2 = new PlayerInfosLaunching(Data.Window.ScreenCenter.X + 90, Data.Window.ScreenCenter.Y, Data.GameDisplaying.Epsilon * 3, true);
+            if (player1 == null)
+            {
+                player1 = new PlayerInfosLaunching(Data.Window.ScreenCenter.X - 385, Data.Window.ScreenCenter.Y, Data.GameDisplaying.Epsilon * 3, false);
+                Client.player1 = player1;
+            }
+            if (player2 == null)
+            {
+                player2 = new PlayerInfosLaunching(Data.Window.ScreenCenter.X + 90, Data.Window.ScreenCenter.Y, Data.GameDisplaying.Epsilon * 3, true);
+            }
             gameLaunching.Items.Add(player1);
             gameLaunching.Items.Add(player2);
             return gameLaunching;
+        }
+        private void LaunchGameMenu(MenuState m, int i)
+        {
+            Push(m);
+            player1.Reset(Exodus.Player.avatarURL, Exodus.Player.rank, Exodus.Player.victories, Exodus.Player.defeats, true);
+            Data.Network.SinglePlayer = false;
+            NetGame.Start("SC");
         }
     }
 }

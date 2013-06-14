@@ -36,8 +36,7 @@ namespace Exodus.Network
                     ClientThread.Start("127.0.0.1");
                     Data.Network.ServerIP = "Connecting to 127.0.0.1:" + Data.Network.Port;
                     Data.Network.Server = "Server (not synchronized): Connected clients:";
-                    Server.Start();
-                    ServerThread = new Thread(Server.Run);
+                    ServerThread = new Thread(Server.Start);
                     ServerThread.Start();
                     ServerThread.Name = "Server";
                     ClientThread.Name = "Client";

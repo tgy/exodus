@@ -89,7 +89,7 @@ namespace Exodus.GameStates
             PlayGame.Items.Units.Worker w = new PlayGame.Items.Units.Worker(2);
             PlayGame.Items.Obstacles.Gas gasToogy = new PlayGame.Items.Obstacles.Gas();
             gasToogy.SetPos(100, 11, true);
-            Map.AddItem(gasToogy);
+            Map.ListPassiveItems.Add(gasToogy);
             w.SetPos(100, 10, true);
             Map.AddItem(w);
             w = new PlayGame.Items.Units.Worker(1);

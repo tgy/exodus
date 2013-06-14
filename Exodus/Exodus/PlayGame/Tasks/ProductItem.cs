@@ -52,9 +52,13 @@ namespace Exodus.PlayGame.Tasks
                                 AStar.closestFreePoint(IsPlaceAvailable, this.pos, this.pos));
                         m.Initialize();
                         if (m.path == null)
+                        {
                             Finished = true;
+                            Network.ClientSide.Client.chat.InsertMsg("Product Canceled: Impossible to move near to the building location");
+                            PlayGame.Map.PlayerResources += Data.GameInfos.CostsItems[child.GetType()];
+                        }
                         else
-                            tempItem.AddTask(m,false,true);
+                            tempItem.AddTask(m, false, true);
                     }
                 }
             }

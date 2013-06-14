@@ -79,6 +79,11 @@ namespace Exodus.GUI.Items
             Components.Add(BackPercentage);
             this.layerDepth = layerDepth;
         }
+        public void Reset(string pseudo, string avatarURL, int rank, int victories, int defeats, bool isOur)
+        {
+            Player.Txt = pseudo;
+            Reset(avatarURL, rank, victories, defeats, isOur);
+        }
         public void Reset(string avatarURL, int rank, int victories, int defeats, bool IsOur)
         {
             Rank.Txt = rank.ToString();

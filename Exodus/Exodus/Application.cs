@@ -615,7 +615,8 @@ namespace Exodus
             {
                 observer1, observer2, observer3
             }));
-            gameLaunching.Items.Add(launching);
+            if (CanLaunch)
+                gameLaunching.Items.Add(launching);
             if (player1 == null)
             {
                 player1 = new PlayerInfosLaunching(Data.Window.ScreenCenter.X - 385, Data.Window.ScreenCenter.Y, Data.GameDisplaying.Epsilon * 3, false);

@@ -14,6 +14,7 @@ namespace Exodus.PlayGame
         {
             base.Initialize(baseAnimDelay, AnimNbFrames, marginX, marginY);
             this.MaxNumbTasks = 5;
+            this.currentResource = new Resource(0, 0, 0, 0, 0);
         }
     }
 }

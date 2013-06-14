@@ -81,7 +81,7 @@ namespace Exodus.PlayGame
             return (Electricity > 0 ? (int)Electricity + "E " : "") +
                    (Hydrogen > 0 ? (int)Hydrogen + "H " : "") +
                    (Iron > 0 ? (int)Iron + "I " : "") +
-                   (Steel > 0 ? (int)Steel + "E " : "") +
+                   (Steel > 0 ? (int)Steel + "S " : "") +
                    (Graphene > 0 ? (int)Graphene + "G " : "");
                    
         }

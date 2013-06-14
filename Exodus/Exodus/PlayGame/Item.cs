@@ -90,6 +90,7 @@ namespace Exodus.PlayGame
         public List<Type> ItemsProductibles { get; protected set; }
         public int IdPlayer { get; protected set; }
         public int PrimaryId;
+        public Resource currentResource;
         #endregion
 
         #region Fonctions
@@ -125,6 +126,7 @@ namespace Exodus.PlayGame
             this.DieSound = Audio.Die[GetType()];
             this.SelectionSound = Audio.Selection[GetType()];
             this.resourcesGeneration = new Resource(0,0,0,0,0);
+            this.currentResource = new Resource(Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue);
         }
         /// <summary>
         /// Initialise la position de l'unité
@@ -290,12 +292,26 @@ namespace Exodus.PlayGame
                     // Si on doit arrêter toutes les tasks
                     if (overrideTasks)
                     {
-                        if (TasksList.Count >= 1)
+                        /*if (TasksList.Count >= 1)
                         {
                             Task temp = TasksList[0];
                             temp.MustStop = true;
                             TasksList.Clear();
                             TasksList.Add(temp);
+                        }*/
+                        for (int i = 0; i < TasksList.Count; )
+                        {
+                            if (i == 0)
+                            {
+                                TasksList[0].MustStop = true;
+                                i++;
+                            }
+                            else
+                            {
+                                TasksList[i].BruteFinish();
+                                TasksList.RemoveAt(i);
+                            }
+
                         }
                     }
                     if (TasksList.Count == 0)
@@ -319,7 +335,10 @@ namespace Exodus.PlayGame
                 if (Position == 0)
                     TasksList[0].MustStop = true;
                 else
+                {
+                    TasksList[Position].BruteFinish();
                     TasksList.RemoveAt(Position);
+                }
             }
         }
         #endregion

@@ -31,6 +31,7 @@ namespace Exodus.Network.ClientSide
         public static Orders.Tasks.ReSync ReSyncOrder = null;
         public static bool MustReSync = false;
         public static GUI.Items.PlayerInfosLaunching player1;
+        public static Func<string, string, string, bool> resetObservers = null;
 
         #region Start
         public static void Start(object ip)
@@ -348,6 +349,22 @@ namespace Exodus.Network.ClientSide
                 Data.Network.ServerIP = "Host decided to quit, game is finished.";
                 chat.InsertMsg("Server gracefully stopped: " + ((DisconnectionMessage)o).reason);
                 IsRunning = false;
+            }
+            // Ordre de reset les spectateurs
+            else if (o is UpdaterObservers<string>)
+            {
+                if (resetObservers != null)
+                {
+                    UpdaterObservers<string> l = (UpdaterObservers<string>)o;
+                    string s1 = "", s2 = "", s3 = "";
+                    if (l.Count > 0)
+                        s1 = l[0];
+                    if (l.Count > 1)
+                        s2 = l[1];
+                    if (l.Count > 2)
+                        s3 = l[2];
+                    resetObservers(s1, s2, s3);
+                }
             }
 
             // On gère pas l'objet reçue, exception

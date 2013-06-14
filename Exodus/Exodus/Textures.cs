@@ -106,15 +106,15 @@ namespace Exodus
             MiniGameItems[typeof(Worker)] = content.Load<Texture2D>("Game/Minis/Worker");
             MiniGameItems[typeof(Habitation)] = content.Load<Texture2D>("Game/Minis/Habitation");
             MiniGameItems[typeof(Gunner)] = content.Load<Texture2D>("Game/Minis/Gunner");
-            MiniGameItems[typeof(University)] = content.Load<Texture2D>("Game/Minis/Labo");
-            MiniGameItems[typeof(Laboratory)] = content.Load<Texture2D>("Game/Minis/Labo");
+            MiniGameItems[typeof(University)] = content.Load<Texture2D>("Game/Minis/labo");
+            MiniGameItems[typeof(Laboratory)] = content.Load<Texture2D>("Game/Minis/labo");
             MiniGameItems[typeof(Creeper)] = content.Load<Texture2D>("Game/Minis/Creeper");
             MiniGameItems[typeof(Nothing1x1)] = content.Load<Texture2D>("Game/Minis/Creeper");
             MiniGameItems[typeof(Nothing2x2)] = content.Load<Texture2D>("Game/Minis/Creeper");
             MiniGameItems[typeof(Spider)] = content.Load<Texture2D>("Game/Minis/Spider");
             MiniGameItems[typeof(Laserman)] = content.Load<Texture2D>("Game/Minis/LaserMini");
-            MiniGameItems[typeof(HydrogenExtractor)] = content.Load<Texture2D>("Game/Minis/Habitation");
-            MiniGameItems[typeof(Iron)] = content.Load<Texture2D>("Game/Minis/Habitation");
+            MiniGameItems[typeof(HydrogenExtractor)] = content.Load<Texture2D>("Game/Minis/hydrogenExtractor");
+            MiniGameItems[typeof(Iron)] = content.Load<Texture2D>("Game/Minis/iron");
             MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HToE)] = content.Load<Texture2D>("Game/UI/Actions/Electricity");
             MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HEIToS)] = content.Load<Texture2D>("Game/UI/Actions/Steel");
             MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HESToG)] = content.Load<Texture2D>("Game/UI/Actions/Graphene");
@@ -123,12 +123,12 @@ namespace Exodus
         {
             BigGameItems[typeof(Worker)] = content.Load<Texture2D>("Game/Bigs/Worker");
             BigGameItems[typeof(Habitation)] = content.Load<Texture2D>("Game/Bigs/Habitation");
-            BigGameItems[typeof(University)] = content.Load<Texture2D>("Game/Bigs/Labo");
-            BigGameItems[typeof(Laboratory)] = content.Load<Texture2D>("Game/Bigs/Labo");
+            BigGameItems[typeof(University)] = content.Load<Texture2D>("Game/Bigs/labo");
+            BigGameItems[typeof(Laboratory)] = content.Load<Texture2D>("Game/Bigs/labo");
             BigGameItems[typeof(Gunner)] = content.Load<Texture2D>("Game/Bigs/Gunner");
             BigGameItems[typeof(Spider)] = content.Load<Texture2D>("Game/Bigs/Spider");
             BigGameItems[typeof(Laserman)] = content.Load<Texture2D>("Game/Bigs/LaserBig");
-            BigGameItems[typeof(HydrogenExtractor)] = content.Load<Texture2D>("Game/Bigs/Habitation");
+            BigGameItems[typeof(HydrogenExtractor)] = content.Load<Texture2D>("Game/Bigs/hydrogenExtractor");
         }
         public static void LoadGame(ContentManager content)
         {

@@ -454,7 +454,7 @@ namespace Exodus
         }
         void ConnectionForm(MenuState m, int i)
         {
-            System.Diagnostics.Process.Start("http://192.168.1.15");
+            System.Diagnostics.Process.Start("http://3ten.fr");
         }
         bool _isConnecting = false;
         MenuState _temp;

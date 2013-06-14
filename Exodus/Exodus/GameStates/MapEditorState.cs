@@ -251,7 +251,7 @@ namespace Exodus.GameStates
                                                 bool allFree = true;
                                                 for (int x = (int)mousePos.X, maxX = (int)mousePos.X + _currentItem.Width; x < maxX && allFree; x++)
                                                     for (int y = (int)mousePos.Y, maxY = (int)mousePos.Y + _currentItem.Width; y < maxY && allFree; y++)
-                                                        if (x >= Map.Width || y >= Map.Height || Map.ObstacleMap[x, y])
+                                                        if (x >= Map.Width || y >= Map.Height || Map.MapCells[x,y].ListItems.Count > 0)
                                                             allFree = false;
                                                 if (allFree)
                                                 {
@@ -294,8 +294,7 @@ namespace Exodus.GameStates
                                 {
                                     for (int x = currentItem.pos.Value.X, mX = x + currentItem.Width; x < mX; x++)
                                         for (int y = currentItem.pos.Value.Y, mY = y + currentItem.Width; y < mY; y++)
-                                            Map.ObstacleMap[x, y] = false;
-                                    Map.MapCells[currentItem.pos.Value.X, currentItem.pos.Value.Y].ListItems.Remove(currentItem);
+                                            Map.MapCells[x, y].ListItems.Remove(currentItem);
                                 }
                                 break;
                                 #endregion
@@ -324,7 +323,7 @@ namespace Exodus.GameStates
                     spriteBatch.Draw(tile.Item1,
                                      v,
                                      tile.Item2,
-                                     (Data.GameDisplaying.DisplayObstacle && Map.ObstacleMap[x, y]
+                                     (Data.GameDisplaying.DisplayObstacle && Map.MapCells[x,y].ListItems.Count > 0
                                           ? Data.GameDisplaying.DisplayingColor
                                           : Color.White),
                                      0f, Vector2.Zero, 1f, SpriteEffects.None, 1f
@@ -349,7 +348,7 @@ namespace Exodus.GameStates
                             bool allFree = true;
                             for (int dX = x, maxX = dX + _currentItem.Width; dX < maxX; dX++)
                                 for (int dY = y, maxY = dY + _currentItem.Width; dY < maxY; dY++)
-                                    if (dX >= Map.Width || dY >= Map.Height || Map.ObstacleMap[dX, dY])
+                                    if (dX >= Map.Width || dY >= Map.Height || Map.MapCells[x,y].ListItems.Count > 0)
                                     {
                                         allFree = false;
                                         break;

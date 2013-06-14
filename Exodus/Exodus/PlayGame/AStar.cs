@@ -143,7 +143,7 @@ namespace Exodus.PlayGame
         }
         static bool ValidCase(int x, int y)
         {
-            return (x >= 0 && x < Map.Width && y >= 0 && y < Map.Height && !Map.ObstacleMap[x, y]);
+            return (x >= 0 && x < Map.Width && y >= 0 && y < Map.Height && Map.MapCells[x,y].ListItems.Count == 0);
         }
 
         /// <summary>

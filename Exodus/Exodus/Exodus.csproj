@@ -128,6 +128,7 @@
     <Compile Include="GUI\Components\Buttons\GameButtons\Mini.cs" />
     <Compile Include="GUI\Components\Buttons\MenuButtons\ConnectionOrangeButton.cs" />
     <Compile Include="GUI\Components\Buttons\MenuButtons\ConnectionGreenButton.cs" />
+    <Compile Include="GUI\Components\Buttons\MenuButtons\LaunchingOrangeButton.cs" />
     <Compile Include="GUI\Components\Buttons\MenuButtons\OrangeMenuButton.cs" />
     <Compile Include="GUI\Components\JustTextureRectangle.cs" />
     <Compile Include="GUI\Components\Minimap.cs" />

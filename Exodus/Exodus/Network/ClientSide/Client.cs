@@ -231,7 +231,10 @@ namespace Exodus.Network.ClientSide
             //return;
             //}
             if (o is string)
-                chat.InsertMsg((string)o);
+            {
+                if (chat != null)
+                    chat.InsertMsg((string)o);
+            }
             else if (o is int)
             {
                 int Id = (int)o;
@@ -373,7 +376,7 @@ namespace Exodus.Network.ClientSide
             {
                 r += Data.GameInfos.CostsItems[i.GetType()];
             }
-            return (int)(r.Electricity + 5*r.Graphene + 2*r.Hydrogen + r.Iron + 3*r.Steel);
+            return (int)(r.Electricity + 5 * r.Graphene + 2 * r.Hydrogen + r.Iron + 3 * r.Steel);
         }
         #endregion
 

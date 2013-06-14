@@ -27,7 +27,7 @@ namespace Exodus
             PlayStateMusic.IsLooped = true;
             PlayStateMusic.Volume = (float) Data.Config.LevelSound/100f;
 
-            Attack[typeof(Gunner)] = LoadAudio(content, "Audio/6198");
+            Attack[typeof(Gunner)] = LoadAudio(content, "Audio/6198", true);
             Attack[typeof(Spider)] = null;
             Attack[typeof(Worker)] = null;
             Attack[typeof(Creeper)] = null;
@@ -53,9 +53,9 @@ namespace Exodus
             Die[typeof(Laserman)] = null;
             Die[typeof(Iron)] = null;
             Die[typeof(HydrogenExtractor)] = null;
-            Selection[typeof(Gunner)] = null;
+            Selection[typeof(Gunner)] = LoadAudio(content, "Audio/gunner-selection", false);
             Selection[typeof(Spider)] = null;
-            Selection[typeof(Worker)] = null;
+            Selection[typeof(Worker)] = LoadAudio(content, "Audio/worker-selection", false);
             Selection[typeof(Creeper)] = null;
             Selection[typeof(Nothing1x1)] = null;
             Selection[typeof(Nothing2x2)] = null;
@@ -63,15 +63,16 @@ namespace Exodus
             Selection[typeof(University)] = null;
             Selection[typeof(Laboratory)] = null;
             Selection[typeof (Gas)] = null;
-            Selection[typeof(Laserman)] = null;
+            Selection[typeof(Laserman)] = LoadAudio(content, "Audio/laserman-selection", false);
+            Selection[typeof(Laserman)].Volume = (float)Data.Config.LevelSound / 100f;
             Selection[typeof(Iron)] = null;
             Selection[typeof(HydrogenExtractor)] = null;
         }
 
-        private static SoundEffectInstance LoadAudio(ContentManager content, string name)
+        private static SoundEffectInstance LoadAudio(ContentManager content, string name, bool looped)
         {
             SoundEffectInstance s = content.Load<SoundEffect>(name).CreateInstance();
-            s.IsLooped = true;
+            s.IsLooped = looped;
             s.Volume = (float) Data.Config.LevelSound/100f;
             return s;
         }

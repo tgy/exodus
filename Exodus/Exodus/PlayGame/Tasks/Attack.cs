@@ -33,6 +33,8 @@ namespace Exodus.PlayGame.Tasks
             }
             else
             {
+                if (this.Parent.AttackSound != null)
+                    this.Parent.AttackSound.Play();
                 if (!(this.Enemy.TasksList.Count > 0 && (this.Enemy.TasksList[0] is Attack || this.Enemy.TasksList[0] is Move)))
                     this.Enemy.AddTask(new Attack(this.Enemy, this.Parent), true, false);
                 this.Parent.currentAttackDelay -= (int)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -43,8 +45,8 @@ namespace Exodus.PlayGame.Tasks
                     if (this.Enemy.currentLife < 0)
                     {
                         this.Finished = true;
-                        //if (Parent is Unit && ((Unit)this.Parent).AttackSound != null)
-                        //    ((Unit)this.Parent).AttackSound.Stop();
+                        if (this.Parent.AttackSound != null)
+                            this.Parent.AttackSound.Stop();
                     }
                 }
             }

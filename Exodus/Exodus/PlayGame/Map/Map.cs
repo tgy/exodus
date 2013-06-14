@@ -25,8 +25,6 @@ namespace Exodus.PlayGame
                                EarningPerSec;
         // Notre map
         public static MapCell[,] MapCells;
-        // Notre équivalent en booléen d'obstacles
-        public static bool[,] ObstacleMap;
         // Width, height de la map : map[width,height]
         public static int Width, Height;
         // Position absolue à l'écran du point tout en haut à gauche de la map de coordonnées [width - 1,0]
@@ -132,7 +130,6 @@ namespace Exodus.PlayGame
             MapCells = m;
             XBase = (widthMap - 1) * Tile.tileWidth / 2;
             YBase = 0;
-            CreateObstacleMap();
         }
         // Charge une map à partir d'un fichier
         public static void Load(string pathMap)
@@ -155,7 +152,7 @@ namespace Exodus.PlayGame
                 XBase = (Width - 1) * Tile.tileWidth / 2;
                 YBase = Tile.tileHeight - Tile.tileHeight;
                 MapCells = m;
-                CreateObstacleMap();
+                //CreateObstacleMap();
                 ListItems = file.listItems;
                 ListPassiveItems = file.listPassives;
                 foreach (Item i in ListPassiveItems)
@@ -223,14 +220,6 @@ namespace Exodus.PlayGame
             int left = XBase + (xCoord + yCoord - Width + 1) * Tile.tileWidth / 2,
                 top = YBase + (Width - xCoord + yCoord + 1) * Tile.tileHeight / 2;
             return new Vector2(left, top);
-        }
-        // Calcule la map d'obstacle
-        static void CreateObstacleMap()
-        {
-            ObstacleMap = new bool[Width, Height];
-            for (int x = 0; x < Width; x++)
-                for (int y = 0; y < Height; y++)
-                    ObstacleMap[x, y] = false;
         }
 
         /// <summary>

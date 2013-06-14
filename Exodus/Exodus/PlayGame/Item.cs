@@ -139,7 +139,7 @@ namespace Exodus.PlayGame
                 for (int i = (int)pos.Value.X, mi = Math.Min(i + Width, Map.Width); i < mi; i++)
                     for (int j = (int)pos.Value.Y, mj = Math.Min(j + Width, Map.Height); j < mj; j++)
                     {
-                        Map.ObstacleMap[i, j] = false;
+                        //Map.ObstacleMap[i, j] = false;
                         Map.MapCells[i, j].ListItems.Remove(this);
                     }
             }
@@ -150,7 +150,7 @@ namespace Exodus.PlayGame
                 for (int i = x, mi = Math.Min(i + Width, Map.Width); i < mi; i++)
                     for (int j = y, mj = Math.Min(j + Width, Map.Height); j < mj; j++)
                     {
-                        Map.ObstacleMap[i, j] = true;
+                        //Map.ObstacleMap[i, j] = true;
                         Map.MapCells[i, j].ListItems.Add(this);
                     }
             }

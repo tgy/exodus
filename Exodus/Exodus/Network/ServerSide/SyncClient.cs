@@ -84,7 +84,7 @@ namespace Exodus.Network.ServerSide
                 case 0:
                     ServerSender = new BinaryWriter(Client.GetStream());
                     Pinger = new Thread(new ParameterizedThreadStart(Ping));
-                    Pinger.Name = "SyncClientPing";
+                    Pinger.Name = "SyncServerPing";
                     Pinger.Start(ServerSender);
                     break;
                 case 1:

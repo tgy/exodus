@@ -89,6 +89,7 @@ namespace Exodus.GameStates
             PlayGame.Items.Units.Worker w = new PlayGame.Items.Units.Worker(Data.Network.IdPlayer);
             PlayGame.Items.Obstacles.Gas gasToogy = new PlayGame.Items.Obstacles.Gas();
             gasToogy.SetPos(100, 11, true);
+            Map.AddItem(gasToogy);
             w.SetPos(100, 10, true);
             Map.AddItem(w);
             PlayGame.Items.Units.Laserman l = new PlayGame.Items.Units.Laserman(Data.Network.IdPlayer);

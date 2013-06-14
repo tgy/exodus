@@ -85,7 +85,7 @@ namespace Exodus.GameStates
             Tile.tileSetTextures[2, 1] = Textures.Game["tileSet-1-2"];
             Tile.tileSetTextures[3, 1] = Textures.Game["tileSet-1-3"];
             Map.Load(200, 200);
-            Map.ListSelectedItems.Clear();
+            Map.ClearSelection();
             Tile.tileSetWidth = (Tile.tileSetTextures[0, 0].Width * (Tile.tileSetTextures.GetLength(0) - 1) + Tile.tileSetTextures[Tile.tileSetTextures.GetLength(0) - 1, 0].Width) / Tile.tileWidth;
             if (!Data.Network.SinglePlayer)
             {
@@ -105,7 +105,7 @@ namespace Exodus.GameStates
                 w = new PlayGame.Items.Units.Worker(1);
                 w.SetPos(100, 20, true);
                 Map.AddItem(w);
-                Map.ListPassiveItems.Add(gasToogy);
+                Map.ListPassiveItems.Add(gasToogy); 
             
             }
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);

@@ -43,7 +43,10 @@ namespace Exodus.PlayGame
         }
         public abstract void Initialize();
         public abstract void Update(GameTime gameTime);
+        public virtual void BruteFinish()
+        {
 
+        }
         public string Name;
         public string Description;
     }

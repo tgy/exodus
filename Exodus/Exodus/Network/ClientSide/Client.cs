@@ -389,8 +389,13 @@ namespace Exodus.Network.ClientSide
         {
             while (IsRunning)
             {
-                SendObject(new Statistics(Data.PlayerInfos.InternetID, PlayGame.Map.PlayerResources, GetArmyValue()));
-                Thread.Sleep(30000);
+                if (PlayGame.Map.PlayerResources != null)
+                {
+                    SendObject(new Statistics(Data.PlayerInfos.InternetID, PlayGame.Map.PlayerResources, GetArmyValue()));
+                    Thread.Sleep(10000);
+                }
+                else
+                    Thread.Sleep(10);
             }
         }
         private static int GetArmyValue()

@@ -401,10 +401,10 @@ namespace Exodus
         private bool BeginGame()
         {
             GameState playState = new PlayState(this);
-            Push(playState);
             if (Server.IsRunning)
                 Server.RunGame();
             Client.RunGame();
+            Push(playState);
             return true;
         }
         private void LaunchGame(MenuState m, int i)

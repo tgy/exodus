@@ -21,7 +21,8 @@ namespace Exodus.PlayGame.Items.Buildings
             {
                 typeof(PlayGame.Items.Units.Worker),
                 typeof(PlayGame.Items.Units.Gunner),
-                typeof(PlayGame.Items.Units.Spider)
+                typeof(PlayGame.Items.Units.Spider),
+                typeof(PlayGame.Items.Units.Laserman)
             };
             this.TasksOnMenu = new List<MenuTask>
             {

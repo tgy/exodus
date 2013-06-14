@@ -39,7 +39,7 @@ namespace Exodus.Network.ServerSide
             msg[0] = 0;
             msg[1] = 2;
             msg[2] = 3;
-            msg[3] = (byte)Data.PlayerInfos.InternetID;
+            msg[3] = (byte)InternetID;
             SyncClient.SendDataToGameManager(msg);
         }
 

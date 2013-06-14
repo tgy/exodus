@@ -10,7 +10,7 @@ namespace Exodus.PlayGame.Items.Units
     {
         public Worker(int idPlayer)
         {
-            Name = "TrapTrap";
+            Name = "Zinedine ZiTrap";
             maxLife = 4242;
             maxShield = 4242;
             Speed = 200;

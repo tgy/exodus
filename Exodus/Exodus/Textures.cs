@@ -115,6 +115,9 @@ namespace Exodus
             MiniGameItems[typeof(Laserman)] = content.Load<Texture2D>("Game/Minis/LaserMini");
             MiniGameItems[typeof(HydrogenExtractor)] = content.Load<Texture2D>("Game/Minis/Habitation");
             MiniGameItems[typeof(Iron)] = content.Load<Texture2D>("Game/Minis/Habitation");
+            MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HToE)] = content.Load<Texture2D>("Game/UI/Actions/Electricity");
+            MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HEIToS)] = content.Load<Texture2D>("Game/UI/Actions/Steel");
+            MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HESToG)] = content.Load<Texture2D>("Game/UI/Actions/Graphene");
         }
         public static void LoadBigGameItems(ContentManager content)
         {

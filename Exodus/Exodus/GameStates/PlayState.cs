@@ -85,6 +85,7 @@ namespace Exodus.GameStates
             Tile.tileSetTextures[2, 1] = Textures.Game["tileSet-1-2"];
             Tile.tileSetTextures[3, 1] = Textures.Game["tileSet-1-3"];
             Map.Load(200, 200);
+            Map.ListSelectedItems.Clear();
             Tile.tileSetWidth = (Tile.tileSetTextures[0, 0].Width * (Tile.tileSetTextures.GetLength(0) - 1) + Tile.tileSetTextures[Tile.tileSetTextures.GetLength(0) - 1, 0].Width) / Tile.tileWidth;
             PlayGame.Items.Obstacles.Gas gasToogy = new PlayGame.Items.Obstacles.Gas();
             gasToogy.SetPos(100, 11, true);

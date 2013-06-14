@@ -55,16 +55,16 @@ namespace Exodus.Network
 
         public static void Stop()
         {
-            if (ServerThread != null)
-            {
-                Server.Stop();
-                ServerThread = null;
-            }
-
             if (ClientThread != null)
             {
                 Client.Stop();
                 ClientThread = null;
+            }
+
+            if (ServerThread != null)
+            {
+                Server.Stop();
+                ServerThread = null;
             }
             SyncClient.Stop();
             Thread.Sleep(100);

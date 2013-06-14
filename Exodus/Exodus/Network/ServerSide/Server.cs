@@ -449,7 +449,8 @@ namespace Exodus.Network.ServerSide
             IsRunning = false;
             PrimaryKey = 0;
             KillAllSClients();
-            TPStats.Reset();
+            if (TPStats != null)
+                TPStats.Reset();
             server.Stop();
             SyncClient.Stop();
         }

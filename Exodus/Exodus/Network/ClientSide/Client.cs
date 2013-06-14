@@ -176,7 +176,7 @@ namespace Exodus.Network.ClientSide
                     IsRunning = false;
                 }
             }
-            else
+            else if (chat != null)
                 chat.InsertMsg("You are not connected!");
             //}
             //catch

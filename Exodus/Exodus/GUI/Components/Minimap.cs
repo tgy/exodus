@@ -52,7 +52,7 @@ namespace Exodus.GUI.Components
                             PlayGame.Item item = PlayGame.Map.MapCells[i, j].ListItems[0];
                             if (!(item is PlayGame.Obstacle) || item is PlayGame.Building)
                             {
-                                if (!item.Focused)
+                                if (!PlayGame.Map.ListSelectedItems.Exists(n => n == item.PrimaryId))
                                     switch (item.IdPlayer)
                                     {
                                         case 0:

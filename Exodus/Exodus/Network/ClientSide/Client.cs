@@ -31,6 +31,7 @@ namespace Exodus.Network.ClientSide
         public static Orders.Tasks.ReSync ReSyncOrder = null;
         public static bool MustReSync = false;
         public static GUI.Items.PlayerInfosLaunching player1;
+        public static Func<string, string, string, bool> resetObservers = null;
 
         #region Start
         public static void Start(object ip)
@@ -56,6 +57,7 @@ namespace Exodus.Network.ClientSide
             sender = new BinaryWriter(client.GetStream());
             Data.Network.ServerIP = "Connected to " + IP + ":" + Data.Network.Port;
             IsRunning = true;
+            SendObject(new PlayerName(Data.PlayerInfos.Name));
             SendObject(Data.PlayerInfos.InternetID);
             Receive();
         }
@@ -64,7 +66,6 @@ namespace Exodus.Network.ClientSide
             Thread Stats = new Thread(UpdateStatistics);
             Stats.Name = "Stats Update";
             Stats.Start();
-            SendObject(new PlayerName(Data.PlayerInfos.Name));
         }
         #endregion
 
@@ -231,7 +232,10 @@ namespace Exodus.Network.ClientSide
             //return;
             //}
             if (o is string)
-                chat.InsertMsg((string)o);
+            {
+                if (chat != null)
+                    chat.InsertMsg((string)o);
+            }
             else if (o is int)
             {
                 int Id = (int)o;
@@ -346,6 +350,22 @@ namespace Exodus.Network.ClientSide
                 chat.InsertMsg("Server gracefully stopped: " + ((DisconnectionMessage)o).reason);
                 IsRunning = false;
             }
+            // Ordre de reset les spectateurs
+            else if (o is UpdaterObservers<string>)
+            {
+                if (resetObservers != null)
+                {
+                    UpdaterObservers<string> l = (UpdaterObservers<string>)o;
+                    string s1 = "", s2 = "", s3 = "";
+                    if (l.Count > 0)
+                        s1 = l[0];
+                    if (l.Count > 1)
+                        s2 = l[1];
+                    if (l.Count > 2)
+                        s3 = l[2];
+                    resetObservers(s1, s2, s3);
+                }
+            }
 
             // On gère pas l'objet reçue, exception
             //else
@@ -373,7 +393,7 @@ namespace Exodus.Network.ClientSide
             {
                 r += Data.GameInfos.CostsItems[i.GetType()];
             }
-            return (int)(r.Electricity + 5*r.Graphene + 2*r.Hydrogen + r.Iron + 3*r.Steel);
+            return (int)(r.Electricity + 5 * r.Graphene + 2 * r.Hydrogen + r.Iron + 3 * r.Steel);
         }
         #endregion
 

@@ -170,11 +170,16 @@ namespace Exodus.PlayGame
                     current = openSet.First();
                     if (ValidPoint(current))
                     {
-                        int d = Heuristic(current, min)  - Heuristic(start, min);
-                        if (d < 0)
+                        if (min.X == -1 && min.Y == -1)
                             min = current;
-                        else if (d > 0)
-                            return min;
+                        else
+                        {
+                            int d = Heuristic(current, min) - Heuristic(start, min);
+                            if (d < 0)
+                                min = current;
+                            else if (d > 0)
+                                return min;
+                        }
                     }
                     closedSet.Add(new CellInfos(current.X, current.Y, 0, 0));
                     openSet.Remove(current);

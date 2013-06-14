@@ -246,6 +246,7 @@
     <Content Include="Datas\config.txt" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
+    <Compile Include="Network\Orders\UpdaterObservers.cs" />
     <Content Include="Network\Types.txt" />
   </ItemGroup>
   <ItemGroup>

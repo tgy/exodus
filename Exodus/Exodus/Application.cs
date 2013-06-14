@@ -587,7 +587,7 @@ namespace Exodus
                                                 5 * Data.GameDisplaying.Epsilon));
             return baseMenuState;
         }
-        private void ResetObservers(string s1, string s2, string s3)
+        private bool ResetObservers(string s1, string s2, string s3)
         {
             observer1.Txt = s1;
             observer2.Txt = s2;
@@ -595,6 +595,7 @@ namespace Exodus
             observer1.Pos.X = (Data.Window.WindowWidth - GUI.Fonts.Eurostile12.MeasureString(s1).X) / 2;
             observer2.Pos.X = (Data.Window.WindowWidth - GUI.Fonts.Eurostile12.MeasureString(s2).X) / 2;
             observer3.Pos.X = (Data.Window.WindowWidth - GUI.Fonts.Eurostile12.MeasureString(s3).X) / 2;
+            return true;
         }
         private MenuState LaunchingGameMenu(bool CanLaunch, ParticleEngine.ParticleEngine particleMenu)
         {
@@ -611,6 +612,8 @@ namespace Exodus
                 observer2 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 272);
             if (observer3 == null)
                 observer3 = new Label(GUI.Fonts.Eurostile12, "", Data.Window.ScreenCenter.X, Data.Window.ScreenCenter.Y + 313);
+            if (Network.ClientSide.Client.resetObservers == null)
+                Network.ClientSide.Client.resetObservers = ResetObservers;
             gameLaunching.Items.Add(new Container(new List<Component>
             {
                 observer1, observer2, observer3

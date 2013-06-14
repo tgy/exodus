@@ -18,8 +18,10 @@ namespace Exodus.Network.ServerSide
         public static Game TheGame;
         private static TcpListener server;
         public static bool IsRunning;
+        public static bool GameRunned;
         private static Thread Client_reading;
         private static Thread Observer_reading;
+        private static Thread SyncObservers = null;
         private static int PrimaryKey = 2;
         private static bool GameHasChanged = true;
         private static TwoPStatistics TPStats;
@@ -40,6 +42,7 @@ namespace Exodus.Network.ServerSide
             TheGame = new Game(LocalIP(), "Default");
             Data.Network.GameStartTime = DateTime.Now;
             IsRunning = true;
+            GameRunned = false;
             //SyncClient
             Thread OnlineSynchronyzation = new Thread(SyncClient.ConnectAsServer);
             OnlineSynchronyzation.Name = "OnlineSynchronyzation";
@@ -47,7 +50,11 @@ namespace Exodus.Network.ServerSide
             //
             Thread BroadcastSignal = new Thread(Broadcast);
             BroadcastSignal.Name = "BroadcastSignal";
-            BroadcastSignal.Start(); SClient Accepted;
+            BroadcastSignal.Start();
+            SyncObservers = new Thread(SyncObserversAuto);
+            SyncObservers.Name = "Sync Observers";
+            SyncObservers.Start();
+            SClient Accepted;
             while (IsRunning)
             {
                 TcpClient client;
@@ -94,10 +101,12 @@ namespace Exodus.Network.ServerSide
         }
         public static void RunGame()
         {
+            GameRunned = true;
             TPStats = new TwoPStatistics();
             Thread ReSyncAuto = new Thread(ReSyncTimer);
             ReSyncAuto.Name = "ReSyncAuto";
-            ReSyncAuto.Start();
+            if (SyncObservers != null)
+                SyncObservers.Abort();
         }
         #endregion
 
@@ -385,6 +394,17 @@ namespace Exodus.Network.ServerSide
             {
                 Resync();
                 Thread.Sleep(10000);
+            }
+        }
+        private static void SyncObserversAuto()
+        {
+            while (IsRunning && !GameRunned)
+            {
+                UpdaterObservers<string> r = new UpdaterObservers<string>();
+                for (int i = Data.Network.MaxPlayersInCurrentGame; i < Data.Network.ConnectedClients.Count && r.Count < 3; i++)
+                    r.Add(Data.Network.ConnectedClients[i].Name);
+                SendToAll(r);
+                Thread.Sleep(1000);
             }
         }
         #endregion

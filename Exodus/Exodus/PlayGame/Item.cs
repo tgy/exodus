@@ -151,6 +151,7 @@ namespace Exodus.PlayGame
                     for (int j = y, mj = Math.Min(j + Width, Map.Height); j < mj; j++)
                     {
                         //Map.ObstacleMap[i, j] = true;
+                        Map.MapCells[i, j].ListItems.Clear();
                         Map.MapCells[i, j].ListItems.Add(this);
                     }
             }

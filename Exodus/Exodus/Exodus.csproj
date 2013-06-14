@@ -139,6 +139,7 @@
     <Compile Include="GUI\Components\Label.cs" />
     <Compile Include="GUI\Components\ProgressBar.cs" />
     <Compile Include="GUI\Components\ScrollBar.cs" />
+    <Compile Include="GUI\Items\PlayerInfosLaunching.cs" />
     <Compile Include="GUI\Items\PlayerInfos.cs" />
     <Compile Include="GUI\Items\Form.cs" />
     <Compile Include="GUI\Items\ScrollingListButtons.cs" />

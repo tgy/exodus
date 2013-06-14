@@ -456,8 +456,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Buildings\ironExtractor.png">
-      <Name>ironExtractor</Name>
+    <Compile Include="Game\Buildings\hydrogenExtractor.png">
+      <Name>hydrogenExtractor</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

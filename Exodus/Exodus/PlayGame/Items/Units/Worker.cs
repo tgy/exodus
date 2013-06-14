@@ -21,6 +21,7 @@ namespace Exodus.PlayGame.Items.Units
             this.ItemsProductibles.Add(typeof(PlayGame.Items.Buildings.Habitation));
             //this.ItemsProductibles.Add(typeof(PlayGame.Items.Buildings.University));
             this.ItemsProductibles.Add(typeof(PlayGame.Items.Buildings.Laboratory));
+            this.ItemsProductibles.Add(typeof(PlayGame.Items.Buildings.HydrogenExtractor));
             this.TasksOnMenu.Add(MenuTask.Build);
         }
     }

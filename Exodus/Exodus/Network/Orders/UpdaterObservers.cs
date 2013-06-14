@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Exodus.Network.Orders
 {
+    [Serializable]
 	class UpdaterObservers<T> : List<T>
 	{
 	}

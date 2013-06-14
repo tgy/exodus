@@ -25,7 +25,7 @@ namespace Exodus.Network.ServerSide
 
         public static void ConnectAsServer()
         {
-            if (ServerSender == null)
+            if (ServerSender == null/* || ServerSender.BaseStream.CanTimeout*/)
             {
                 WhatIsIt = 0;
                 InitializeConnection();
@@ -103,14 +103,13 @@ namespace Exodus.Network.ServerSide
         }
         public static int UserIsValid(string UserName, string Password)
         {
-            SQLAnswer = null;
             ConnectToSendRequest();
             //Player.ConnectionState = 2;
             SendDBCMDToGameManager("SELECT * FROM `user` WHERE `name`=\"" + UserName + "\" AND `password`=\"" + Data.Security.SHA1(Password) + "\"");
+            SQLAnswer = null;
             Receive();
-            for (byte b = 0; b < 10; b++)
+            for (byte b = 0; b < 100; b++)
             {
-                Thread.Sleep(100);
                 if (SQLAnswer != null)
                 {
                     if (SQLAnswer.Length == 1)
@@ -125,6 +124,8 @@ namespace Exodus.Network.ServerSide
                         return -1;
                     }
                 }
+                else
+                    Thread.Sleep(10);
             }
             return -1;
         }
@@ -281,12 +282,21 @@ namespace Exodus.Network.ServerSide
         {
             IsRunning = false;
             if (NetReader != null)
+            {
                 NetReader.Close();
+                NetReader = null;
+            }
             DBTalker.Close();
             if (ClientSender != null)
+            {
                 ClientSender.Close();
+                ClientSender = null;
+            }
             if (ServerSender != null)
+            {
                 ServerSender.Close();
+                ServerSender = null;
+            }
             InternetGames.Clear();
         }
     }

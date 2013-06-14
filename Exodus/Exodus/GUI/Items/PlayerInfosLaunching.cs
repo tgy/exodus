@@ -69,7 +69,7 @@ namespace Exodus.GUI.Items
             Components.Add(gPostWin);
             Components.Add(gPostPlayed);
             Components.Add(gPostLost);
-            Percentage = new Label(Fonts.Eurostile24, "42%", x + _step2 + 10, y + 122);
+            Percentage = new Label(Fonts.Eurostile24, "", x + _step2 + 10, y + 122);
             Components.Add(Percentage);
             BackPercentage = new JustTextureRectangle(Textures.GameUI["MiniTile"], x + _step2 + 6, y + 112, 128, 5, layerDepth + Data.GameDisplaying.Epsilon);
             BackPercentage.c = new Color(57, 162, 17);

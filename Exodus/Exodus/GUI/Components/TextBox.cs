@@ -400,12 +400,18 @@ namespace Exodus.GUI.Components
                 result += '*';
             return result;
         }
+        public void Focus()
+        {
+            _cursorVisible = true;
+            Focused = true;
+        }
         public void ResetValue()
         {
             _displayedIndexBegin = 0;
             _displayedIndexEnd = 0;
             _cursorIndex = 0;
             Value = "";
+            _displayedValue = "";
         }
         public void ResetValue(string s)
         {

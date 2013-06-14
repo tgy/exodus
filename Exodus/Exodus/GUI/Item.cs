@@ -28,6 +28,7 @@ namespace Exodus.GUI
         public virtual void Update(GameTime gameTime)
         {
             for (int i = 0; i < Components.Count; i++)
+            {
                 if (Components[i].ClickFocus)
                 {
                     if (Inputs.LeftClick())

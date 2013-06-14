@@ -32,7 +32,7 @@ namespace Exodus.Network.ServerSide
             if (P1InternetID == PlayerStats.InternetId)
             {
                 P1ArmyValue = PlayerStats.ArmyValue;
-                P1ResourcesValue = PlayerStats.Electricity + "-" + PlayerStats.Iron + "-" + PlayerStats.Hydrogen + "-" + PlayerStats.Steel + "-" + PlayerStats.Graphene + ";";
+                P1ResourcesValue = PlayerStats.Electricity + "-" + PlayerStats.Iron + "-" + PlayerStats.Hydrogen + "-" + PlayerStats.Steel + "-" + PlayerStats.Graphene;
                 P1TrainedCount = PlayerStats.UnitsTrained;
                 P1LostCount = PlayerStats.UnitsLost;
                 P1Sended = true;
@@ -40,7 +40,7 @@ namespace Exodus.Network.ServerSide
             else if (P2InternetID == PlayerStats.InternetId)
             {
                 P2ArmyValue = PlayerStats.ArmyValue;
-                P2ResourcesValue = PlayerStats.Electricity + "-" + PlayerStats.Iron + "-" + PlayerStats.Hydrogen + "-" + PlayerStats.Steel + "-" + PlayerStats.Graphene + ";";
+                P2ResourcesValue = PlayerStats.Electricity + "-" + PlayerStats.Iron + "-" + PlayerStats.Hydrogen + "-" + PlayerStats.Steel + "-" + PlayerStats.Graphene;
                 P2TrainedCount = PlayerStats.UnitsTrained;
                 P2LostCount = PlayerStats.UnitsLost;
                 P2Sended = true;

@@ -109,10 +109,10 @@ namespace Exodus.GameStates
                 PlayGame.Items.Obstacles.Gas g = new PlayGame.Items.Obstacles.Gas();
                 g.SetPos(110, 50, true);
                 Map.ListPassiveItems.Add(g);
-            
+
             }
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
-            Map.PlayerResources = new Resource(0, 0, 0, 0, 0);
+            Map.PlayerResources = new Resource(10000, 10000, 10000, 10000, 10000);
             base.LoadContent();
         }
         public override void Draw(SpriteBatch spriteBatch)

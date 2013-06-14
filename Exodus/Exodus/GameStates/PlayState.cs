@@ -94,9 +94,9 @@ namespace Exodus.GameStates
             }
             else
             {
-                PlayGame.Items.Obstacles.Gas gasToogy = new PlayGame.Items.Obstacles.Gas();
-                gasToogy.SetPos(100, 11, true);
-                Map.ListPassiveItems.Add(gasToogy);
+                PlayGame.Items.Obstacles.Iron iron = new PlayGame.Items.Obstacles.Iron();
+                iron.SetPos(110, 40, true);
+                Map.ListPassiveItems.Add(iron);
                 PlayGame.Items.Units.Worker w = new PlayGame.Items.Units.Worker(2);
                 w.SetPos(100, 10, true);
                 Map.AddItem(w);
@@ -105,7 +105,7 @@ namespace Exodus.GameStates
                 w = new PlayGame.Items.Units.Worker(1);
                 w.SetPos(100, 20, true);
                 Map.AddItem(w);
-                Map.ListPassiveItems.Add(gasToogy); 
+                Map.ListPassiveItems.Add(iron); 
             
             }
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);

@@ -38,6 +38,7 @@ namespace Exodus
             Attack[typeof(Laboratory)] = null;
             Attack[typeof (Gas)] = null;
             Attack[typeof(Laserman)] = null;
+            Attack[typeof(Iron)] = null;
             Die[typeof(Gunner)] = null;
             Die[typeof(Spider)] = null;
             Die[typeof(Worker)] = null;
@@ -49,6 +50,7 @@ namespace Exodus
             Die[typeof(Laboratory)] = null;
             Die[typeof (Gas)] = null;
             Die[typeof(Laserman)] = null;
+            Die[typeof(Iron)] = null;
             Selection[typeof(Gunner)] = null;
             Selection[typeof(Spider)] = null;
             Selection[typeof(Worker)] = null;
@@ -60,6 +62,7 @@ namespace Exodus
             Selection[typeof(Laboratory)] = null;
             Selection[typeof (Gas)] = null;
             Selection[typeof(Laserman)] = null;
+            Selection[typeof(Iron)] = null;
         }
 
         private static SoundEffectInstance LoadAudio(ContentManager content, string name)

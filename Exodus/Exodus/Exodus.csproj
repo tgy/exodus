@@ -215,7 +215,6 @@
     <Compile Include="PlayGame\Resource.cs" />
     <Compile Include="PlayGame\Researchs.cs" />
     <Compile Include="PlayGame\Task.cs" />
-    <Compile Include="PlayGame\Resources.cs" />
     <Compile Include="PlayGame\Items\Obstacle.cs" />
     <Compile Include="PlayGame\Tasks\Attack.cs" />
     <Compile Include="PlayGame\Tasks\ChangeResources\HESToG.cs" />

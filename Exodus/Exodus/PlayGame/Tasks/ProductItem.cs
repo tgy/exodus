@@ -38,7 +38,7 @@ namespace Exodus.PlayGame.Tasks
                 {
                     tempItem = this.child;
                     // Si la place est prise, alors on oublie :/
-                    if (!IsPlaceAvailable(pos))
+                    if (!IsPlaceAvailable(pos) && !(this.child is PlayGame.Items.Buildings.HydrogenExtractor))
                         Finished = true;
                     else
                     {

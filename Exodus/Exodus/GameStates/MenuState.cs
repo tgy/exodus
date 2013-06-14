@@ -32,6 +32,7 @@ namespace Exodus.GameStates
             if (Inputs.KeyPress(Microsoft.Xna.Framework.Input.Keys.Escape))
             {
                 SyncClient.Stop();
+                Network.NetGame.Stop();
                 game.Pop();
             }
             base.Update(gameTime);

@@ -32,6 +32,7 @@ namespace Exodus.Network.ClientSide
         public static bool MustReSync = false;
         public static GUI.Items.PlayerInfosLaunching player1;
         public static Func<string, string, string, bool> resetObservers = null;
+        public static Func<bool> RunGameFunc = null;
 
         #region Start
         public static void Start(object ip)
@@ -158,7 +159,8 @@ namespace Exodus.Network.ClientSide
                     obj is PlayerName ||
                     obj is Orders.Tasks.ProductItem ||
                     obj is int ||
-                    obj is Statistics)
+                    obj is Statistics ||
+                    obj is LaunchGame)
                     tWithLength[2] = 1;
                 // Sinon le serveur ne désérialisera pas
                 else //Le serveur fera suivre a tous les clients sans deserialiser
@@ -235,6 +237,11 @@ namespace Exodus.Network.ClientSide
             {
                 if (chat != null)
                     chat.InsertMsg((string)o);
+            }
+            else if (o is LaunchGame)
+            {
+                if (RunGameFunc != null)
+                    RunGameFunc();
             }
             else if (o is int)
             {

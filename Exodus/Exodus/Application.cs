@@ -396,11 +396,20 @@ namespace Exodus
         }
         private void BeginGame(MenuState m, int i)
         {
+            BeginGame();
+        }
+        private bool BeginGame()
+        {
             GameState playState = new PlayState(this);
             Push(playState);
             if (Server.IsRunning)
                 Server.RunGame();
             Client.RunGame();
+            return true;
+        }
+        private void LaunchGame(MenuState m, int i)
+        {
+            Client.SendObject(new Network.Orders.LaunchGame());
         }
         private void Editor(MenuState m, int i)
         {
@@ -603,7 +612,7 @@ namespace Exodus
             Texture2D t = Textures.Menu["Observers"];
             gameLaunching.Items.Add(new Passive(t, (Data.Window.WindowWidth - t.Width) / 2, Data.Window.ScreenCenter.Y + 215, Data.GameDisplaying.Epsilon * 4));
             MenuButton m = new LaunchingOrangeButton("");
-            m.DoClick = BeginGame;
+            m.DoClick = LaunchGame;
             MenuHorizontal launching = new MenuHorizontal(Data.Window.ScreenCenter.X - 118, Data.Window.ScreenCenter.Y + 180, 0);
             launching.Create(new List<Component> { m });
             if (observer1 == null)
@@ -620,6 +629,8 @@ namespace Exodus
             }));
             if (CanLaunch)
                 gameLaunching.Items.Add(launching);
+            if (Client.RunGameFunc == null)
+                Client.RunGameFunc = BeginGame;
             if (player1 == null)
             {
                 player1 = new PlayerInfosLaunching(Data.Window.ScreenCenter.X - 385, Data.Window.ScreenCenter.Y, Data.GameDisplaying.Epsilon * 3, false);

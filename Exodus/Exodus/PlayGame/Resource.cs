@@ -76,5 +76,14 @@ namespace Exodus.PlayGame
         {
             return (p.Hydrogen <= q.Hydrogen && p.Iron <= q.Iron && p.Graphene <= q.Graphene && p.Steel <= q.Steel && p.Electricity <= q.Electricity);
         }
+        public override string ToString()
+        {
+            return (Electricity > 0 ? (int)Electricity + "E " : "") +
+                   (Hydrogen > 0 ? (int)Hydrogen + "H " : "") +
+                   (Iron > 0 ? (int)Iron + "I " : "") +
+                   (Steel > 0 ? (int)Steel + "E " : "") +
+                   (Graphene > 0 ? (int)Graphene + "G " : "");
+                   
+        }
     }
 }

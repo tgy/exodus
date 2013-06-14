@@ -257,37 +257,45 @@ namespace Exodus.GameStates
                                         // on ne fait rien si le batiment est un extracteur d'hydrogene et qu'on essaye de le poser autre part que sur un puit de gaz
                                         if (!(newItem is PlayGame.Items.Buildings.HydrogenExtractor && Map.MapCells[(int)mousePos.X, (int)mousePos.Y].ListItems.FirstOrDefault(x => x is PlayGame.Items.Obstacles.Gas) == null))
                                         {
-                                            if (Data.Network.SinglePlayer)
+                                            if (!(Map.PlayerResources >= Data.GameInfos.CostsItems[newItem.GetType()]))
                                             {
-                                                Data.GameInfos.item.AddTask(
-                                                    new PlayGame.Tasks.ProductItem(
-                                                        Data.GameInfos.item,
-                                                        Data.GameInfos.timeCreatingItem[newItem.GetType()],
-                                                        newItem,
-                                                        new Point((int)mousePos.X, (int)mousePos.Y),
-                                                        true,
-                                                        false,
-                                                        true
-                                                    ),
-                                                    !Inputs.KeyboardState.IsKeyDown(Keys.LeftShift) && !Inputs.KeyboardState.IsKeyDown(Keys.RightShift),
-                                                    false
-                                                );
+                                                Network.ClientSide.Client.chat.InsertMsg("Not enough resources: you are missing" + (PlayGame.Map.PlayerResources - Data.GameInfos.CostsItems[newItem.GetType()]).ToString());
                                             }
                                             else
                                             {
-                                                Network.ClientSide.Client.SendObject(
-                                                    new Network.Orders.Tasks.ProductItem(
-                                                        Data.GameInfos.item.PrimaryId,
-                                                        false,
-                                                        _currentExample.GetType(),
-                                                        (int)mousePos.X,
-                                                        (int)mousePos.Y,
-                                                        true,
-                                                        false,
-                                                        true
-                                                    )
-                                                );
-                                                //throw new Exception("GO IMPLEMENTER CA EN MULTIPLAYER, SPECE DE GLANDU");
+                                                Map.PlayerResources -= Data.GameInfos.CostsItems[newItem.GetType()];
+                                                if (Data.Network.SinglePlayer)
+                                                {
+                                                    Data.GameInfos.item.AddTask(
+                                                        new PlayGame.Tasks.ProductItem(
+                                                            Data.GameInfos.item,
+                                                            Data.GameInfos.timeCreatingItem[newItem.GetType()],
+                                                            newItem,
+                                                            new Point((int)mousePos.X, (int)mousePos.Y),
+                                                            true,
+                                                            false,
+                                                            true
+                                                        ),
+                                                        !Inputs.KeyboardState.IsKeyDown(Keys.LeftShift) && !Inputs.KeyboardState.IsKeyDown(Keys.RightShift),
+                                                        false
+                                                    );
+                                                }
+                                                else
+                                                {
+                                                    Network.ClientSide.Client.SendObject(
+                                                        new Network.Orders.Tasks.ProductItem(
+                                                            Data.GameInfos.item.PrimaryId,
+                                                            false,
+                                                            _currentExample.GetType(),
+                                                            (int)mousePos.X,
+                                                            (int)mousePos.Y,
+                                                            true,
+                                                            false,
+                                                            true
+                                                        )
+                                                    );
+                                                    //throw new Exception("GO IMPLEMENTER CA EN MULTIPLAYER, SPECE DE GLANDU");
+                                                }
                                             }
                                         }
                                     }

@@ -56,15 +56,15 @@ namespace Exodus.Network.ClientSide
             sender = new BinaryWriter(client.GetStream());
             Data.Network.ServerIP = "Connected to " + IP + ":" + Data.Network.Port;
             IsRunning = true;
-            Receive();
+            SendObject(new PlayerName(Data.PlayerInfos.Name));
             SendObject(Data.PlayerInfos.InternetID);
+            Receive();
         }
         public static void RunGame()
         {
             Thread Stats = new Thread(UpdateStatistics);
             Stats.Name = "Stats Update";
             Stats.Start();
-            SendObject(new PlayerName(Data.PlayerInfos.Name));
         }
         #endregion
 
@@ -176,7 +176,7 @@ namespace Exodus.Network.ClientSide
                     IsRunning = false;
                 }
             }
-            else
+            else if (chat != null)
                 chat.InsertMsg("You are not connected!");
             //}
             //catch
@@ -231,7 +231,10 @@ namespace Exodus.Network.ClientSide
             //return;
             //}
             if (o is string)
-                chat.InsertMsg((string)o);
+            {
+                if (chat != null)
+                    chat.InsertMsg((string)o);
+            }
             else if (o is int)
             {
                 int Id = (int)o;
@@ -373,7 +376,7 @@ namespace Exodus.Network.ClientSide
             {
                 r += Data.GameInfos.CostsItems[i.GetType()];
             }
-            return (int)(r.Electricity + 5*r.Graphene + 2*r.Hydrogen + r.Iron + 3*r.Steel);
+            return (int)(r.Electricity + 5 * r.Graphene + 2 * r.Hydrogen + r.Iron + 3 * r.Steel);
         }
         #endregion
 

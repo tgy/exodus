@@ -79,10 +79,10 @@ namespace Exodus
         public static void LoadGameItems(ContentManager content)
         {
             GameItems[typeof(Worker) + "1"] = content.Load<Texture2D>("Game/Units/Worker1");
-            GameItems[typeof(Gunner) + "1"] = content.Load<Texture2D>("Game/Units/gunner");
+            GameItems[typeof(Gunner) + "1"] = content.Load<Texture2D>("Game/Units/gunner1");
             GameItems[typeof(Habitation) + "1"] = content.Load<Texture2D>("Game/Buildings/habitation");
             GameItems[typeof(Worker) + "2"] = content.Load<Texture2D>("Game/Units/Worker2");
-            GameItems[typeof(Gunner) + "2"] = content.Load<Texture2D>("Game/Units/gunner");
+            GameItems[typeof(Gunner) + "2"] = content.Load<Texture2D>("Game/Units/gunner2");
             GameItems[typeof(Spider) + "2"] = content.Load<Texture2D>("Game/Units/Spider");
             GameItems[typeof(Spider) + "1"] = content.Load<Texture2D>("Game/Units/Spider");
             GameItems[typeof(Habitation) + "2"] = content.Load<Texture2D>("Game/Buildings/habitation");

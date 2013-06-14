@@ -288,8 +288,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Units\gunner.png">
-      <Name>gunner</Name>
+    <Compile Include="Game\Units\gunner2.png">
+      <Name>gunner2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -456,8 +456,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Buildings\ironExtractor.png">
-      <Name>ironExtractor</Name>
+    <Compile Include="Game\Buildings\hydrogenExtractor.png">
+      <Name>hydrogenExtractor</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -1057,6 +1057,59 @@
   <ItemGroup>
     <Compile Include="Menu\Backgrounds\BGLaunchGame.jpg">
       <Name>BGLaunchGame</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\Units\gunner1.png">
+      <Name>gunner1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\UI\Actions\Electricity.png">
+      <Name>Electricity</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\UI\Actions\ElectricityHover.png">
+      <Name>ElectricityHover</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\UI\Actions\Graphene.png">
+      <Name>Graphene</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\UI\Actions\GrapheneHover.png">
+      <Name>GrapheneHover</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\UI\Actions\Steel.png">
+      <Name>Steel</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\UI\Actions\SteelHover.png">
+      <Name>SteelHover</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\Obstacles\iron.png">
+      <Name>iron</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\Buildings\habitationBlue.png">
+      <Name>habitationBlue</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

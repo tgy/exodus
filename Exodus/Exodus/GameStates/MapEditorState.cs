@@ -29,7 +29,8 @@ namespace Exodus.GameStates
         {
             typeof(PlayGame.Items.Obstacles.Creeper),
             typeof(PlayGame.Items.Obstacles.Nothing1x1),
-            typeof(PlayGame.Items.Obstacles.Nothing2x2)
+            typeof(PlayGame.Items.Obstacles.Nothing2x2),
+            typeof(PlayGame.Items.Obstacles.Iron)
         };
         List<Texture2D> _gameItemList = new List<Texture2D>();
         List<Type> _gameItemsTypeList = new List<Type>
@@ -39,7 +40,8 @@ namespace Exodus.GameStates
             typeof(PlayGame.Items.Units.Spider),
             typeof(PlayGame.Items.Units.Laserman),
             typeof(PlayGame.Items.Buildings.Habitation),
-            typeof(PlayGame.Items.Buildings.Laboratory)
+            typeof(PlayGame.Items.Buildings.Laboratory),
+            typeof(PlayGame.Items.Buildings.HydrogenExtractor)
         };
         List<Texture2D> _tilesList = new List<Texture2D>();
         enum itemType

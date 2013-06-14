@@ -48,7 +48,7 @@ namespace Exodus.PlayGame.Tasks
                     List<Point> neighbors = AStar.GetAllNeighbors(parent.pos.Value);
                     foreach (Point p in neighbors)
                     {
-                        if (Map.MapCells[p.X, p.Y].ListItems.Count > 0 && Map.MapCells[p.X, p.Y].ListItems[0].Focused)
+                        if (Map.MapCells[p.X, p.Y].ListItems.Count > 0 && Map.ListSelectedItems.Exists(n => n == Map.MapCells[p.X, p.Y].ListItems[0].PrimaryId))
                                 this.Finished = false;
                     }
                 }

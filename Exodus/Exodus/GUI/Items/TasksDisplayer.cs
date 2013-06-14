@@ -238,14 +238,14 @@ namespace Exodus.GUI.Items
             List<Component> result = new List<Component>();
             int currentX = Area.X + 9;
             Texture2D te;
-            te = Textures.MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HToE)];
-            result.Add(new Mini(ChangeResource, typeof(PlayGame.Tasks.ChangeResources.HToE), te, te, currentX, Area.Y + 14));
+            te = Textures.GameUI["LabElectrecity"];
+            result.Add(new Mini(ChangeResource, typeof(PlayGame.Tasks.ChangeResources.HToE), te, Textures.GameUI["LabElectrecityHover"], currentX, Area.Y + 14));
             currentX += te.Width + _step;
-            te = Textures.MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HEIToS)];
-            result.Add(new Mini(ChangeResource, typeof(PlayGame.Tasks.ChangeResources.HEIToS), te, te, currentX, Area.Y + 14));
+            te = Textures.GameUI["LabSteel"];
+            result.Add(new Mini(ChangeResource, typeof(PlayGame.Tasks.ChangeResources.HEIToS), te, Textures.GameUI["LabSteelHover"], currentX, Area.Y + 14));
             currentX += te.Width + _step;
-            te = Textures.MiniGameItems[typeof(PlayGame.Tasks.ChangeResources.HESToG)];
-            result.Add(new Mini(ChangeResource, typeof(PlayGame.Tasks.ChangeResources.HESToG), te, te, currentX, Area.Y + 14));
+            te = Textures.GameUI["LabGraphene"];
+            result.Add(new Mini(ChangeResource, typeof(PlayGame.Tasks.ChangeResources.HESToG), te, Textures.GameUI["LabGrapheneHover"], currentX, Area.Y + 14));
             currentX += te.Width + _step;
             Push(result);
         }

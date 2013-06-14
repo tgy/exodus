@@ -30,6 +30,8 @@ namespace Exodus.PlayGame.Items
                 return new University(IdPlayer);
             if (t == typeof(Laboratory))
                 return new Laboratory(IdPlayer);
+            if (t == typeof(HydrogenExtractor))
+                return new HydrogenExtractor(IdPlayer);
             return null;
         }
         public static Obstacle LoadObstacle(Type t)
@@ -40,6 +42,8 @@ namespace Exodus.PlayGame.Items
                 return new Nothing1x1();
             if (t == typeof(Nothing2x2))
                 return new Nothing2x2();
+            if (t == typeof(Iron))
+                return new Iron();
             return null;
         }
         public static Item LoadItem(Type t, int IdPlayer)

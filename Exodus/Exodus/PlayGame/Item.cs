@@ -52,13 +52,13 @@ namespace Exodus.PlayGame
             this.AttackSound = Audio.Attack[GetType()];
             this.DieSound = Audio.Die[GetType()];
             this.SelectionSound = Audio.Selection[GetType()];
-            this.Focused = Map.ListSelectedItems.Contains(this.PrimaryId);
+            //this.Focused = Map.ListSelectedItems.Contains(this.PrimaryId);
         }
         public string Name { get; protected set; }
         #endregion
 
         #region ConfigInfos
-        [NonSerialized]public bool Focused = false;
+        //[NonSerialized]public bool Focused = false;
         // Représente la position de la texture à l'écran
         protected Rectangle screenPos;
         // Représente la position du cercle de sélection si l'unité est dessinée
@@ -227,7 +227,7 @@ namespace Exodus.PlayGame
                                  SpriteEffects.None,
                                  layerDepth
                 );
-                if (Focused)
+                if (Map.ListSelectedItems.Exists(n => n == PrimaryId))
                 {
                     spriteBatch.Draw(_selectionCircle,
                                      selectionPosition,
@@ -240,7 +240,7 @@ namespace Exodus.PlayGame
                                      layerDepth + Data.GameDisplaying.Epsilon);
                 }
             }
-            if (this.Intersect(Inputs.MouseState.X, Inputs.MouseState.Y) || this.Focused)
+            if (this.Intersect(Inputs.MouseState.X, Inputs.MouseState.Y) || Map.ListSelectedItems.Contains(PrimaryId))
                 this.bigLife.Draw(spriteBatch);
         }
 

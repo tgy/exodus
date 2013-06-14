@@ -200,7 +200,9 @@
     <Compile Include="Player.cs" />
     <Compile Include="PlayGame\AStar.cs" />
     <Compile Include="PlayGame\Camera.cs" />
+    <Compile Include="PlayGame\Items\Buildings\HydrogenExtractor.cs" />
     <Compile Include="PlayGame\Items\Buildings\Labo.cs" />
+    <Compile Include="PlayGame\Items\Obstacles\Iron.cs" />
     <Compile Include="PlayGame\Items\Obstacles\Nothing2x2.cs" />
     <Compile Include="PlayGame\Items\Obstacles\Nothing1x1.cs" />
     <Compile Include="PlayGame\Items\Obstacles\Creeper.cs" />
@@ -215,7 +217,6 @@
     <Compile Include="PlayGame\Resource.cs" />
     <Compile Include="PlayGame\Researchs.cs" />
     <Compile Include="PlayGame\Task.cs" />
-    <Compile Include="PlayGame\Resources.cs" />
     <Compile Include="PlayGame\Items\Obstacle.cs" />
     <Compile Include="PlayGame\Tasks\Attack.cs" />
     <Compile Include="PlayGame\Tasks\ChangeResources\HESToG.cs" />

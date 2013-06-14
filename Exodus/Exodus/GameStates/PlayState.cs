@@ -85,23 +85,28 @@ namespace Exodus.GameStates
             Tile.tileSetTextures[2, 1] = Textures.Game["tileSet-1-2"];
             Tile.tileSetTextures[3, 1] = Textures.Game["tileSet-1-3"];
             Map.Load(200, 200);
-            Map.ListSelectedItems.Clear();
+            Map.ClearSelection();
             Tile.tileSetWidth = (Tile.tileSetTextures[0, 0].Width * (Tile.tileSetTextures.GetLength(0) - 1) + Tile.tileSetTextures[Tile.tileSetTextures.GetLength(0) - 1, 0].Width) / Tile.tileWidth;
-            //PlayGame.Items.Obstacles.Gas gasToogy = new PlayGame.Items.Obstacles.Gas();
-            //gasToogy.SetPos(100, 11, true);
-            //Map.ListPassiveItems.Add(gasToogy);
-            //PlayGame.Items.Units.Worker w = new PlayGame.Items.Units.Worker(2);
-            //w.SetPos(100, 10, true);
-            //Map.AddItem(w);
-            //PlayGame.Items.Buildings.Habitation h = new PlayGame.Items.Buildings.Habitation(2);
-            //w.AddTask(new PlayGame.Tasks.ProductItem(w, 0, h, new Point(100, 40), true, true, true), false, false);
-            //w = new PlayGame.Items.Units.Worker(1);
-            //w.SetPos(100, 20, true);
-            //Map.ListPassiveItems.Add(gasToogy);
             if (!Data.Network.SinglePlayer)
             {
                 Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 1, 100, 10));
                 Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 2, 100, 20));
+            }
+            else
+            {
+                PlayGame.Items.Obstacles.Iron iron = new PlayGame.Items.Obstacles.Iron();
+                iron.SetPos(110, 40, true);
+                Map.ListPassiveItems.Add(iron);
+                PlayGame.Items.Units.Worker w = new PlayGame.Items.Units.Worker(2);
+                w.SetPos(100, 10, true);
+                Map.AddItem(w);
+                PlayGame.Items.Buildings.Habitation h = new PlayGame.Items.Buildings.Habitation(2);
+                w.AddTask(new PlayGame.Tasks.ProductItem(w, 0, h, new Point(100, 40), true, true, true), false, false);
+                w = new PlayGame.Items.Units.Worker(1);
+                w.SetPos(100, 20, true);
+                Map.AddItem(w);
+                Map.ListPassiveItems.Add(iron); 
+            
             }
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
             Map.PlayerResources = new Resource(0, 0, 0, 0, 0);

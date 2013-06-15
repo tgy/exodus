@@ -31,7 +31,7 @@ namespace Exodus.PlayGame
                 return i;
             }
         }
-        public static LinkedList<Point> Pathfind(Point Start, Point Arrival)
+        public static LinkedList<Point> Pathfind(Point Start, Point Arrival, Func<Point, Point, bool> Arrived)
         {
             // Si la case n'est pas valable ou est un obstacle
             Arrival = closestFreePoint(x => ValidCase(x.X, x.Y), Arrival, Start);
@@ -49,7 +49,7 @@ namespace Exodus.PlayGame
             while (openSet2.Count > 0)
             {
                 current = openSet.First();
-                if (current.point.Equals(Arrival))
+                if (Arrived(current.point, Arrival))
                     return ReconstructPath(current);
                 openSet2.Remove(current.point);
                 openSet.Remove(current);
@@ -114,7 +114,6 @@ namespace Exodus.PlayGame
             }
             return l;
         }
-
         public static List<Point> GetFreeNeighbors(Point p)
         {
             List<Point> result = new List<Point>();
@@ -142,7 +141,7 @@ namespace Exodus.PlayGame
         }
         static bool ValidCase(int x, int y)
         {
-            return (x >= 0 && x < Map.Width && y >= 0 && y < Map.Height && Map.MapCells[x,y].ListItems.Count == 0);
+            return (x >= 0 && x < Map.Width && y >= 0 && y < Map.Height && Map.MapCells[x, y].ListItems.Count == 0);
         }
 
         /// <summary>

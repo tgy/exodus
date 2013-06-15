@@ -15,6 +15,12 @@ namespace Exodus.PlayGame.Tasks
             baseTimer;
         Point Arrival;
         Unit parent;
+        Func<Point, Point, bool> Arrived = ((p1, p2) => p1.Equals(p2));
+        public Move(Item parent, Point Arrival, Func<Point, Point, bool> Arrived)
+            : this(parent,Arrival)
+        {
+            this.Arrived = Arrived;
+        }
         public Move(Item parent, Point Arrival)
             : base(parent)
         {
@@ -40,7 +46,7 @@ namespace Exodus.PlayGame.Tasks
                 Finished = true;
             else
             {
-                this.path = PlayGame.AStar.Pathfind(parent.pos.Value, this.Arrival);
+                this.path = PlayGame.AStar.Pathfind(parent.pos.Value, this.Arrival, this.Arrived);
                 if (path == null)
                 {
                     this.Finished = true;
@@ -49,7 +55,7 @@ namespace Exodus.PlayGame.Tasks
                     foreach (Point p in neighbors)
                     {
                         if (Map.MapCells[p.X, p.Y].ListItems.Count > 0 && Map.ListSelectedItems.Exists(n => n == Map.MapCells[p.X, p.Y].ListItems[0].PrimaryId))
-                                this.Finished = false;
+                            this.Finished = false;
                     }
                 }
                 else
@@ -70,7 +76,7 @@ namespace Exodus.PlayGame.Tasks
             {
                 if (path == null)
                 {
-                    path = AStar.Pathfind(parent.pos.Value, this.Arrival);
+                    path = AStar.Pathfind(parent.pos.Value, this.Arrival, this.Arrived);
                 }
                 else
                 {

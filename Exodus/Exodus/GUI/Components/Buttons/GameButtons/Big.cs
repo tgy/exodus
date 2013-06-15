@@ -20,21 +20,20 @@ namespace Exodus.GUI.Components.Buttons.GameButtons
             Area = new Rectangle(x, y, Textures.GameUI["bigItem"].Width, Textures.GameUI["bigItem"].Height);
             Item = item;
             Depth = depth;
-            BigLife = new BigLife(x + 2, y + 63, Depth - 6*Data.GameDisplaying.Epsilon);
-            _maxLife = new Label(Fonts.Arial9, "", x + 32, y + 70) {Color = new Color(22, 127, 176)};
+            BigLife = new BigLife(x + 2, y + 63, Depth - 6 * Data.GameDisplaying.Epsilon);
+            _maxLife = new Label(Fonts.Arial9, "", x + 32, y + 70) { Color = new Color(22, 127, 176) };
             _currentLife = new Label(Fonts.Arial9, "", 0, y + 70);
         }
 
         public override void Update(GameTime gameTime)
         {
-            BigLife.Value = 100*Item.currentLife/Item.maxLife;
-            PlayGame.Item current = Map.ListItems.Find(i => i.PrimaryId == Map.ListSelectedItems[0]);
-            _maxLife.Txt = " / " + current.maxLife.ToString();
-            _currentLife.Txt = current.currentLife.ToString();
+            BigLife.Value = 100 * Item.currentLife / Item.maxLife;
+            _maxLife.Txt = " / " + Item.maxLife.ToString();
+            _currentLife.Txt = Item.currentLife.ToString();
 
             _currentLife.Pos.X = (int)(_maxLife.Pos.X - Fonts.Arial9.MeasureString(_currentLife.Txt).X);
 
-            int percentage = 100 * current.currentLife / current.maxLife;
+            int percentage = 100 * Item.currentLife / Item.maxLife;
             Color color;
             if (percentage >= 75)
                 color = new Color(91, 224, 43);

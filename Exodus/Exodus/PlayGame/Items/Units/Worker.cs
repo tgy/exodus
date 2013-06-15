@@ -23,6 +23,8 @@ namespace Exodus.PlayGame.Items.Units
             this.ItemsProductibles.Add(typeof(PlayGame.Items.Buildings.Laboratory));
             this.ItemsProductibles.Add(typeof(PlayGame.Items.Buildings.HydrogenExtractor));
             this.TasksOnMenu.Add(MenuTask.Build);
+            SightRange = 4;
+            Range = 1.4f;
         }
     }
 }

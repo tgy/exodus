@@ -19,7 +19,8 @@ namespace Exodus.PlayGame.Items.Units
             currentAttackDelay = AttackDelayMax;
             this.IdPlayer = IdPlayer;
             Initialize(20, 24, -47, -5);
-            this.SightRange = 4;
+            SightRange = 4;
+            Range = 1.4f;
         }
     }
 }

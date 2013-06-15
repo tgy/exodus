@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Exodus.PlayGame.Tasks
 {
@@ -9,12 +10,14 @@ namespace Exodus.PlayGame.Tasks
     class Attack : Task
     {
         public Item Enemy;
+        public Func<Point, Point, bool> Arrived;
         int delay;
         public Attack(Item parent, Item enemy, int delay) : base(parent, "Attack", "Attack the ennemy")
         {
             if (parent != null)
                 this.Parent = parent;
             this.Enemy = enemy;
+            this.Arrived = ((p1, p2) => AStar.Heuristic(p1, p2) <= this.Parent.Range * 10);
             this.delay = delay;
         }
 
@@ -33,27 +36,32 @@ namespace Exodus.PlayGame.Tasks
                 this.Finished = true;
             if (!this.Finished)
             {
-                // si l'ennemi n'est plus juste a côté
-                if (AStar.Heuristic(this.Parent.pos.Value, this.Enemy.pos.Value) > 14)
-                {
-                    this.Parent.AddTask(new PlayGame.Tasks.Move(this.Parent, Enemy.pos.Value), false, true);
-                }
+                if (Enemy == null || Parent == null)
+                    Finished = true;
                 else
                 {
-                    if (this.Parent.AttackSound != null)
-                        this.Parent.AttackSound.Play();
-                    this.Parent.currentAttackDelay -= (int)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    if (this.Parent.currentAttackDelay < 0)
+                    // si l'ennemi n'est plus juste a côté
+                    if (!Arrived(Parent.pos.Value, Enemy.pos.Value))
                     {
-                        this.Parent.currentAttackDelay = this.Parent.AttackDelayMax;
-                        this.Enemy.currentLife -= this.Parent.AttackStrength;
-                        if (!(this.Enemy.TasksList.Count > 0 && (this.Enemy.TasksList[0] is Attack || this.Enemy.TasksList[0] is Move)))
+                        this.Parent.AddTask(new PlayGame.Tasks.Move(this.Parent, Enemy.pos.Value, Arrived), false, true);
+                    }
+                    else
+                    {
+                        if (this.Parent.AttackSound != null)
+                            this.Parent.AttackSound.Play();
+                        if (Enemy is Unit && !(this.Enemy.TasksList.Count > 0 && (this.Enemy.TasksList[0] is Attack || this.Enemy.TasksList[0] is Move)))
                             this.Enemy.AddTask(new Attack(this.Enemy, this.Parent, 1000), true, false);
-                        if (this.Enemy.currentLife < 0)
+                        this.Parent.currentAttackDelay -= (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+                        if (this.Parent.currentAttackDelay < 0)
                         {
-                            this.Finished = true;
-                            if (this.Parent.AttackSound != null)
-                                this.Parent.AttackSound.Stop();
+                            this.Parent.currentAttackDelay = this.Parent.AttackDelayMax;
+                            this.Enemy.currentLife -= this.Parent.AttackStrength;
+                            if (this.Enemy.currentLife < 0)
+                            {
+                                this.Finished = true;
+                                if (this.Parent.AttackSound != null)
+                                    this.Parent.AttackSound.Stop();
+                            }
                         }
                     }
                 }

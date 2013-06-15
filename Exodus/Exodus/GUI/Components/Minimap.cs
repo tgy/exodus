@@ -15,7 +15,7 @@ namespace Exodus.GUI.Components
         private Vector2 backgroundPosition;
         private int offsetX = 129;
         private int offsetY = 14;
-        DateTime start;
+        public DateTime start;
         Label hour;
         public Minimap(int x, int y, float depth)
         {

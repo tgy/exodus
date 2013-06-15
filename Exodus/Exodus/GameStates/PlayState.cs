@@ -94,8 +94,8 @@ namespace Exodus.GameStates
             {
                 if (Network.ServerSide.Server.IsRunning)
                 {
-                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 1, 100, 10));
-                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 2, 100, 20));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 1, 100, 20));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 2, 100, 30));
                 }
             }
             else
@@ -144,7 +144,8 @@ namespace Exodus.GameStates
                                      0f, Vector2.Zero, 1f, SpriteEffects.None, 1f
                         );
                     for (int i = 0; i < Map.MapCells[x, y].ListItems.Count; i++)
-                        Map.MapCells[x, y].ListItems[i].Draw(spriteBatch);
+                        if (Map.MapCells[x,y].ListItems[i].pos.Value.X == x && Map.MapCells[x,y].ListItems[i].pos.Value.Y == y)
+                            Map.MapCells[x, y].ListItems[i].Draw(spriteBatch);
                 }
 
             #endregion

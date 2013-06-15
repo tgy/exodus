@@ -401,6 +401,7 @@ namespace Exodus.Network.ServerSide
         }
         private static void ReSyncTimer()
         {
+            Thread.Sleep(100);
             while (IsRunning)
             {
                 Resync();

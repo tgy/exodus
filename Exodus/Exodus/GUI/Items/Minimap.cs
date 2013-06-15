@@ -29,7 +29,7 @@ namespace Exodus.GUI.Components
             Area = new Rectangle(x, y, borders.Width, borders.Height);
             areaBackground = new Rectangle(Area.X + offsetX, Area.Y + offsetY, background.Width, background.Height);
             start = DateTime.Now;
-            hour = new Label(GUI.Fonts.Eurostile12, "", x + 54, y + 139);
+            hour = new Label(GUI.Fonts.Eurostile12, "", x + 54, y + 139, 4 * float.Epsilon);
             Components.Add(hour);
         }
         public override void Update(GameTime gameTime)
@@ -95,14 +95,14 @@ namespace Exodus.GUI.Components
             pos1 = ScreenToMiniMap(new Vector2(PlayGame.Camera.x, PlayGame.Camera.y));
             pos2 = ScreenToMiniMap(new Vector2(PlayGame.Camera.x + Data.Window.WindowWidth,
                                                PlayGame.Camera.y + Data.Window.WindowHeight));
-            spriteBatch.Draw(minitile, new Rectangle((int)pos1.X, (int)pos1.Y, (int)(pos2.X - pos1.X + 1), 1),
-                             Color.Green);
-            spriteBatch.Draw(minitile, new Rectangle((int)pos1.X, (int)pos2.Y, (int)(pos2.X - pos1.X + 1), 1),
-                             Color.Green);
-            spriteBatch.Draw(minitile, new Rectangle((int)pos1.X, (int)pos1.Y, 1, (int)(pos2.Y - pos1.Y + 1)),
-                             Color.Green);
-            spriteBatch.Draw(minitile, new Rectangle((int)pos2.X, (int)pos1.Y, 1, (int)(pos2.Y - pos1.Y + 1)),
-                             Color.Green);
+            spriteBatch.Draw(minitile, new Rectangle((int)pos1.X, (int)pos1.Y, (int)(pos2.X - pos1.X + 1), 1), null,
+                             Color.Green, 0f, Vector2.Zero, SpriteEffects.None, 4 * float.Epsilon);
+            spriteBatch.Draw(minitile, new Rectangle((int)pos1.X, (int)pos2.Y, (int)(pos2.X - pos1.X + 1), 1), null,
+                             Color.Green, 0f, Vector2.Zero, SpriteEffects.None, 4 * float.Epsilon);
+            spriteBatch.Draw(minitile, new Rectangle((int)pos1.X, (int)pos1.Y, 1, (int)(pos2.Y - pos1.Y + 1)), null,
+                             Color.Green, 0f, Vector2.Zero, SpriteEffects.None, 4 * float.Epsilon);
+            spriteBatch.Draw(minitile, new Rectangle((int)pos2.X, (int)pos1.Y, 1, (int)(pos2.Y - pos1.Y + 1)), null,
+                             Color.Green, 0f, Vector2.Zero, SpriteEffects.None, 4 * float.Epsilon);
             base.Draw(spriteBatch);
         }
         int Clamp(int val, int min, int max)

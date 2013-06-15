@@ -52,16 +52,19 @@ namespace Exodus.GUI.Components.Buttons.GameButtons
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Textures.BigGameItems[Item.GetType()],
-                             new Rectangle(Area.X + 1, Area.Y + 1, Textures.BigGameItems[Item.GetType()].Width,
-                                           Textures.BigGameItems[Item.GetType()].Height), null, Color.White, 0f,
-                             Vector2.Zero,
-                             SpriteEffects.None, Depth);
-            spriteBatch.Draw(Textures.GameUI["bigItem"], Area, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None,
-                             Depth - Data.GameDisplaying.Epsilon);
-            BigLife.Draw(spriteBatch);
-            _currentLife.Draw(spriteBatch);
-            _maxLife.Draw(spriteBatch);
+            if (Item != null)
+            {
+                spriteBatch.Draw(Textures.BigGameItems[Item.GetType()],
+                                 new Rectangle(Area.X + 1, Area.Y + 1, Textures.BigGameItems[Item.GetType()].Width,
+                                               Textures.BigGameItems[Item.GetType()].Height), null, Color.White, 0f,
+                                 Vector2.Zero,
+                                 SpriteEffects.None, Depth);
+                spriteBatch.Draw(Textures.GameUI["bigItem"], Area, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None,
+                                 Depth - Data.GameDisplaying.Epsilon);
+                BigLife.Draw(spriteBatch);
+                _currentLife.Draw(spriteBatch);
+                _maxLife.Draw(spriteBatch);
+            }
         }
     }
 }

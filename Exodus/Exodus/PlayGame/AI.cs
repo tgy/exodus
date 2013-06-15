@@ -8,16 +8,18 @@ namespace Exodus.PlayGame
 {
     static class AI
     {
-        public static void Update(DateTime time, int id)
+        static int task = 0;
+        public static void Update(TimeSpan time, int id)
         {
-            if (time >= new DateTime(0, 0, 0, 0, 0, 10, 0))
+            if (task == 0 && time >= new TimeSpan(0, 0, 0, 10))
             {
-                Items.Buildings.Habitation h = (Items.Buildings.Habitation)Map.ListItems.FirstOrDefault(x => x is Items.Buildings.Habitation);
+                Items.Buildings.Habitation h = (Items.Buildings.Habitation)Map.ListItems.FirstOrDefault(x => x is Items.Buildings.Habitation && x.IdPlayer == id);
                 if (h != null)
                 {
                     Items.Units.Worker w = new Items.Units.Worker(id);
                     h.AddTask(new Tasks.ProductItem(h, Data.GameInfos.timeCreatingItem[w.GetType()], w, h.pos.Value, true, true, false), true, false);
                 }
+                task++;
             }
         }
     }

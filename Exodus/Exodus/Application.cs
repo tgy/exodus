@@ -357,7 +357,6 @@ namespace Exodus
                 if (_scrollingSelection.SelectedItem >= 0 && _scrollingSelection.SelectedItem < _scrollingSelection.Entries.Count)
                 {
                     Data.Config.currentMap = _scrollingSelection.Entries[_scrollingSelection.SelectedItem].Item2;
-                    PlaySinglePlayer(m, i);
                     if (_scrollingSelection.SelectedItem != -1)
                     {
                         if (_searchingLAN)
@@ -379,7 +378,6 @@ namespace Exodus
                 System.Net.IPAddress ip;
                 if (System.Net.IPAddress.TryParse(ipJoin.Value, out ip))
                 {
-                    PlaySinglePlayer(m, i);
                     Data.Network.LastIP = ipJoin.Value;
                     Data.Network.SinglePlayer = false;
                     player2.Reset(Data.PlayerInfos.Name, Exodus.Player.avatarURL, Exodus.Player.rank, Exodus.Player.victories, Exodus.Player.defeats, true);

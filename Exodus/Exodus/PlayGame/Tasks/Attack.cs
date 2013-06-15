@@ -31,27 +31,32 @@ namespace Exodus.PlayGame.Tasks
                 this.Finished = true;
             if (!this.Finished)
             {
-                // si l'ennemi n'est plus juste a côté
-                if (!Arrived(Parent.pos.Value,Enemy.pos.Value))
-                {
-                    this.Parent.AddTask(new PlayGame.Tasks.Move(this.Parent, Enemy.pos.Value, Arrived), false, true);
-                }
+                if (Enemy == null || Parent == null)
+                    Finished = true;
                 else
                 {
-                    if (this.Parent.AttackSound != null)
-                        this.Parent.AttackSound.Play();
-                    if (Enemy is Unit && !(this.Enemy.TasksList.Count > 0 && (this.Enemy.TasksList[0] is Attack || this.Enemy.TasksList[0] is Move)))
-                        this.Enemy.AddTask(new Attack(this.Enemy, this.Parent), true, false);
-                    this.Parent.currentAttackDelay -= (int)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    if (this.Parent.currentAttackDelay < 0)
+                    // si l'ennemi n'est plus juste a côté
+                    if (!Arrived(Parent.pos.Value, Enemy.pos.Value))
                     {
-                        this.Parent.currentAttackDelay = this.Parent.AttackDelayMax;
-                        this.Enemy.currentLife -= this.Parent.AttackStrength;
-                        if (this.Enemy.currentLife < 0)
+                        this.Parent.AddTask(new PlayGame.Tasks.Move(this.Parent, Enemy.pos.Value, Arrived), false, true);
+                    }
+                    else
+                    {
+                        if (this.Parent.AttackSound != null)
+                            this.Parent.AttackSound.Play();
+                        if (Enemy is Unit && !(this.Enemy.TasksList.Count > 0 && (this.Enemy.TasksList[0] is Attack || this.Enemy.TasksList[0] is Move)))
+                            this.Enemy.AddTask(new Attack(this.Enemy, this.Parent), true, false);
+                        this.Parent.currentAttackDelay -= (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+                        if (this.Parent.currentAttackDelay < 0)
                         {
-                            this.Finished = true;
-                            if (this.Parent.AttackSound != null)
-                                this.Parent.AttackSound.Stop();
+                            this.Parent.currentAttackDelay = this.Parent.AttackDelayMax;
+                            this.Enemy.currentLife -= this.Parent.AttackStrength;
+                            if (this.Enemy.currentLife < 0)
+                            {
+                                this.Finished = true;
+                                if (this.Parent.AttackSound != null)
+                                    this.Parent.AttackSound.Stop();
+                            }
                         }
                     }
                 }

@@ -104,30 +104,17 @@ namespace Exodus.GameStates
                 i.SetPos(96, 24, true);
                 Map.AddItem(i);
                 i = new PlayGame.Items.Buildings.Habitation(2);
-                i.SetPos(96, 34, true);
+                i.SetPos(96, 150, true);
                 Map.AddItem(i);
-                for (int x = 100; x < 110; x++)
-                    for (int y = 30; y < 50; y++)
-                    {
-                        i = new PlayGame.Items.Units.Worker(2);
-                        i.SetPos(x, y, true);
-                        Map.AddItem(i);
-                    }
-                for (int x = 120; x < 130; x += 2)
-                    for (int y = 30; y < 50; y += 2)
-                    {
-                        i = new PlayGame.Items.Buildings.Habitation(2);
-                        i.SetPos(x, y, true);
-                        Map.AddItem(i);
-                    }
+                i = new PlayGame.Items.Obstacles.Iron();
+                i.SetPos(110, 136, true);
+                Map.AddItem(i);
                 i = new PlayGame.Items.Obstacles.Gas();
-                i.SetPos(110, 50, true);
-                Map.AddPassiveItem(i);
-                i = new PlayGame.Items.Units.Laserman(1);
-                i.SetPos(100, 21, true);
+                i.SetPos(86, 160, true);
                 Map.AddItem(i);
             }
             start = DateTime.Now;
+            AI.task = 0;
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
             Map.PlayerResources = new Resource(10000, 10000, 10000, 10000, 10000);
             base.LoadContent();

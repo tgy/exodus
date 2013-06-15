@@ -103,6 +103,7 @@ namespace Exodus
             GameItems[typeof(Laserman) + "1"] = content.Load<Texture2D>("Game/Units/Laserman1");
             GameItems[typeof(Laserman) + "2"] = content.Load<Texture2D>("Game/Units/Laserman2");
             GameItems[typeof(HydrogenExtractor) + "1"] = content.Load<Texture2D>("Game/Buildings/hydrogenExtractor");
+            GameItems[typeof(HydrogenExtractor) + "2"] = content.Load<Texture2D>("Game/Buildings/hydrogenExtractor");
         }
         public static void LoadMiniGameItems(ContentManager content)
         {

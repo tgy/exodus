@@ -149,19 +149,19 @@ namespace Exodus.GameStates
             #endregion
             spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, Data.Network.Running_as + " (Id:" + Data.Network.IdPlayer + ")",
                                    new Vector2(Data.Window.WindowWidth - 420, 15), Color.Red, 0f, Vector2.Zero, 1f,
-                                   SpriteEffects.None, float.Epsilon);
+                                   SpriteEffects.None, 5 * float.Epsilon);
             spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, Data.Network.Client,
                                    new Vector2(Data.Window.WindowWidth - 370, 34), Color.Red, 0f, Vector2.Zero, 1f,
-                                   SpriteEffects.None, float.Epsilon);
+                                   SpriteEffects.None, 5 * float.Epsilon);
             spriteBatch.DrawString(GUI.Fonts.Eurostile12, Data.Network.ServerIP,
                                    new Vector2(Data.Window.WindowWidth - 345, 49), Color.Red, 0f, Vector2.Zero, 1f,
-                                   SpriteEffects.None, float.Epsilon);
+                                   SpriteEffects.None, 5 * float.Epsilon);
             spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, Data.Network.Server,
                                    new Vector2(Data.Window.WindowWidth - 370, 69), Color.Red, 0f, Vector2.Zero, 1f,
-                                   SpriteEffects.None, float.Epsilon);
+                                   SpriteEffects.None, 5 * float.Epsilon);
             spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, Data.Network.Error,
                                    new Vector2(Data.Window.WindowWidth / 2 - 42, Data.Window.WindowHeight / 2), Color.Red,
-                                   0f, Vector2.Zero, 1f, SpriteEffects.None, float.Epsilon);
+                                   0f, Vector2.Zero, 1f, SpriteEffects.None, 5 * float.Epsilon);
             resourcesDisplayer.Set(PlayGame.Map.PlayerResources);
             int Client_Count = 1;
             while (Client_Count <= Data.Network.ConnectedClients.Count)
@@ -499,6 +499,22 @@ namespace Exodus.GameStates
                         for (int y = Orders.listItems[i].pos.Value.Y, mY = y + Orders.listItems[i].Width; y < mY; y++)
                             for (int x = Orders.listItems[i].pos.Value.X, mX = x + Orders.listItems[i].Width; x < mX; x++)
                                 PlayGame.Map.MapCells[x, y].ListItems.Add(Orders.listPassives[i]);
+            }
+            if (Data.Network.SinglePlayer)
+            {
+                bool findOur = false;
+                bool findEnemy = false;
+                for (int i = 0; i < Map.ListItems.Count; i++)
+                {
+                    if (Map.ListItems[i].IdPlayer == Data.Network.IdPlayer)
+                        findOur = true;
+                    else
+                        findEnemy = true;
+                }
+                if (!findOur)
+                    game.Push(new GameStates.GameFinishedState(game, this, endGameState.lost));
+                else if (!findEnemy)
+                    game.Push(new GameStates.GameFinishedState(game, this, endGameState.won));
             }
             base.Update(gameTime);
         }

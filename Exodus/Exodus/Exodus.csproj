@@ -111,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audio.cs" />
+    <Compile Include="GameStates\GameFinishedState.cs" />
     <Compile Include="GUI\Components\Buttons\SoundButton.cs" />
     <Compile Include="Network\Orders\LaunchGame.cs" />
     <Compile Include="Network\Orders\Tasks\HarvestIron.cs" />

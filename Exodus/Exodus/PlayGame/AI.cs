@@ -17,7 +17,6 @@ namespace Exodus.PlayGame
         {
             id = idAI;
         }
-
         public static void Update(TimeSpan time)
         {
             if (task == 0 && time >= new TimeSpan(0, 0, 0, 2))
@@ -85,17 +84,14 @@ namespace Exodus.PlayGame
                 }
             }
         }
-
         private static Item First<T>(bool activeItem)
         {
             return (activeItem ? Map.ListItems : Map.ListPassiveItems).FirstOrDefault(x => x is T && x.IdPlayer == id);
         }
-
         private static Item First<T>(bool activeItem, List<Item> different)
         {
             return (activeItem ? Map.ListItems : Map.ListPassiveItems).FirstOrDefault(x => x is T && x.IdPlayer == id && !different.Contains(x));
         }
-
         private static Item Closest<T>(bool activeItem)
         {
             Item min = null;
@@ -111,7 +107,6 @@ namespace Exodus.PlayGame
             }
             return min;
         }
-
         private static void ProduceRandomUnit()
         {
             List<Item> l = new List<Item>();
@@ -137,7 +132,6 @@ namespace Exodus.PlayGame
                 }
             }
         }
-
         private static void GetNUnitAndAttackRandomItem(int n)
         {
             List<Item> enemyItems = new List<Item>();
@@ -161,7 +155,6 @@ namespace Exodus.PlayGame
                     break;
             }
         }
-
         private static void GetUselessUnitToBase()
         {
             foreach (Item i in Map.ListItems)

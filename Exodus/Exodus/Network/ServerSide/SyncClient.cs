@@ -152,9 +152,9 @@ namespace Exodus.Network.ServerSide
         {
             //if (!IsRunning)
             //    Thread.Sleep(100);
-            //for (byte i = 0; i < 10; i++)
-            //    if (!IsRunning)
-            //        Thread.Sleep(10);
+            for (byte i = 0; i < 10; i++)
+                if (!IsRunning)
+                    Thread.Sleep(10);
             switch (WhatIsIt)
             {
                 case 0: //Server

@@ -75,12 +75,12 @@ namespace Exodus.PlayGame
                 {
                     if (Data.Network.SinglePlayer)
                     {
-                        this.AddTask(new Tasks.Attack(this, item), false, false);
+                        this.AddTask(new Tasks.Attack(this, item, 0), false, false);
                     }
                     else
                     {
                         Network.ClientSide.Client.SendObject(
-                            new Network.Orders.Tasks.Attack(this.PrimaryId, item.PrimaryId, false)
+                            new Network.Orders.Tasks.Attack(this.PrimaryId, item.PrimaryId, false, 0)
                         );
                     }
                 }

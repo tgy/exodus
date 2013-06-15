@@ -9,11 +9,13 @@ namespace Exodus.Network.Orders.Tasks
     class Attack : ItemTask
     {
         public int enemyPrimaryId;
-        public Attack(int parentPos, int enemyPrimaryId, bool overrideTask)
+        public int timer;
+        public Attack(int parentPos, int enemyPrimaryId, bool overrideTask, int timer)
             : base(parentPos, overrideTask)
         {
             this.overrideTask = overrideTask;
             this.enemyPrimaryId = enemyPrimaryId;
+            this.timer = timer;
         }
     }
 }

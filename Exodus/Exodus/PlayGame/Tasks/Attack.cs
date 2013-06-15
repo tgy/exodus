@@ -11,12 +11,14 @@ namespace Exodus.PlayGame.Tasks
     {
         public Item Enemy;
         public Func<Point, Point, bool> Arrived;
-        public Attack(Item parent, Item enemy) : base(parent, "Attack", "Attack the ennemy")
+        int delay;
+        public Attack(Item parent, Item enemy, int delay) : base(parent, "Attack", "Attack the ennemy")
         {
             if (parent != null)
                 this.Parent = parent;
             this.Enemy = enemy;
             this.Arrived = ((p1, p2) => AStar.Heuristic(p1, p2) <= this.Parent.Range * 10);
+            this.delay = delay;
         }
 
         public override void Initialize()
@@ -27,6 +29,9 @@ namespace Exodus.PlayGame.Tasks
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            delay -= (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (delay > 0)
+                return;
             if (MustStop)
                 this.Finished = true;
             if (!this.Finished)
@@ -45,7 +50,7 @@ namespace Exodus.PlayGame.Tasks
                         if (this.Parent.AttackSound != null)
                             this.Parent.AttackSound.Play();
                         if (Enemy is Unit && !(this.Enemy.TasksList.Count > 0 && (this.Enemy.TasksList[0] is Attack || this.Enemy.TasksList[0] is Move)))
-                            this.Enemy.AddTask(new Attack(this.Enemy, this.Parent), true, false);
+                            this.Enemy.AddTask(new Attack(this.Enemy, this.Parent, 1000), true, false);
                         this.Parent.currentAttackDelay -= (int)gameTime.ElapsedGameTime.TotalMilliseconds;
                         if (this.Parent.currentAttackDelay < 0)
                         {

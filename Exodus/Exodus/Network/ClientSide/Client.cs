@@ -109,17 +109,21 @@ namespace Exodus.Network.ClientSide
             //    if (!IsGameAlreadyInList(NewGame))
             //        ServerList.Add(NewGame);
             //}
-            while (ServerList.Count < 5 && IsRefreshing)
+            while (IsRefreshing)
             {
-                if (BroadcastListener.Available != 0)
+                for (byte b = 0; b < 10; b++)
                 {
-                    GamePlusTwo = BroadcastListener.Receive(ref EndPoint);
-                    Game NewGame = (Game)Serialize.Serializer.ByteArrayToObject(/*ShortenArray(*/GamePlusTwo/*, 2)*/);
-                    if (!IsGameAlreadyInList(NewGame))
-                        ServerList.Add(NewGame);
+                    if (BroadcastListener.Available != 0)
+                    {
+                        GamePlusTwo = BroadcastListener.Receive(ref EndPoint);
+                        Game NewGame = (Game)Serialize.Serializer.ByteArrayToObject(/*ShortenArray(*/GamePlusTwo/*, 2)*/);
+                        if (!IsGameAlreadyInList(NewGame))
+                            ServerList.Add(NewGame);
+                    }
+                    else
+                        Thread.Sleep(100);
                 }
-                else
-                    Thread.Sleep(100);
+                ServerList.Clear();
             }
             BroadcastListener.Close();
             IsRefreshing = false;

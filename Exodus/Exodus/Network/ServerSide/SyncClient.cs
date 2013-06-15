@@ -69,7 +69,7 @@ namespace Exodus.Network.ServerSide
             try
             {
                 //Client = new TcpClient(Dns.GetHostAddresses("thefirsthacker.myftp.org")[0].ToString(), 4000);
-                Client = new TcpClient("192.168.1.15", 4000);
+                Client = new TcpClient("192.168.1.14", 4000);
                 //Client = new TcpClient("192.168.1.15", 4000);
                 //NetReader = new BinaryReader(Client.GetStream());
                 //InternetGames = new List<Game>();
@@ -255,7 +255,7 @@ namespace Exodus.Network.ServerSide
         }
         private static void Ping(object bw)
         {
-            BinaryWriter bla = (BinaryWriter)bw;
+            BinaryWriter pinger = (BinaryWriter)bw;
             byte[] ping = new byte[3];
             ping[0] = 0;
             ping[1] = 1;
@@ -263,7 +263,7 @@ namespace Exodus.Network.ServerSide
             Thread.Sleep(100);
             while (IsRunning)
             {
-                bla.Write(ping);
+                pinger.Write(ping);
                 Thread.Sleep(100);
             }
         }

@@ -367,7 +367,8 @@ namespace Exodus.Network.ClientSide
                         item.AddTask(
                               new PlayGame.Tasks.Attack(
                                   item,
-                                  ennemy
+                                  ennemy,
+                                  ((Orders.Tasks.Attack)o).timer
                                   ),
                                   false,
                                   false

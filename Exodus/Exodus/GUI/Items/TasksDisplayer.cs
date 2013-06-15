@@ -413,7 +413,7 @@ namespace Exodus.GUI.Items
                     foreach (int selected in Map.ListSelectedItems)
                     {
                         c = Map.ListItems.Find(u => u.PrimaryId == selected);
-                        c.AddTask(new PlayGame.Tasks.Attack(c, Map.ListItems[enemyIndex]), b, false);
+                        c.AddTask(new PlayGame.Tasks.Attack(c, Map.ListItems[enemyIndex], 0), b, false);
                     }
                 }
                 else
@@ -421,7 +421,7 @@ namespace Exodus.GUI.Items
                     foreach (int item in Map.ListSelectedItems)
                     {
                         Network.ClientSide.Client.SendObject(
-                            new Network.Orders.Tasks.Attack(item, Map.ListItems[enemyIndex].PrimaryId, b)
+                            new Network.Orders.Tasks.Attack(item, Map.ListItems[enemyIndex].PrimaryId, b, 0)
                         );
                     }
                 }

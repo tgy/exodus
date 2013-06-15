@@ -363,7 +363,7 @@ namespace Exodus.Network.ClientSide
                         else if (ennemy == null && Orders.enemyPrimaryId == Map.ListItems[i].PrimaryId)
                             ennemy = Map.ListItems[i];
                     }
-                    if (item != null )
+                    if (item != null && ennemy != null)
                         item.AddTask(
                               new PlayGame.Tasks.Attack(
                                   item,
@@ -373,6 +373,23 @@ namespace Exodus.Network.ClientSide
                                   false,
                                   false
                                   );
+                }
+                else if (o is Orders.Tasks.HarvestIron)
+                {
+                    Orders.Tasks.HarvestIron Orders = (Orders.Tasks.HarvestIron)o;
+                    PlayGame.Item item = null,
+                                  iron = null;
+                    for (int i = 0; i < Map.ListItems.Count && (item == null || iron == null); i++)
+                    {
+                        if (item == null && Orders.parentPrimaryKey == Map.ListItems[i].PrimaryId)
+                            item = Map.ListItems[i];
+                        else if (iron == null && Orders.ironPrimaryKey == Map.ListItems[i].PrimaryId)
+                            iron = Map.ListItems[i];
+                    }
+                    if (item != null && iron != null)
+                    {
+                        item.AddTask(new PlayGame.Tasks.HarvestIron(item, iron), false, false);
+                    }
                 }
             }
             else if (o is GetId)

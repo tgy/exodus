@@ -114,6 +114,7 @@ namespace Exodus.GameStates
                 Map.AddItem(i);
             }
             start = DateTime.Now;
+            AI.task = 0;
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
             Map.PlayerResources = new Resource(10000, 10000, 10000, 10000, 10000);
             base.LoadContent();

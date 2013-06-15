@@ -104,8 +104,7 @@ namespace Exodus.Network.ServerSide
             TPStats = new TwoPStatistics();
             Thread ReSyncAuto = new Thread(ReSyncTimer);
             ReSyncAuto.Name = "ReSyncAuto";
-            if (SyncObservers != null)
-                SyncObservers.Abort();
+            ReSyncAuto.Start();
         }
         #endregion
 
@@ -344,6 +343,8 @@ namespace Exodus.Network.ServerSide
             }
             else if (o is Statistics)
                 TPStats.AddStatistic((Statistics)o);
+            else if (o is Task)
+                SendToAll(o);
             else
                 throw new Exception("Dah hell is that object?");
         }

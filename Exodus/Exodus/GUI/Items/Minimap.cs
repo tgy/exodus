@@ -71,10 +71,10 @@ namespace Exodus.GUI.Components
                                 c = Color.Gray;
                                 break;
                             case 1:
-                                c = Color.Yellow;
+                                c = Color.Blue;
                                 break;
                             case 2:
-                                c = Color.Blue;
+                                c = Color.Yellow;
                                 break;
                         }
                     else

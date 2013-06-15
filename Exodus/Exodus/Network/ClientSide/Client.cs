@@ -102,29 +102,29 @@ namespace Exodus.Network.ClientSide
                 throw new Exception("Another Socket is alreading using the port 4269!");
             }
             EndPoint = new IPEndPoint(IPAddress.Any, 4269);
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    GamePlusTwo = BroadcastListener.Receive(ref EndPoint);
-            //    Game NewGame = (Game)Serialize.Serializer.ByteArrayToObject(/*ShortenArray(*/GamePlusTwo/*, 2)*/);
-            //    if (!IsGameAlreadyInList(NewGame))
-            //        ServerList.Add(NewGame);
-            //}
-            while (IsRefreshing)
+            for (int i = 0; i < 10; i++)
             {
-                for (byte b = 0; b < 10; b++)
-                {
-                    if (BroadcastListener.Available != 0)
-                    {
-                        GamePlusTwo = BroadcastListener.Receive(ref EndPoint);
-                        Game NewGame = (Game)Serialize.Serializer.ByteArrayToObject(/*ShortenArray(*/GamePlusTwo/*, 2)*/);
-                        if (!IsGameAlreadyInList(NewGame))
-                            ServerList.Add(NewGame);
-                    }
-                    else
-                        Thread.Sleep(100);
-                }
-                ServerList.Clear();
+                GamePlusTwo = BroadcastListener.Receive(ref EndPoint);
+                Game NewGame = (Game)Serialize.Serializer.ByteArrayToObject(/*ShortenArray(*/GamePlusTwo/*, 2)*/);
+                if (!IsGameAlreadyInList(NewGame))
+                    ServerList.Add(NewGame);
             }
+            //while (IsRefreshing)
+            //{
+            //    for (byte b = 0; b < 10; b++)
+            //    {
+            //        if (BroadcastListener.Available != 0)
+            //        {
+            //            GamePlusTwo = BroadcastListener.Receive(ref EndPoint);
+            //            Game NewGame = (Game)Serialize.Serializer.ByteArrayToObject(/*ShortenArray(*/GamePlusTwo/*, 2)*/);
+            //            if (!IsGameAlreadyInList(NewGame))
+            //                ServerList.Add(NewGame);
+            //        }
+            //        else
+            //            Thread.Sleep(100);
+            //    }
+            //    ServerList.Clear();
+            //}
             BroadcastListener.Close();
             IsRefreshing = false;
         }

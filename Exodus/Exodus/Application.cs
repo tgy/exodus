@@ -472,15 +472,24 @@ namespace Exodus
                     Data.Config.Pwd = pass.Value;
                     Data.SavePlayerConfig();
                     statusBar.Text = "loading";
-                    PlayerInfos.Reset(
-                        SyncClient.SendSQLRequest("SELECT `avatar` FROM `user` WHERE `id` = " + Data.PlayerInfos.InternetID)[0][0],
-                        Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + Data.PlayerInfos.InternetID + ")"))[0][0]) + 1,
-                        Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + Data.PlayerInfos.InternetID))[0][0]),
-                        Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + Data.PlayerInfos.InternetID + " AND (`P1ID`=" + Data.PlayerInfos.InternetID + " OR `P2ID`=" + Data.PlayerInfos.InternetID + ")"))[0][0])
-                    );
-                    Push(_temp);
-                    statusBar.Text = "Welcome !";
-                    statusBar.Active = false;
+                    try
+                    {
+                        PlayerInfos.Reset(
+                            SyncClient.SendSQLRequest("SELECT `avatar` FROM `user` WHERE `id` = " + Data.PlayerInfos.InternetID)[0][0],
+                            Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + Data.PlayerInfos.InternetID + ")"))[0][0]) + 1,
+                            Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + Data.PlayerInfos.InternetID))[0][0]),
+                            Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + Data.PlayerInfos.InternetID + " AND (`P1ID`=" + Data.PlayerInfos.InternetID + " OR `P2ID`=" + Data.PlayerInfos.InternetID + ")"))[0][0])
+                        );
+                        Push(_temp);
+                        statusBar.Text = "Welcome !";
+                        statusBar.Active = false;
+                    }
+                    catch
+                    {
+                        Player.ConnectionState = 2;
+                        statusBar.Text = "Problem?";
+                        statusBar.Active = false;
+                    }
                 }
                 else
                 {

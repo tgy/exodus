@@ -22,6 +22,7 @@ namespace Exodus.Network.ServerSide
         private static TcpClient Client;
         static bool _MySQLConnection = false;
         private static string[][] SQLAnswer;
+        private static Thread Receiver = null;
 
         public static void ConnectAsServer()
         {
@@ -98,9 +99,12 @@ namespace Exodus.Network.ServerSide
                 default:
                     throw new Exception("This never happends...");
             }
-            Thread Receiver = new Thread(Receive);
-            Receiver.Name = "SyncClient Receiver";
-            Receiver.Start();
+            if (Receiver == null)
+            {
+                Receiver = new Thread(Receive);
+                Receiver.Name = "SyncClient Receiver";
+                Receiver.Start();
+            }
             IsRunning = true;
         }
         public static int UserIsValid(string UserName, string Password)
@@ -210,19 +214,20 @@ namespace Exodus.Network.ServerSide
             byte[] data = new byte[0];
             while (IsRunning)
             {
-                if (/*client.Connected && */Client.Available != 0)
+                if (/*Client.Connected && */Client.Available != 0)
                 {
-                    #region debug
-                    byte[] b;
-                    #endregion
-                    lenght = NetReader.ReadByte() * 256 + NetReader.ReadByte();
+                    byte Long = NetReader.ReadByte();
+                    byte Short = NetReader.ReadByte();
+                    lenght = Long * 256 + Short;
                     data = NetReader.ReadBytes(lenght + 1);
                     //object GameList = Serialize.Serializer.ByteArrayToGameList(data);
                     //InternetGames = (List<Game>)GameList;
                     ProcessData(data);
                 }
                 else
+                {
                     Thread.Sleep(100);
+                }
             }
         }
         public static void SendDataToGameManagerAsServer(byte[] data)
@@ -244,7 +249,7 @@ namespace Exodus.Network.ServerSide
                     InternetGames.Clear();
                     break;
 
-                case 2://SQL
+                case 2: //SQL
                     //IsRunning = false;
                     ProcessSQLRequest(ShortenArray(data, 1));
                     break;

@@ -451,9 +451,15 @@ namespace Exodus.Network.ServerSide
                     if (!foundP1 || !foundP2)
                     {
                         if (foundP1)
+                        {
                             SendToAll(new WhoWon(idP1));
+                            ThisClientWins((byte)idP1);
+                        }
                         else if (foundP2)
+                        {
                             SendToAll(new WhoWon(idP2));
+                            ThisClientWins((byte)idP1);
+                        }
                         else
                             SendToAll(new WhoWon((new Random().Next(2)) == 1 ? idP2 : idP1));
                         GameRunned = false;
@@ -476,7 +482,7 @@ namespace Exodus.Network.ServerSide
             int id;
             if (Data.Network.ConnectedClients[0].InternetID == client.InternetID)
                 id = Data.Network.ConnectedClients[1].InternetID;
-            else id = client.InternetID;
+            else id = Data.Network.ConnectedClients[0].InternetID;
             client.Stop();
             Data.Network.ConnectedClients.Remove(client);
             SendToAll("[" + DateTime.Now.ToShortTimeString() + "] * " + client.Name + " has left the game. (Crash)");

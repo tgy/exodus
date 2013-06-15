@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -98,17 +99,11 @@ namespace Exodus.GameStates
             else
             {
                 PlayGame.Item i;
-                 i = new PlayGame.Items.Obstacles.Iron();
-                i.SetPos(110, 40, true);
-                Map.ListPassiveItems.Add(i);
-                i = new PlayGame.Items.Units.Worker(2);
-                i.SetPos(100, 10, true);
+                i = new PlayGame.Items.Buildings.Habitation(1);
+                i.SetPos(96, 24, true);
                 Map.AddItem(i);
                 i = new PlayGame.Items.Buildings.Habitation(2);
-                i.SetPos(100,40,true);
-                Map.AddItem(i);
-                i = new PlayGame.Items.Units.Worker(1);
-                i.SetPos(100, 20, true);
+                i.SetPos(96, 34, true);
                 Map.AddItem(i);
                 for (int x = 100; x < 110; x++)
                     for (int y = 30; y < 50; y++)
@@ -130,7 +125,6 @@ namespace Exodus.GameStates
                 i = new PlayGame.Items.Units.Laserman(1);
                 i.SetPos(100, 21, true);
                 Map.AddItem(i);
-
             }
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
             Map.PlayerResources = new Resource(10000, 10000, 10000, 10000, 10000);

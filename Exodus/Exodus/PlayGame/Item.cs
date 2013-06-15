@@ -213,7 +213,11 @@ namespace Exodus.PlayGame
             #endregion
             #region Killed
             if (this.currentLife <= 0)
+            {
+                if (!Data.Network.SinglePlayer && Data.Network.IdPlayer == this.IdPlayer)
+                    Network.ClientSide.Client.UnitsLost++;
                 this.AddTask(new PlayGame.Tasks.Die(this), true, false);
+            }
             #endregion
             this.bigLife.Depth = this.layerDepth;
             this.bigLife.Value = 100 * currentLife / maxLife;

@@ -64,7 +64,6 @@ namespace Exodus
             Selection[typeof(Laboratory)] = null;
             Selection[typeof (Gas)] = null;
             Selection[typeof(Laserman)] = LoadAudio(content, "Audio/laserman-selection", false);
-            Selection[typeof(Laserman)].Volume = (float)Data.Config.LevelSound / 100f;
             Selection[typeof(Iron)] = null;
             Selection[typeof(HydrogenExtractor)] = null;
         }

@@ -100,15 +100,19 @@ namespace Exodus.GameStates
                 PlayGame.Items.Obstacles.Iron iron = new PlayGame.Items.Obstacles.Iron();
                 iron.SetPos(110, 40, true);
                 Map.ListPassiveItems.Add(iron);
+
+                PlayGame.Items.Buildings.Habitation h = new PlayGame.Items.Buildings.Habitation(2);
+                
                 PlayGame.Items.Units.Worker w = new PlayGame.Items.Units.Worker(2);
                 w.SetPos(100, 10, true);
                 Map.AddItem(w);
-                PlayGame.Items.Buildings.Habitation h = new PlayGame.Items.Buildings.Habitation(2);
                 w.AddTask(new PlayGame.Tasks.ProductItem(w, 0, h, new Point(100, 40), true, true, true), false, false);
+                
+                
                 w = new PlayGame.Items.Units.Worker(1);
                 w.SetPos(100, 20, true);
                 Map.AddItem(w);
-                Map.ListPassiveItems.Add(iron);
+                
                 PlayGame.Items.Obstacles.Gas g = new PlayGame.Items.Obstacles.Gas();
                 g.SetPos(110, 50, true);
                 Map.ListPassiveItems.Add(g);
@@ -210,7 +214,6 @@ namespace Exodus.GameStates
                 }
                 Map.ListItems[i].Update(gameTime);
             }
-
             Map.PlayerResources += (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * Map.EarningPerSec;
             for (int i = 0; i < Map.ListPassiveItems.Count; i++)
                 Map.ListPassiveItems[i].Update(gameTime);
@@ -446,6 +449,9 @@ namespace Exodus.GameStates
                                 }
                                 #region Attack
                                 TasksDisplayer.Attack(default(Type));
+                                #endregion
+                                #region Harvest
+                                TasksDisplayer.Harvest(default(Type));
                                 #endregion
                             }
                             #endregion

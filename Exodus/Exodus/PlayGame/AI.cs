@@ -152,7 +152,7 @@ namespace Exodus.PlayGame
             int count = 0;
             foreach (Item i in Map.ListItems)
             {
-                if (i is Unit && !(i is Items.Units.Worker) && i.IdPlayer == id)
+                if (i is Unit && !(i is Items.Units.Worker) && i.IdPlayer == id && i.TasksList.Count == 0)
                 {
                     i.AddTask(new Tasks.Attack(i, item, 0), false, false);
                     count++;

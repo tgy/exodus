@@ -54,44 +54,39 @@ namespace Exodus.GUI.Components
             spriteBatch.Draw(background, areaBackground, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None,
                              Depth + 5 * Data.GameDisplaying.Epsilon);
             spriteBatch.Draw(borders, Area, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, this.Depth);
-            for (int i = 0; i < PlayGame.Map.Width; i++)
+            List<PlayGame.Item> l = new List<PlayGame.Item>();
+            foreach (PlayGame.Item i in PlayGame.Map.ListItems)
+                l.Add(i);
+            foreach (PlayGame.Item i in PlayGame.Map.ListPassiveItems)
+                l.Add(i);
+            foreach (PlayGame.Item i in l)
             {
-                for (int j = 0; j < PlayGame.Map.Height; j++)
+                Color c = Color.Gray;
+                if (!(i is PlayGame.Obstacle) || i is PlayGame.Building)
                 {
-                    if (PlayGame.Map.MapCells[i, j].ListItems.Count > 0)
-                    {
-                        if (PlayGame.Map.MapCells[i, j].ListItems.Count != 0)
+                    if (!PlayGame.Map.ListSelectedItems.Exists(n => n == i.IdPlayer))
+                        switch (i.IdPlayer)
                         {
-                            Color c = Color.Gray;
-                            PlayGame.Item item = PlayGame.Map.MapCells[i, j].ListItems[0];
-                            if (!(item is PlayGame.Obstacle) || item is PlayGame.Building)
-                            {
-                                if (!PlayGame.Map.ListSelectedItems.Exists(n => n == item.PrimaryId))
-                                    switch (item.IdPlayer)
-                                    {
-                                        case 0:
-                                            c = Color.Red;
-                                            break;
-                                        case 1:
-                                            c = Color.Yellow;
-                                            break;
-                                        case 2:
-                                            c = Color.Blue;
-                                            break;
-                                    }
-                                else
-                                    c = Color.White;
-                                Vector2 pos = ScreenToMiniMap(PlayGame.Map.MapToScreen(i, j));
-                                if (i + j >= PlayGame.Map.Width / 2 && i + j <= PlayGame.Map.Width + PlayGame.Map.Height / 2 &&
-                                    Math.Abs(i - j) <= PlayGame.Map.Width / 2)
-                                    spriteBatch.Draw(minitile, new Rectangle((int)pos.X, (int)pos.Y, 2, 2), null, c,
-                                                     0f, new Vector2(0, 0), SpriteEffects.None,
-                                                     this.Depth + Data.GameDisplaying.Epsilon);
-                            }
+                            case 0:
+                                c = Color.Gray;
+                                break;
+                            case 1:
+                                c = Color.Yellow;
+                                break;
+                            case 2:
+                                c = Color.Blue;
+                                break;
                         }
-                    }
-                } // end for
-            } // end for
+                    else
+                        c = Color.White;
+                    Vector2 pos = ScreenToMiniMap(PlayGame.Map.MapToScreen(i.pos.Value.X, i.pos.Value.Y));
+                    if (i.pos.Value.X + i.pos.Value.Y >= PlayGame.Map.Width / 2 && i.pos.Value.X + i.pos.Value.Y <= PlayGame.Map.Width + PlayGame.Map.Height / 2 &&
+                        Math.Abs(i.pos.Value.X - i.pos.Value.Y) <= PlayGame.Map.Width / 2)
+                        spriteBatch.Draw(minitile, new Rectangle((int)pos.X, (int)pos.Y, 2, 2), null, c,
+                                         0f, new Vector2(0, 0), SpriteEffects.None,
+                                         this.Depth + Data.GameDisplaying.Epsilon);
+                }
+            }
             pos1 = ScreenToMiniMap(new Vector2(PlayGame.Camera.x, PlayGame.Camera.y));
             pos2 = ScreenToMiniMap(new Vector2(PlayGame.Camera.x + Data.Window.WindowWidth,
                                                PlayGame.Camera.y + Data.Window.WindowHeight));

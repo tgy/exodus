@@ -11,11 +11,11 @@ namespace Exodus.PlayGame.Items.Units
         public Spider(int IdPlayer)
         {
             Name = "Spider Pig";
-            maxLife = 4657;
-            maxShield = 69;
+            maxLife = 150;
+            maxShield = 0;
             Speed = 100;
-            AttackStrength = 69;
-            AttackDelayMax = 10;
+            AttackStrength = 5;
+            AttackDelayMax = 100;
             currentAttackDelay = AttackDelayMax;
             this.IdPlayer = IdPlayer;
             Initialize(40, 16, 0, 0);

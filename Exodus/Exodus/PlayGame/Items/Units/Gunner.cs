@@ -11,14 +11,15 @@ namespace Exodus.PlayGame.Items.Units
         public Gunner(int IdPlayer)
         {
             Name = "Marchand de Pruneaux";
-            maxLife = 4242;
-            maxShield = 4242;
+            maxLife = 300;
+            maxShield = 0;
             Speed = 200;
-            AttackStrength = 69;
-            AttackDelayMax = 10;
+            AttackStrength = 15;
+            AttackDelayMax = 100;
             currentAttackDelay = AttackDelayMax;
             this.IdPlayer = IdPlayer;
             Initialize(40, 24, 9, 15);
+            SightRange = 6;
         }
     }
 }

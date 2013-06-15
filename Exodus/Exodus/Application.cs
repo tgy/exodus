@@ -184,6 +184,7 @@ namespace Exodus
             settings_pass2.Hidden = true;
             settingsForm.Components.Add(settings_pass2);
             SoundButton soundButton = new SoundButton(0, 0, new Padding(14, -6), 2 * Data.GameDisplaying.Epsilon);
+            soundButton.Progress = (float)Data.Config.LevelSound / 100f;
             soundButton.DoClick = SaveSound;
             settingsForm.Components.Add(new Label(Fonts.Eurostile12, "CHANGE SOUND LEVEL", 0, 0, Data.GameDisplaying.Epsilon));
             settingsForm.Components.Add(soundButton);

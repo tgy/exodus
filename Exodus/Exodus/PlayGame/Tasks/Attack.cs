@@ -26,27 +26,30 @@ namespace Exodus.PlayGame.Tasks
         {
             if (MustStop)
                 this.Finished = true;
-            // si l'ennemi n'est plus juste a côté
-            if (Math.Abs(Enemy.pos.Value.X - this.Parent.pos.Value.X) + Math.Abs(Enemy.pos.Value.Y - this.Parent.pos.Value.Y) > 2)
+            if (!this.Finished)
             {
-                this.Parent.AddTask(new PlayGame.Tasks.Move(this.Parent, Enemy.pos.Value), false, true);
-            }
-            else
-            {
-                if (this.Parent.AttackSound != null)
-                    this.Parent.AttackSound.Play();
-                if (!(this.Enemy.TasksList.Count > 0 && (this.Enemy.TasksList[0] is Attack || this.Enemy.TasksList[0] is Move)))
-                    this.Enemy.AddTask(new Attack(this.Enemy, this.Parent), true, false);
-                this.Parent.currentAttackDelay -= (int)gameTime.ElapsedGameTime.TotalMilliseconds;
-                if (this.Parent.currentAttackDelay < 0)
+                // si l'ennemi n'est plus juste a côté
+                if (Math.Abs(Enemy.pos.Value.X - this.Parent.pos.Value.X) + Math.Abs(Enemy.pos.Value.Y - this.Parent.pos.Value.Y) > 2)
                 {
-                    this.Parent.currentAttackDelay = this.Parent.AttackDelayMax;
-                    this.Enemy.currentLife -= this.Parent.AttackStrength;
-                    if (this.Enemy.currentLife < 0)
+                    this.Parent.AddTask(new PlayGame.Tasks.Move(this.Parent, Enemy.pos.Value), false, true);
+                }
+                else
+                {
+                    if (this.Parent.AttackSound != null)
+                        this.Parent.AttackSound.Play();
+                    if (!(this.Enemy.TasksList.Count > 0 && (this.Enemy.TasksList[0] is Attack || this.Enemy.TasksList[0] is Move)))
+                        this.Enemy.AddTask(new Attack(this.Enemy, this.Parent), true, false);
+                    this.Parent.currentAttackDelay -= (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    if (this.Parent.currentAttackDelay < 0)
                     {
-                        this.Finished = true;
-                        if (this.Parent.AttackSound != null)
-                            this.Parent.AttackSound.Stop();
+                        this.Parent.currentAttackDelay = this.Parent.AttackDelayMax;
+                        this.Enemy.currentLife -= this.Parent.AttackStrength;
+                        if (this.Enemy.currentLife < 0)
+                        {
+                            this.Finished = true;
+                            if (this.Parent.AttackSound != null)
+                                this.Parent.AttackSound.Stop();
+                        }
                     }
                 }
             }

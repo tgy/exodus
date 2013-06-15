@@ -1,5 +1,5 @@
 DisplayObstacles=True
-LevelSound=20
+LevelSound=51
 GraphicQuality=0
 PaddingMap=7
 LastIP=192.168.1.39

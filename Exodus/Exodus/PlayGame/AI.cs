@@ -31,7 +31,7 @@ namespace Exodus.PlayGame
                 if (w != null)
                 {
                     Items.Buildings.HydrogenExtractor h = new Items.Buildings.HydrogenExtractor(id);
-                    Items.Obstacles.Gas g = (Items.Obstacles.Gas)Map.ListItems.FirstOrDefault(x => x is Items.Obstacles.Gas);
+                    Items.Obstacles.Gas g = (Items.Obstacles.Gas)Map.ListPassiveItems.FirstOrDefault(x => x is Items.Obstacles.Gas);
                     if (g != null)
                         w.AddTask(new Tasks.ProductItem(w, Data.GameInfos.timeCreatingItem[h.GetType()], h, g.pos.Value, false, false, true), true, false);
                 }
@@ -39,7 +39,7 @@ namespace Exodus.PlayGame
                 if (w2 != null)
                     w2.AddTask(new Tasks.ProductItem(w2, Data.GameInfos.timeCreatingItem[typeof(Items.Buildings.Habitation)], new Items.Buildings.Habitation(id), new Point(86, 135), true, true, true), true, false);
                 Items.Units.Worker w3 = (Items.Units.Worker)Map.ListItems.FirstOrDefault(x => x is Items.Units.Worker && x.IdPlayer == id && x != w && x != w2);
-                Items.Obstacles.Iron i = (Items.Obstacles.Iron)Map.ListItems.FirstOrDefault(x => x is Items.Obstacles.Iron);
+                Items.Obstacles.Iron i = (Items.Obstacles.Iron)Map.ListPassiveItems.FirstOrDefault(x => x is Items.Obstacles.Iron);
                 if (w3 != null && i != null)
                 {
                     i.AddTask(new Tasks.HarvestIron(w3, i), true, false);

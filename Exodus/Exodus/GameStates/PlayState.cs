@@ -225,7 +225,6 @@ namespace Exodus.GameStates
                 }
                 Map.ListItems[i].Update(gameTime);
             }
-
             Map.PlayerResources += (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * Map.EarningPerSec;
             for (int i = 0; i < Map.ListPassiveItems.Count; i++)
                 Map.ListPassiveItems[i].Update(gameTime);
@@ -468,6 +467,9 @@ namespace Exodus.GameStates
                                 }
                                 #region Attack
                                 TasksDisplayer.Attack(default(Type));
+                                #endregion
+                                #region Harvest
+                                TasksDisplayer.Harvest(default(Type));
                                 #endregion
                             }
                             #endregion

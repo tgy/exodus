@@ -21,7 +21,7 @@ namespace Exodus.PlayGame
         {
             this.nbAnims = Enum.GetValues(typeof(Animation)).Length;
             base.Initialize(baseAnimDelay, AnimNbFrames, marginX, marginY, "selectBuilding" + Width);
-            this.MaxNumbTasks = 0;
+            this.MaxNumbTasks = 1;
         }
         protected override void UpdateAnim()
         {

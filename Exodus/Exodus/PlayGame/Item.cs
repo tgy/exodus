@@ -92,6 +92,7 @@ namespace Exodus.PlayGame
         public int IdPlayer { get; protected set; }
         public int PrimaryId;
         public Resource currentResource;
+        public Resource maxResource;
         #endregion
 
         #region Fonctions
@@ -127,7 +128,8 @@ namespace Exodus.PlayGame
             this.DieSound = Audio.Die[GetType()];
             this.SelectionSound = Audio.Selection[GetType()];
             this.resourcesGeneration = new Resource(0,0,0,0,0);
-            this.currentResource = new Resource(Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue);
+            this.maxResource = new Resource(0, 0, 0, 0, 0);
+            this.currentResource = new Resource(0, 0, 0, 0, 0);
             this.SightRange = 0;
         }
         /// <summary>
@@ -209,7 +211,7 @@ namespace Exodus.PlayGame
             spriteAnimRect.Y = (spriteAnimRect.Height * (int)anim) % _texture.Height;
             #endregion
             #region Killed
-            if (this.currentLife < 0)
+            if (this.currentLife <= 0)
                 this.AddTask(new PlayGame.Tasks.Die(this), true, false);
             #endregion
             this.bigLife.Value = 100 * currentLife / maxLife;

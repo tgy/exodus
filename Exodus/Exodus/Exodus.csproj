@@ -113,6 +113,7 @@
     <Compile Include="Audio.cs" />
     <Compile Include="GUI\Components\Buttons\SoundButton.cs" />
     <Compile Include="Network\Orders\LaunchGame.cs" />
+    <Compile Include="Network\Orders\Tasks\HarvestIron.cs" />
     <Compile Include="PlayerOpponent.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="GameMouse.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="PlayGame\Tasks\ChangeResources.cs" />
     <Compile Include="PlayGame\Tasks\ChangeResources\HToE.cs" />
     <Compile Include="PlayGame\Tasks\Die.cs" />
+    <Compile Include="PlayGame\Tasks\Harvest.cs" />
     <Compile Include="PlayGame\Tasks\Hold.cs" />
     <Compile Include="PlayGame\Tasks\Move.cs" />
     <Compile Include="PlayGame\Tasks\ProductItem.cs" />

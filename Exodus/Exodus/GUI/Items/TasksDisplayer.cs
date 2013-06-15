@@ -368,6 +368,35 @@ namespace Exodus.GUI.Items
         {
 
         }
+        public static void Harvest(Type t)
+        {
+            int ironIndex = 0;
+            while (ironIndex < Map.ListPassiveItems.Count && (!Map.ListPassiveItems[ironIndex].Intersect(Inputs.MouseState.X, Inputs.MouseState.Y)))
+            {
+                ironIndex++;
+            }
+            if (ironIndex < Map.ListPassiveItems.Count)
+            {
+                PlayGame.Item c;
+                if (Data.Network.SinglePlayer)
+                {
+                    foreach (int selected in Map.ListSelectedItems)
+                    {
+                        c = Map.ListItems.Find(u => u.PrimaryId == selected);
+                        c.AddTask(new PlayGame.Tasks.HarvestIron(c, Map.ListPassiveItems[ironIndex]), false, false);
+                    }
+                }
+                else
+                {
+                    foreach (int item in Map.ListSelectedItems)
+                    {
+                        Network.ClientSide.Client.SendObject(
+                            new Network.Orders.Tasks.HarvestIron(item, ironIndex, true)
+                        );
+                    }
+                }
+            }
+        }
         public static void Attack(Type t)
         {
             int enemyIndex = 0;

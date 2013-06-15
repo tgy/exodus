@@ -77,6 +77,9 @@ namespace Exodus
             Menu["StartButtonClick"] = Menu["StartButtonHover"];
             Menu["SoundButton"] = content.Load<Texture2D>("Menu/Buttons/SoundButton");
             Menu["SoundButtonProgress"] = content.Load<Texture2D>("Menu/Buttons/SoundButtonProgress");
+            Menu["EndGameBG"] = content.Load<Texture2D>("Menu/Backgrounds/BackgroundPixel");
+            Menu["EndGameLost"] = content.Load<Texture2D>("Menu/Backgrounds/YouLost");
+            Menu["EndGameWon"] = content.Load<Texture2D>("Menu/Backgrounds/YouWon");
         }
         public static void LoadGameItems(ContentManager content)
         {

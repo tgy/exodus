@@ -10,14 +10,15 @@ namespace Exodus.PlayGame.Tasks
     class Attack : Task
     {
         public Item Enemy;
-        public Func<Point, Point, bool> Arrived;
+        public Func<Point, Point, bool> CanAttack;
         int delay;
-        public Attack(Item parent, Item enemy, int delay) : base(parent, "Attack", "Attack the ennemy")
+        public Attack(Item parent, Item enemy, int delay)
+            : base(parent, "Attack", "Attack the ennemy")
         {
             if (parent != null)
                 this.Parent = parent;
             this.Enemy = enemy;
-            this.Arrived = ((p1, p2) => AStar.Heuristic(p1, p2) <= this.Parent.Range * 10);
+            this.CanAttack = ((p1, p2) => AStar.Heuristic(p1, p2) <= this.Parent.Range);
             this.delay = delay;
         }
 
@@ -41,9 +42,9 @@ namespace Exodus.PlayGame.Tasks
                 else
                 {
                     // si l'ennemi n'est plus juste a côté
-                    if (!Arrived(Parent.pos.Value, Enemy.pos.Value))
+                    if (!CanAttack(Parent.pos.Value, Enemy.pos.Value))
                     {
-                        this.Parent.AddTask(new PlayGame.Tasks.Move(this.Parent, Enemy.pos.Value, Arrived), false, true);
+                        this.Parent.AddTask(new PlayGame.Tasks.Move(this.Parent, Enemy.pos.Value, (x, y) => AStar.ValidCase(x, y) && (AStar.Heuristic(Enemy.pos.Value, new Point(x, y)) >= Parent.Range)), false, true);
                     }
                     else
                     {

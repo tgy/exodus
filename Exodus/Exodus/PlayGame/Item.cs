@@ -31,8 +31,8 @@ namespace Exodus.PlayGame
                    currentLife;
         public int maxShield { get; protected set; }
         public int maxLife { get; protected set; }
-        public float Range { get; protected set; }
-        public float SightRange { get; protected set; }
+        public int Range { get; protected set; }
+        public int SightRange { get; protected set; }
         public int AttackDelayMax { get; protected set; }
         public int currentAttackDelay;
         public int AttackStrength;
@@ -320,15 +320,19 @@ namespace Exodus.PlayGame
                     }
                     if (TasksList.Count == 0)
                         t.Initialize();
-                    TasksList.Add(t);
+                    if (!t.Finished)
+                        TasksList.Add(t);
                 }
                 else
                 {
                     t.Initialize();
-                    if (TasksList.Count > 0)
-                        TasksList.Insert(0, t);
-                    else if (TasksList.Count == 0)
-                        TasksList.Add(t);
+                    if (!t.Finished)
+                    {
+                        if (TasksList.Count > 0)
+                            TasksList.Insert(0, t);
+                        else if (TasksList.Count == 0)
+                            TasksList.Add(t);
+                    }
                 }
             }
         }

@@ -8,12 +8,12 @@ namespace Exodus.Network.Orders.Tasks
     [Serializable]
     class HarvestIron : ItemTask
     {
-        public int ironIndex;
-        public HarvestIron(int parentPos, int ironIndex, bool overrideTask)
+        public int ironPrimaryKey;
+        public HarvestIron(int parentPos, int ironPrimaryKey, bool overrideTask)
             : base(parentPos, overrideTask)
         {
             this.overrideTask = overrideTask;
-            this.ironIndex = ironIndex;
+            this.ironPrimaryKey = ironPrimaryKey;
         }
     }
 }

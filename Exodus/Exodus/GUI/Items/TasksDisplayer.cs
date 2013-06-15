@@ -391,7 +391,7 @@ namespace Exodus.GUI.Items
                     foreach (int item in Map.ListSelectedItems)
                     {
                         Network.ClientSide.Client.SendObject(
-                            new Network.Orders.Tasks.HarvestIron(item, ironIndex, true)
+                            new Network.Orders.Tasks.HarvestIron(item, Map.ListPassiveItems[ironIndex].PrimaryId, true)
                         );
                     }
                 }

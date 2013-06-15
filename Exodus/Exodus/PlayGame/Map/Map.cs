@@ -43,6 +43,15 @@ namespace Exodus.PlayGame
             }
             ListItems.Add(i);
         }
+        public static void AddPassiveItem(Item i)
+        {
+            if (Data.Network.SinglePlayer)
+            {
+                i.PrimaryId = primaryKey;
+                primaryKey++;
+            }
+            ListPassiveItems.Add(i);
+        }
         public static List<Item> ListPassiveItems = new List<Item>();
         private static bool _selectionContainsUnit = false;
         public static void AddItemsToSelection(List<Item> l)

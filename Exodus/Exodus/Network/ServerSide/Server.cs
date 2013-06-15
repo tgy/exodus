@@ -344,6 +344,8 @@ namespace Exodus.Network.ServerSide
             }
             else if (o is Statistics)
                 TPStats.AddStatistic((Statistics)o);
+            else if (o is Task)
+                SendToAll(o);
             else
                 throw new Exception("Dah hell is that object?");
         }

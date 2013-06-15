@@ -121,7 +121,7 @@ namespace Exodus.GameStates
                     }
                 i = new PlayGame.Items.Obstacles.Gas();
                 i.SetPos(110, 50, true);
-                Map.ListPassiveItems.Add(i);
+                Map.AddPassiveItem(i);
                 i = new PlayGame.Items.Units.Laserman(1);
                 i.SetPos(100, 21, true);
                 Map.AddItem(i);

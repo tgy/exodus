@@ -26,6 +26,7 @@ namespace Exodus.GameStates
         TasksDisplayer tasksDisplayer;
         BuildingProduction buildingProduction;
         ResourcesDisplayer resourcesDisplayer;
+        Minimap _miniMap;
         private SelectionDisplayer selectionDisplayer;
         private DateTime start;
         public PlayState(Application g)
@@ -63,8 +64,8 @@ namespace Exodus.GameStates
             selectionDisplayer = new SelectionDisplayer(0, Data.Window.WindowHeight - Textures.GameUI["selection"].Height, 25 * Data.GameDisplaying.Epsilon);
             Items.Add(selectionDisplayer);
 
-            Minimap minimap = new Minimap(Data.Window.WindowWidth - 284, Data.Window.WindowHeight - 170, 25 * Data.GameDisplaying.Epsilon);
-            Items.Add(minimap);
+            _miniMap = new Minimap(Data.Window.WindowWidth - 284, Data.Window.WindowHeight - 170, 25 * Data.GameDisplaying.Epsilon);
+            Items.Add(_miniMap);
 
             t = Textures.GameUI["launchMenuButton"];
             Items.Add(new Container(
@@ -193,7 +194,7 @@ namespace Exodus.GameStates
                     GameMouse.Active = true;
                     break;
             }
-            _selectionSquare.Active = Data.GameInfos.currentMode == Data.GameInfos.ModeGame.Normal;
+            _selectionSquare.Active = Data.GameInfos.currentMode == Data.GameInfos.ModeGame.Normal && !_miniMap.Focused;
             base.Draw(spriteBatch);
         }
         public override void Update(GameTime gameTime)

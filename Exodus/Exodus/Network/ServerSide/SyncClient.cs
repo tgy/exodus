@@ -41,7 +41,6 @@ namespace Exodus.Network.ServerSide
                 InitializeConnection();
                 NetReader = new BinaryReader(Client.GetStream());
                 SendIdMessage();
-                Receive();
             }
         }
         public static void ConnectToSendRequest()
@@ -69,7 +68,7 @@ namespace Exodus.Network.ServerSide
             try
             {
                 //Client = new TcpClient(Dns.GetHostAddresses("thefirsthacker.myftp.org")[0].ToString(), 4000);
-                Client = new TcpClient("192.168.1.14", 4000);
+                Client = new TcpClient("192.168.1.15", 4000);
                 //Client = new TcpClient("192.168.1.15", 4000);
                 //NetReader = new BinaryReader(Client.GetStream());
                 //InternetGames = new List<Game>();
@@ -99,6 +98,9 @@ namespace Exodus.Network.ServerSide
                 default:
                     throw new Exception("This never happends...");
             }
+            Thread Receiver = new Thread(Receive);
+            Receiver.Name = "SyncClient Receiver";
+            Receiver.Start();
             IsRunning = true;
         }
         public static int UserIsValid(string UserName, string Password)
@@ -107,7 +109,6 @@ namespace Exodus.Network.ServerSide
             //Player.ConnectionState = 2;
             SendDBCMDToGameManager("SELECT * FROM `user` WHERE `name`=\"" + UserName + "\" AND `password`=\"" + Data.Security.SHA1(Password) + "\"");
             SQLAnswer = null;
-            Receive();
             for (byte b = 0; b < 100; b++)
             {
                 if (SQLAnswer != null)
@@ -134,7 +135,6 @@ namespace Exodus.Network.ServerSide
             SQLAnswer = null;
             ConnectToSendRequest();
             SendDBCMDToGameManager(request);
-            Receive();
             for (byte b = 0; b < 10; b++)
             {
                 Thread.Sleep(100);
@@ -152,9 +152,9 @@ namespace Exodus.Network.ServerSide
         {
             //if (!IsRunning)
             //    Thread.Sleep(100);
-            for (byte i = 0; i < 10; i++)
-                if (!IsRunning)
-                    Thread.Sleep(10);
+            //for (byte i = 0; i < 10; i++)
+            //    if (!IsRunning)
+            //        Thread.Sleep(10);
             switch (WhatIsIt)
             {
                 case 0: //Server
@@ -172,7 +172,7 @@ namespace Exodus.Network.ServerSide
         }
         private static void SendDBCMDToGameManager(string command)
         {
-            while (IsRunning)
+            for (byte b = 0; b < 50; b++)
             {
                 if (_MySQLConnection)
                     Thread.Sleep(10);
@@ -199,9 +199,9 @@ namespace Exodus.Network.ServerSide
             GamePlusThree[0] = (byte)((SGame.Length + 1) / 256);
             GamePlusThree[1] = (byte)((SGame.Length + 1) % 256);
             GamePlusThree[2] = 1;
-            for (byte i = 0; i < 10; i++)
-                if (!IsRunning)
-                    Thread.Sleep(100);
+            //for (byte i = 0; i < 10; i++)
+            //    if (!IsRunning)
+            //        Thread.Sleep(100);
             ServerSender.Write(GamePlusThree);
         }
         private static void Receive()
@@ -242,7 +242,7 @@ namespace Exodus.Network.ServerSide
                     break;
 
                 case 2:
-                    IsRunning = false;
+                    //IsRunning = false;
                     ProcessSQLRequest(ShortenArray(data, 1));
                     break;
 

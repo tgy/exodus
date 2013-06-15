@@ -139,7 +139,7 @@
     <Compile Include="GUI\Components\Buttons\MenuButtons\LaunchingOrangeButton.cs" />
     <Compile Include="GUI\Components\Buttons\MenuButtons\OrangeMenuButton.cs" />
     <Compile Include="GUI\Components\JustTextureRectangle.cs" />
-    <Compile Include="GUI\Components\Minimap.cs" />
+    <Compile Include="GUI\Items\Minimap.cs" />
     <Compile Include="GUI\Components\ListButtons.cs" />
     <Compile Include="GUI\Components\MiniLife.cs" />
     <Compile Include="GUI\Components\Buttons\MultiButton.cs" />

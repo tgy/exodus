@@ -27,6 +27,7 @@ namespace Exodus.GameStates
         BuildingProduction buildingProduction;
         ResourcesDisplayer resourcesDisplayer;
         private SelectionDisplayer selectionDisplayer;
+        private DateTime start;
         public PlayState(Application g)
         {
             this.game = g;
@@ -126,6 +127,7 @@ namespace Exodus.GameStates
                 i.SetPos(100, 21, true);
                 Map.AddItem(i);
             }
+            start = DateTime.Now;
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
             Map.PlayerResources = new Resource(10000, 10000, 10000, 10000, 10000);
             base.LoadContent();
@@ -209,6 +211,8 @@ namespace Exodus.GameStates
         }
         public override void Update(GameTime gameTime)
         {
+            if (Data.Network.SinglePlayer)
+                PlayGame.AI.Update(DateTime.Now - start, 2);
             Map.EarningPerSec.Reset();
             for (int i = 0; i < Map.ListItems.Count; i++)
             {

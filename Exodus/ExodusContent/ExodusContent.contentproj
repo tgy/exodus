@@ -264,8 +264,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Game\Buildings\habitation.png">
-      <Name>habitation</Name>
+    <Compile Include="Game\Buildings\habitation-yellow.png">
+      <Name>habitation-yellow</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -288,8 +288,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Units\gunner2.png">
-      <Name>gunner2</Name>
+    <Compile Include="Game\Units\gunner-blue.png">
+      <Name>gunner-blue</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -970,29 +970,29 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Units\Worker1.png">
-      <Name>Worker1</Name>
+    <Compile Include="Game\Units\Worker-yellow.png">
+      <Name>Worker-yellow</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Units\Worker2.png">
-      <Name>Worker2</Name>
+    <Compile Include="Game\Units\Worker-blue.png">
+      <Name>Worker-blue</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Units\Laserman1.png">
-      <Name>Laserman1</Name>
+    <Compile Include="Game\Units\Laserman-yellow.png">
+      <Name>Laserman-yellow</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Units\Laserman2.png">
-      <Name>Laserman2</Name>
+    <Compile Include="Game\Units\Laserman-blue.png">
+      <Name>Laserman-blue</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -1048,8 +1048,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Units\gunner1.png">
-      <Name>gunner1</Name>
+    <Compile Include="Game\Units\gunner-yellow.png">
+      <Name>gunner-yellow</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -1094,8 +1094,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Buildings\habitationBlue.png">
-      <Name>habitationBlue</Name>
+    <Compile Include="Game\Buildings\habitation-blue.png">
+      <Name>habitation-blue</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

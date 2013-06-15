@@ -67,7 +67,7 @@ namespace Exodus.PlayGame
                 }
                 else if ((task - 4) % 4 == 0 && time >= new TimeSpan(0, 0, 0, 15) && (time.Seconds - 15) % 20 == 0)
                 {
-                    for (int i = 0; i < rand.Next(5); i++)
+                    for (int i = 0; i < rand.Next(10); i++)
                     {
                         ProduceRandomUnit();
                     }
@@ -75,17 +75,17 @@ namespace Exodus.PlayGame
                 }
                 else if ((task - 5) % 4 == 0 && time >= new TimeSpan(0, 0, 0, 20) && (time.Seconds - 20) % 20 == 0)
                 {
-                    GetNUnitAndAttackRandomItem(rand.Next(5));
+                    GetRandomUnitAndAttackRandomItem(2);
                     task++;
                 }
                 else if ((task - 6) % 4 == 0 && time >= new TimeSpan(0, 0, 0, 25) && (time.Seconds - 25) % 20 == 0)
                 {
-                    GetUselessUnitToBase();
+                    GetUselessWorkerToBase();
                     task++;
                 }
                 else if ((task - 7) % 4 == 0 && time >= new TimeSpan(0, 0, 0, 35) && (time.Seconds - 35) % 20 == 0)
                 {
-                    if (rand.Next(9) == 0)
+                    if (rand.Next(7) == 0)
                     {
                         Items.Units.Worker worker = (Items.Units.Worker)Map.ListItems.FirstOrDefault(x => x is Items.Units.Worker && x.IdPlayer == id && x.TasksList.Count == 0);
                         if (worker != null)
@@ -94,8 +94,8 @@ namespace Exodus.PlayGame
                             if (Map.MapCells[p.X, p.Y].ListItems.Count == 0)
                                 worker.AddTask(new Tasks.ProductItem(worker, Data.GameInfos.timeCreatingItem[typeof(Items.Buildings.Habitation)], new Items.Buildings.Habitation(id), p, true, true, true), false, false);
                         }
-                        task++;
                     }
+                    task++;
                 }
             }
         }
@@ -119,30 +119,35 @@ namespace Exodus.PlayGame
         private static void ProduceRandomUnit()
         {
             List<Item> l = new List<Item>();
-            foreach (Item i in Map.ListItems)
+            foreach (Item h in Map.ListItems)
             {
-                if (i is Items.Buildings.Habitation && i.IdPlayer == id)
+                if (h is Items.Buildings.Habitation && h.IdPlayer == id)
                 {
-                    switch (rand.Next(7))
-                    {
-                        case 0: case 1:
-                            i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Gunner)], new Items.Units.Gunner(id), i.pos.Value, true, true, false), false, false);
-                            break;
-                        case 2: case 3:
-                            i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Laserman)], new Items.Units.Laserman(id), i.pos.Value, true, true, false), false, false);
-                            break;
-                        case 4: case 5:
-                            i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Spider)], new Items.Units.Spider(id), i.pos.Value, true, true, false), false, false);
-                            break;
-                        case 6:
-                            i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Worker)], new Items.Units.Worker(id), i.pos.Value, true, true, false), false, false);
-                            break;
-                    }
+                    l.Add(h);
                 }
+            }
+            Items.Buildings.Habitation i = (Items.Buildings.Habitation)l[rand.Next(l.Count)];
+            switch (rand.Next(7))
+            {
+                case 0:
+                case 1:
+                    i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Gunner)], new Items.Units.Gunner(id), i.pos.Value, true, true, false), false, false);
+                    break;
+                case 2:
+                case 3:
+                    i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Laserman)], new Items.Units.Laserman(id), i.pos.Value, true, true, false), false, false);
+                    break;
+                case 4:
+                case 5:
+                    i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Spider)], new Items.Units.Spider(id), i.pos.Value, true, true, false), false, false);
+                    break;
+                case 6:
+                    i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Worker)], new Items.Units.Worker(id), i.pos.Value, true, true, false), false, false);
+                    break;
             }
         }
 
-        private static void GetNUnitAndAttackRandomItem(int n)
+        private static void GetRandomUnitAndAttackRandomItem(int proba)
         {
             List<Item> enemyItems = new List<Item>();
             foreach (Item i in Map.ListItems)
@@ -153,24 +158,21 @@ namespace Exodus.PlayGame
                 }
             }
             Item item = enemyItems[rand.Next(enemyItems.Count)];
-            int count = 0;
-            foreach (Item i in Map.ListItems)
+            for (int i = Map.ListItems.Count - 1; i >= 0; i--)
             {
-                if (i is Unit && !(i is Items.Units.Worker) && i.IdPlayer == id && i.TasksList.Count == 0)
+                if (Map.ListItems[i] is Unit && !(Map.ListItems[i] is Items.Units.Worker) && Map.ListItems[i].IdPlayer == id && Map.ListItems[i].TasksList.Count == 0)
                 {
-                    i.AddTask(new Tasks.Attack(i, item, 0), false, false);
-                    count++;
+                    if (rand.Next(proba) == 0)
+                        Map.ListItems[i].AddTask(new Tasks.Attack(Map.ListItems[i], item, 0), false, false);
                 }
-                if (count == n)
-                    break;
             }
         }
 
-        private static void GetUselessUnitToBase()
+        private static void GetUselessWorkerToBase()
         {
             foreach (Item i in Map.ListItems)
             {
-                if (i is Unit && i.IdPlayer == id && i.TasksList.Count == 0)
+                if (i is Unit && i.IdPlayer == id && i.TasksList.Count == 0 && i is Items.Units.Worker)
                     i.AddTask(new Tasks.Move(i, baseAI.pos.Value), true, false);
             }
         }

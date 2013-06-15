@@ -9,11 +9,13 @@ namespace Exodus.PlayGame.Tasks
     class Attack : Task
     {
         public Item Enemy;
-        public Attack(Item parent, Item enemy) : base(parent, "Attack", "Attack the ennemy")
+        int delay;
+        public Attack(Item parent, Item enemy, int delay) : base(parent, "Attack", "Attack the ennemy")
         {
             if (parent != null)
                 this.Parent = parent;
             this.Enemy = enemy;
+            this.delay = delay;
         }
 
         public override void Initialize()
@@ -24,12 +26,15 @@ namespace Exodus.PlayGame.Tasks
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            delay -= (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (delay > 0)
+                return;
             if (MustStop)
                 this.Finished = true;
             if (!this.Finished)
             {
                 // si l'ennemi n'est plus juste a côté
-                if (Math.Abs(Enemy.pos.Value.X - this.Parent.pos.Value.X) + Math.Abs(Enemy.pos.Value.Y - this.Parent.pos.Value.Y) > 2)
+                if (AStar.Heuristic(this.Parent.pos.Value, this.Enemy.pos.Value) > 14)
                 {
                     this.Parent.AddTask(new PlayGame.Tasks.Move(this.Parent, Enemy.pos.Value), false, true);
                 }
@@ -37,13 +42,13 @@ namespace Exodus.PlayGame.Tasks
                 {
                     if (this.Parent.AttackSound != null)
                         this.Parent.AttackSound.Play();
-                    if (!(this.Enemy.TasksList.Count > 0 && (this.Enemy.TasksList[0] is Attack || this.Enemy.TasksList[0] is Move)))
-                        this.Enemy.AddTask(new Attack(this.Enemy, this.Parent), true, false);
                     this.Parent.currentAttackDelay -= (int)gameTime.ElapsedGameTime.TotalMilliseconds;
                     if (this.Parent.currentAttackDelay < 0)
                     {
                         this.Parent.currentAttackDelay = this.Parent.AttackDelayMax;
                         this.Enemy.currentLife -= this.Parent.AttackStrength;
+                        if (!(this.Enemy.TasksList.Count > 0 && (this.Enemy.TasksList[0] is Attack || this.Enemy.TasksList[0] is Move)))
+                            this.Enemy.AddTask(new Attack(this.Enemy, this.Parent, 1000), true, false);
                         if (this.Enemy.currentLife < 0)
                         {
                             this.Finished = true;

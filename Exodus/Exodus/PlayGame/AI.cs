@@ -76,10 +76,12 @@ namespace Exodus.PlayGame
                 else if ((task - 5) % 3 == 0 && time >= new TimeSpan(0, 0, 0, 20) && (time.Seconds - 20) % 15 == 0)
                 {
                     GetNUnitAndAttackRandomItem(rand.Next(10));
+                    task++;
                 }
                 else if ((task - 6) % 3 == 0 && time >= new TimeSpan(0, 0, 0, 25) && (time.Seconds - 25) % 15 == 0)
                 {
                     GetUselessUnitToBase();
+                    task++;
                 }
             }
         }

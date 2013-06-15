@@ -95,7 +95,6 @@ namespace Exodus.PlayGame
             int straight = dX + dY - 2 * diagonal;
             return 14 * diagonal + 10 * straight;
         }
-
         public static List<Point> GetAllNeighbors(Point p)
         {
             List<Point> l = new List<Point>();

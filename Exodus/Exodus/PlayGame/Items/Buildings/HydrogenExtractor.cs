@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,8 @@ namespace Exodus.PlayGame.Items.Buildings
         {
             Name = "Hydrogen extractor";
             this.Value = 0;
-            maxLife = 666;
-            maxShield = 666;
+            maxLife = 1000;
+            maxShield = 0;
             Width = 2;
             this.IdPlayer = IdPlayer;
             base.Initialize(Int32.MaxValue, 1, 20, 6);

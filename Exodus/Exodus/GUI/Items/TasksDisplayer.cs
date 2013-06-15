@@ -378,12 +378,13 @@ namespace Exodus.GUI.Items
             if (enemyIndex < Map.ListItems.Count)
             {
                 PlayGame.Item c;
+                bool b = !(Inputs.KeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) || Inputs.KeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift));
                 if (Data.Network.SinglePlayer)
                 {
                     foreach (int selected in Map.ListSelectedItems)
                     {
                         c = Map.ListItems.Find(u => u.PrimaryId == selected);
-                        c.AddTask(new PlayGame.Tasks.Attack(c, Map.ListItems[enemyIndex]), false, false);
+                        c.AddTask(new PlayGame.Tasks.Attack(c, Map.ListItems[enemyIndex]), b, false);
                     }
                 }
                 else
@@ -391,7 +392,7 @@ namespace Exodus.GUI.Items
                     foreach (int item in Map.ListSelectedItems)
                     {
                         Network.ClientSide.Client.SendObject(
-                            new Network.Orders.Tasks.Attack(item, enemyIndex, true)
+                            new Network.Orders.Tasks.Attack(item, Map.ListItems[enemyIndex].PrimaryId, b)
                         );
                     }
                 }

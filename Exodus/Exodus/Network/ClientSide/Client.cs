@@ -350,12 +350,20 @@ namespace Exodus.Network.ClientSide
                 else if (o is Orders.Tasks.Attack)
                 {
                     Orders.Tasks.Attack Orders = (Orders.Tasks.Attack)o;
-                    PlayGame.Item i = PlayGame.Map.ListItems.FirstOrDefault(s => s.PrimaryId == Orders.parentPrimaryKey);
-                    if (i != null)
-                        i.AddTask(
+                    PlayGame.Item item = null,
+                                  ennemy = null;
+                    for (int i = 0; i < Map.ListItems.Count && (item == null || ennemy == null); i++)
+                    {
+                        if (item == null && Orders.parentPrimaryKey == Map.ListItems[i].PrimaryId)
+                            item = Map.ListItems[i];
+                        else if (ennemy == null && Orders.enemyPrimaryId == Map.ListItems[i].PrimaryId)
+                            ennemy = Map.ListItems[i];
+                    }
+                    if (item != null )
+                        item.AddTask(
                               new PlayGame.Tasks.Attack(
-                                  i,
-                                  PlayGame.Map.ListItems[Orders.enemyPos]
+                                  item,
+                                  ennemy
                                   ),
                                   false,
                                   false

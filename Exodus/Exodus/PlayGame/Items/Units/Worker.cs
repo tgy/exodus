@@ -11,11 +11,11 @@ namespace Exodus.PlayGame.Items.Units
         public Worker(int idPlayer)
         {
             Name = "Zinedine ZiTrap";
-            maxLife = 4242;
-            maxShield = 4242;
+            maxLife = 50;
+            maxShield = 0;
             Speed = 200;
-            AttackStrength = 500;
-            AttackDelayMax = 2000;
+            AttackStrength = 5;
+            AttackDelayMax = 500;
             IdPlayer = idPlayer;
             Initialize(40, 76, 9, 10);
             this.ItemsProductibles.Add(typeof(PlayGame.Items.Buildings.Habitation));

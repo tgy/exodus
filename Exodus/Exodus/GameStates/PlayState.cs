@@ -144,7 +144,7 @@ namespace Exodus.GameStates
                                      0f, Vector2.Zero, 1f, SpriteEffects.None, 1f
                         );
                     for (int i = 0; i < Map.MapCells[x, y].ListItems.Count; i++)
-                        if (Map.MapCells[x,y].ListItems[i].pos.Value.X == x && Map.MapCells[x,y].ListItems[i].pos.Value.Y == y)
+                        if (Map.MapCells[x,y].ListItems[i].pos != null && Map.MapCells[x,y].ListItems[i].pos.Value.X == x && Map.MapCells[x,y].ListItems[i].pos.Value.Y == y)
                             Map.MapCells[x, y].ListItems[i].Draw(spriteBatch);
                 }
 

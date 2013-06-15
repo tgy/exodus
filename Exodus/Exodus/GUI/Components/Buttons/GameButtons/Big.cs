@@ -27,24 +27,27 @@ namespace Exodus.GUI.Components.Buttons.GameButtons
 
         public override void Update(GameTime gameTime)
         {
-            BigLife.Value = 100 * Item.currentLife / Item.maxLife;
-            _maxLife.Txt = " / " + Item.maxLife.ToString();
-            _currentLife.Txt = Item.currentLife.ToString();
+            if (Item != null)
+            {
+                BigLife.Value = 100 * Item.currentLife / Item.maxLife;
+                _maxLife.Txt = " / " + Item.maxLife.ToString();
+                _currentLife.Txt = Item.currentLife.ToString();
 
-            _currentLife.Pos.X = (int)(_maxLife.Pos.X - Fonts.Arial9.MeasureString(_currentLife.Txt).X);
+                _currentLife.Pos.X = (int)(_maxLife.Pos.X - Fonts.Arial9.MeasureString(_currentLife.Txt).X);
 
-            int percentage = 100 * Item.currentLife / Item.maxLife;
-            Color color;
-            if (percentage >= 75)
-                color = new Color(91, 224, 43);
-            else if (percentage >= 50)
-                color = new Color(255, 221, 61);
-            else if (percentage >= 25)
-                color = new Color(230, 130, 9);
-            else
-                color = new Color(218, 33, 13);
+                int percentage = 100 * Item.currentLife / Item.maxLife;
+                Color color;
+                if (percentage >= 75)
+                    color = new Color(91, 224, 43);
+                else if (percentage >= 50)
+                    color = new Color(255, 221, 61);
+                else if (percentage >= 25)
+                    color = new Color(230, 130, 9);
+                else
+                    color = new Color(218, 33, 13);
 
-            _currentLife.Color = color;
+                _currentLife.Color = color;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

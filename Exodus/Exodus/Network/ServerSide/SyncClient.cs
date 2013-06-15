@@ -135,7 +135,7 @@ namespace Exodus.Network.ServerSide
             SQLAnswer = null;
             ConnectToSendRequest();
             SendDBCMDToGameManager(request);
-            for (byte b = 0; b < 10; b++)
+            for (byte b = 0; b < 30; b++)
             {
                 Thread.Sleep(100);
                 if (SQLAnswer != null)

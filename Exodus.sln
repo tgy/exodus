@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exodus", "Exodus\Exodus\Exodus.csproj", "{C60E5337-F1C3-487C-B853-F8A990077894}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExodusContent", "Exodus\ExodusContent\ExodusContent.contentproj", "{EC0F2B5C-37B5-4D59-847B-E6C8D2EB9F49}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B203082-F1D5-49B4-8209-DBB32645BC9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

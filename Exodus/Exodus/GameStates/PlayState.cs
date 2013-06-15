@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,7 @@ namespace Exodus.GameStates
         BuildingProduction buildingProduction;
         ResourcesDisplayer resourcesDisplayer;
         private SelectionDisplayer selectionDisplayer;
+        private DateTime start;
         public PlayState(Application g)
         {
             this.game = g;
@@ -104,7 +106,28 @@ namespace Exodus.GameStates
                 i = new PlayGame.Items.Buildings.Habitation(2);
                 i.SetPos(96, 34, true);
                 Map.AddItem(i);
+                for (int x = 100; x < 110; x++)
+                    for (int y = 30; y < 50; y++)
+                    {
+                        i = new PlayGame.Items.Units.Worker(2);
+                        i.SetPos(x, y, true);
+                        Map.AddItem(i);
+                    }
+                for (int x = 120; x < 130; x += 2)
+                    for (int y = 30; y < 50; y += 2)
+                    {
+                        i = new PlayGame.Items.Buildings.Habitation(2);
+                        i.SetPos(x, y, true);
+                        Map.AddItem(i);
+                    }
+                i = new PlayGame.Items.Obstacles.Gas();
+                i.SetPos(110, 50, true);
+                Map.AddPassiveItem(i);
+                i = new PlayGame.Items.Units.Laserman(1);
+                i.SetPos(100, 21, true);
+                Map.AddItem(i);
             }
+            start = DateTime.Now;
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
             Map.PlayerResources = new Resource(10000, 10000, 10000, 10000, 10000);
             base.LoadContent();
@@ -188,6 +211,8 @@ namespace Exodus.GameStates
         }
         public override void Update(GameTime gameTime)
         {
+            if (Data.Network.SinglePlayer)
+                PlayGame.AI.Update(DateTime.Now - start, 2);
             Map.EarningPerSec.Reset();
             for (int i = 0; i < Map.ListItems.Count; i++)
             {

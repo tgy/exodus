@@ -427,7 +427,7 @@ namespace Exodus.Network.ServerSide
             while (IsRunning && GameRunned)
             {
                 Thread.Sleep(1000);
-                if (Data.Network.ConnectedClients.Count > 2)
+                if (Data.Network.ConnectedClients.Count >= 2)
                 {
                     int idP1, idP2;
                     if (Data.Network.ConnectedClients[0].Id == 1)
@@ -466,8 +466,6 @@ namespace Exodus.Network.ServerSide
                     GameRunned = false;
                     //FIXME STOP SERVER
                 }
-                else
-                    throw new Exception("No Clients connected ?");
 
             }
         }

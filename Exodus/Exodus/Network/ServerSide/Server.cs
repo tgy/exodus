@@ -464,6 +464,7 @@ namespace Exodus.Network.ServerSide
                 {
                     SendToAll(new WhoWon(Data.Network.ConnectedClients[0].InternetID));
                     GameRunned = false;
+                    //FIXME STOP SERVER
                 }
                 else
                     throw new Exception("No Clients connected ?");

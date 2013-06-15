@@ -46,6 +46,7 @@ namespace Exodus.Network.ServerSide
                 P2Sended = true;
             }
             else throw new Exception("Something went wrong...");
+            //To send
             if (P1Sended && P2Sended)
             {
                 TimeElapsed = DateTime.Now.Subtract(Data.Network.GameStartTime).ToString().Substring(0, 8);

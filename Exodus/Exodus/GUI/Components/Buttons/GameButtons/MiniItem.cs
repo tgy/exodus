@@ -20,8 +20,12 @@ namespace Exodus.GUI.Components.Buttons.GameButtons
             get { return _id; }
             set
             {
-                Texture = Textures.MiniGameItems[Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[value]).GetType()];
-                _id = value;
+                PlayGame.Item i = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[value]);
+                if (i != null)
+                {
+                    Texture = Textures.MiniGameItems[i.GetType()];
+                    _id = value;
+                }
             }
         }
 
@@ -30,13 +34,13 @@ namespace Exodus.GUI.Components.Buttons.GameButtons
             Area = new Rectangle(x, y, Textures.GameUI["smallItem"].Width, Textures.GameUI["smallItem"].Height);
             Depth = depth;
             Id = id;
-            _miniLife = new MiniLife(x + 2, y + 24, Depth - 2*Data.GameDisplaying.Epsilon);
+            _miniLife = new MiniLife(x + 2, y + 24, Depth - 2 * Data.GameDisplaying.Epsilon);
         }
 
         public override void Update(GameTime gameTime)
         {
             PlayGame.Item i = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[Id]);
-            _miniLife.Value = 100* i.currentLife/i.maxLife;
+            _miniLife.Value = 100 * i.currentLife / i.maxLife;
 
             if (Focused && Inputs.LeftClick())
                 Map.ListSelectedItems = new List<int> { i.PrimaryId };

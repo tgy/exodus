@@ -33,7 +33,8 @@ namespace Exodus.PlayGame.Tasks
                 {
                     this.iron.currentResource -= (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * new Resource(0, 5, 0, 0, 0);
                     this.iron.currentLife = (int)(this.iron.currentResource.Iron / this.iron.maxResource.Iron * 100);
-                    Map.PlayerResources += (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * new Resource(0, 5, 0, 0, 0);
+                    if (this.Parent.IdPlayer == Data.Network.IdPlayer)
+                        Map.PlayerResources += (gameTime.ElapsedGameTime.TotalMilliseconds / 1000) * new Resource(0, 5, 0, 0, 0);
                 }
                 else
                 {

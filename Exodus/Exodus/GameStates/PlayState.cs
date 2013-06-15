@@ -118,6 +118,7 @@ namespace Exodus.GameStates
             AI.task = 0;
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
             Map.PlayerResources = new Resource(10000, 10000, 10000, 10000, 10000);
+            AI.Load(2);
             base.LoadContent();
         }
         public override void Draw(SpriteBatch spriteBatch)
@@ -200,7 +201,7 @@ namespace Exodus.GameStates
         public override void Update(GameTime gameTime)
         {
             if (Data.Network.SinglePlayer)
-                PlayGame.AI.Update(DateTime.Now - start, 2);
+                PlayGame.AI.Update(DateTime.Now - start);
             Map.EarningPerSec.Reset();
             for (int i = 0; i < Map.ListItems.Count; i++)
             {

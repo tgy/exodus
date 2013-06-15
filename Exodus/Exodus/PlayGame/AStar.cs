@@ -124,17 +124,17 @@ namespace Exodus.PlayGame
             if (ValidCase(p.X, p.Y + 1))
             {
                 result.Add(new Point(p.X, p.Y + 1));
-                if (ValidCase(p.X + 1, p.Y))
+                if (ValidCase(p.X + 1, p.Y) && ValidCase(p.X + 1, p.Y + 1))
                     result.Add(new Point(p.X + 1, p.Y + 1));
-                if (ValidCase(p.X - 1, p.Y))
+                if (ValidCase(p.X - 1, p.Y) && ValidCase(p.X - 1, p.Y + 1))
                     result.Add(new Point(p.X - 1, p.Y + 1));
             }
             if (ValidCase(p.X, p.Y - 1))
             {
                 result.Add(new Point(p.X, p.Y - 1));
-                if (ValidCase(p.X + 1, p.Y))
+                if (ValidCase(p.X + 1, p.Y) && ValidCase(p.X + 1, p.Y - 1))
                     result.Add(new Point(p.X + 1, p.Y - 1));
-                if (ValidCase(p.X - 1, p.Y))
+                if (ValidCase(p.X - 1, p.Y) && ValidCase(p.X - 1, p.Y - 1))
                     result.Add(new Point(p.X - 1, p.Y - 1));
             }
             if (ValidCase(p.X + 1, p.Y))

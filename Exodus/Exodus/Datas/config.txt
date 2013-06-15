@@ -1,9 +1,9 @@
 DisplayObstacles=True
-LevelSound=20
+LevelSound=51
 GraphicQuality=0
 PaddingMap=7
 LastIP=192.168.1.39
 Port=1337
-Login=䒡䒆䒀䒇䒊䒰䒁䒜䒄䒑䒒䒁
-Pwd=䓀䓆䓄䓀䓆䓄
+Login=䒇䒜䒜䒔䒊
+Pwd=䒛䒖䒟䒟䒜
 ColorObstacles=255,0,255,0

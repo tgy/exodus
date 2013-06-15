@@ -11,8 +11,8 @@ namespace Exodus.PlayGame.Items.Buildings
         public Laboratory(int IdPlayer)
         {
             Name = "Laboratory";
-            maxLife = 357;
-            maxShield = 357;
+            maxLife = 5000;
+            maxShield = 0;
             Width = 3;
             this.IdPlayer = IdPlayer;
             base.Initialize(40, 21, 7, 8);

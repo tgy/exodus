@@ -32,6 +32,7 @@ namespace Exodus.PlayGame
         public int maxShield { get; protected set; }
         public int maxLife { get; protected set; }
         public int Range { get; protected set; }
+        public int SightRange { get; protected set; }
         public int AttackDelayMax { get; protected set; }
         public int currentAttackDelay;
         public int AttackStrength;
@@ -129,6 +130,7 @@ namespace Exodus.PlayGame
             this.resourcesGeneration = new Resource(0,0,0,0,0);
             this.maxResource = new Resource(0, 0, 0, 0, 0);
             this.currentResource = new Resource(0, 0, 0, 0, 0);
+            this.SightRange = 0;
         }
         /// <summary>
         /// Initialise la position de l'unité

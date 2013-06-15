@@ -184,6 +184,7 @@ namespace Exodus
             settings_pass2.Hidden = true;
             settingsForm.Components.Add(settings_pass2);
             SoundButton soundButton = new SoundButton(0, 0, new Padding(14, -6), 2 * Data.GameDisplaying.Epsilon);
+            soundButton.Progress = (float)Data.Config.LevelSound / 100f;
             soundButton.DoClick = SaveSound;
             settingsForm.Components.Add(new Label(Fonts.Eurostile12, "CHANGE SOUND LEVEL", 0, 0, Data.GameDisplaying.Epsilon));
             settingsForm.Components.Add(soundButton);
@@ -356,7 +357,6 @@ namespace Exodus
                 if (_scrollingSelection.SelectedItem >= 0 && _scrollingSelection.SelectedItem < _scrollingSelection.Entries.Count)
                 {
                     Data.Config.currentMap = _scrollingSelection.Entries[_scrollingSelection.SelectedItem].Item2;
-                    PlaySinglePlayer(m, i);
                     if (_scrollingSelection.SelectedItem != -1)
                     {
                         if (_searchingLAN)
@@ -378,7 +378,6 @@ namespace Exodus
                 System.Net.IPAddress ip;
                 if (System.Net.IPAddress.TryParse(ipJoin.Value, out ip))
                 {
-                    PlaySinglePlayer(m, i);
                     Data.Network.LastIP = ipJoin.Value;
                     Data.Network.SinglePlayer = false;
                     player2.Reset(Data.PlayerInfos.Name, Exodus.Player.avatarURL, Exodus.Player.rank, Exodus.Player.victories, Exodus.Player.defeats, true);

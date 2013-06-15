@@ -55,6 +55,36 @@ namespace Exodus.PlayGame
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (this.SightRange > 0 && this.TasksList.Count == 0 && (Data.Network.SinglePlayer || this.IdPlayer == Data.Network.IdPlayer))
+            {
+                Item item = null;
+                int currentHeuristic = 0,
+                    tempHeuristic;
+                int limit = this.SightRange * 10;
+                for (int i = 0; i < Map.ListItems.Count; i++)
+                    if (Map.ListItems[i].IdPlayer != this.IdPlayer && Map.ListItems[i].pos != null && this.pos != null)
+                    {
+                        tempHeuristic = AStar.Heuristic(Map.ListItems[i].pos.Value, this.pos.Value);
+                        if (tempHeuristic <= limit && (item == null || currentHeuristic > tempHeuristic))
+                        {
+                            item = Map.ListItems[i];
+                            currentHeuristic = tempHeuristic;
+                        }
+                    }
+                if (item != null)
+                {
+                    if (Data.Network.SinglePlayer)
+                    {
+                        this.AddTask(new Tasks.Attack(this, item), false, false);
+                    }
+                    else
+                    {
+                        Network.ClientSide.Client.SendObject(
+                            new Network.Orders.Tasks.Attack(this.PrimaryId, item.PrimaryId, false)
+                        );
+                    }
+                }
+            }
         }
         protected override void UpdateScreenPosition()
         {
@@ -109,7 +139,7 @@ namespace Exodus.PlayGame
                             throw new Exception("Statut de l'animation inconnu");
                     }
                 }
-                #endregion
+                    #endregion
                 else if (TasksList[0] is Tasks.Attack)
                 {
                     this.dir = GetDir(((Tasks.Attack)TasksList[0]).Enemy.pos.Value, this.pos.Value);
@@ -190,7 +220,6 @@ namespace Exodus.PlayGame
             this.SelectionSound = Audio.Selection[GetType()];
             //this.Focused = Map.ListSelectedItems.Contains(this.PrimaryId);
         }
-
         private Direction GetDir(Point pos, Point oldPos)
         {
             Point dir = new Point(pos.X == oldPos.X ? 0 : (pos.X - oldPos.X) / Math.Abs(pos.X - oldPos.X), pos.Y == oldPos.Y ? 0 : (pos.Y - oldPos.Y) / Math.Abs(pos.Y - oldPos.Y));

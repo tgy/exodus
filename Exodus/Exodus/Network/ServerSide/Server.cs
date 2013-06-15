@@ -421,15 +421,15 @@ namespace Exodus.Network.ServerSide
 
         private static void SClientCrash(SClient client)
         {
+            int id;
+            if (Data.Network.ConnectedClients[0].InternetID == client.InternetID)
+                id = Data.Network.ConnectedClients[1].InternetID;
+            else id = client.InternetID;
             client.Stop();
             Data.Network.ConnectedClients.Remove(client);
             SendToAll("[" + DateTime.Now.ToShortTimeString() + "] * " + client.Name + " has left the game. (Crash)");
             TheGame.NbPlayers--;
             GameHasChanged = true;
-            int id;
-            if (Data.Network.ConnectedClients[0].InternetID == client.InternetID)
-                id = Data.Network.ConnectedClients[1].InternetID;
-            else id = client.InternetID;
             ThisClientWinns(id);
         }
         private static void ThisClientWinns(int id)

@@ -104,8 +104,7 @@ namespace Exodus.Network.ServerSide
             TPStats = new TwoPStatistics();
             Thread ReSyncAuto = new Thread(ReSyncTimer);
             ReSyncAuto.Name = "ReSyncAuto";
-            if (SyncObservers != null)
-                SyncObservers.Abort();
+            ReSyncAuto.Start();
         }
         #endregion
 

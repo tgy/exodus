@@ -111,9 +111,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audio.cs" />
+    <Compile Include="GameStates\GameFinishedState.cs" />
     <Compile Include="GUI\Components\Buttons\SoundButton.cs" />
     <Compile Include="Network\Orders\LaunchGame.cs" />
     <Compile Include="Network\Orders\Tasks\HarvestIron.cs" />
+    <Compile Include="Network\Orders\WhoWon.cs" />
     <Compile Include="PlayerOpponent.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="GameMouse.cs" />
@@ -138,7 +140,7 @@
     <Compile Include="GUI\Components\Buttons\MenuButtons\LaunchingOrangeButton.cs" />
     <Compile Include="GUI\Components\Buttons\MenuButtons\OrangeMenuButton.cs" />
     <Compile Include="GUI\Components\JustTextureRectangle.cs" />
-    <Compile Include="GUI\Components\Minimap.cs" />
+    <Compile Include="GUI\Items\Minimap.cs" />
     <Compile Include="GUI\Components\ListButtons.cs" />
     <Compile Include="GUI\Components\MiniLife.cs" />
     <Compile Include="GUI\Components\Buttons\MultiButton.cs" />

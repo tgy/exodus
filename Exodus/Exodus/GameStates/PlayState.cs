@@ -26,6 +26,7 @@ namespace Exodus.GameStates
         TasksDisplayer tasksDisplayer;
         BuildingProduction buildingProduction;
         ResourcesDisplayer resourcesDisplayer;
+        Minimap _miniMap;
         private SelectionDisplayer selectionDisplayer;
         private DateTime start;
         public PlayState(Application g)
@@ -63,8 +64,8 @@ namespace Exodus.GameStates
             selectionDisplayer = new SelectionDisplayer(0, Data.Window.WindowHeight - Textures.GameUI["selection"].Height, 25 * Data.GameDisplaying.Epsilon);
             Items.Add(selectionDisplayer);
 
-            Minimap minimap = new Minimap(Data.Window.WindowWidth - 284, Data.Window.WindowHeight - 170, 25 * Data.GameDisplaying.Epsilon);
-            Items.Add(minimap);
+            _miniMap = new Minimap(Data.Window.WindowWidth - 284, Data.Window.WindowHeight - 170, 25 * Data.GameDisplaying.Epsilon);
+            Items.Add(_miniMap);
 
             t = Textures.GameUI["launchMenuButton"];
             Items.Add(new Container(
@@ -93,8 +94,8 @@ namespace Exodus.GameStates
             {
                 if (Network.ServerSide.Server.IsRunning)
                 {
-                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 1, 100, 10));
-                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 2, 100, 20));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 1, 100, 20));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 2, 100, 30));
                 }
             }
             else
@@ -104,30 +105,17 @@ namespace Exodus.GameStates
                 i.SetPos(96, 24, true);
                 Map.AddItem(i);
                 i = new PlayGame.Items.Buildings.Habitation(2);
-                i.SetPos(96, 34, true);
+                i.SetPos(96, 150, true);
                 Map.AddItem(i);
-                for (int x = 100; x < 110; x++)
-                    for (int y = 30; y < 50; y++)
-                    {
-                        i = new PlayGame.Items.Units.Worker(2);
-                        i.SetPos(x, y, true);
-                        Map.AddItem(i);
-                    }
-                for (int x = 120; x < 130; x += 2)
-                    for (int y = 30; y < 50; y += 2)
-                    {
-                        i = new PlayGame.Items.Buildings.Habitation(2);
-                        i.SetPos(x, y, true);
-                        Map.AddItem(i);
-                    }
-                i = new PlayGame.Items.Obstacles.Gas();
-                i.SetPos(110, 50, true);
+                i = new PlayGame.Items.Obstacles.Iron();
+                i.SetPos(110, 136, true);
                 Map.AddPassiveItem(i);
-                i = new PlayGame.Items.Units.Laserman(1);
-                i.SetPos(100, 21, true);
-                Map.AddItem(i);
+                i = new PlayGame.Items.Obstacles.Gas();
+                i.SetPos(86, 160, true);
+                Map.AddPassiveItem(i);
             }
             start = DateTime.Now;
+            AI.task = 0;
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
             Map.PlayerResources = new Resource(10000, 10000, 10000, 10000, 10000);
             base.LoadContent();
@@ -156,25 +144,26 @@ namespace Exodus.GameStates
                                      0f, Vector2.Zero, 1f, SpriteEffects.None, 1f
                         );
                     for (int i = 0; i < Map.MapCells[x, y].ListItems.Count; i++)
-                        Map.MapCells[x, y].ListItems[i].Draw(spriteBatch);
+                        if (Map.MapCells[x,y].ListItems[i].pos.Value.X == x && Map.MapCells[x,y].ListItems[i].pos.Value.Y == y)
+                            Map.MapCells[x, y].ListItems[i].Draw(spriteBatch);
                 }
 
             #endregion
             spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, Data.Network.Running_as + " (Id:" + Data.Network.IdPlayer + ")",
                                    new Vector2(Data.Window.WindowWidth - 420, 15), Color.Red, 0f, Vector2.Zero, 1f,
-                                   SpriteEffects.None, float.Epsilon);
+                                   SpriteEffects.None, 5 * float.Epsilon);
             spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, Data.Network.Client,
                                    new Vector2(Data.Window.WindowWidth - 370, 34), Color.Red, 0f, Vector2.Zero, 1f,
-                                   SpriteEffects.None, float.Epsilon);
+                                   SpriteEffects.None, 5 * float.Epsilon);
             spriteBatch.DrawString(GUI.Fonts.Eurostile12, Data.Network.ServerIP,
                                    new Vector2(Data.Window.WindowWidth - 345, 49), Color.Red, 0f, Vector2.Zero, 1f,
-                                   SpriteEffects.None, float.Epsilon);
+                                   SpriteEffects.None, 5 * float.Epsilon);
             spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, Data.Network.Server,
                                    new Vector2(Data.Window.WindowWidth - 370, 69), Color.Red, 0f, Vector2.Zero, 1f,
-                                   SpriteEffects.None, float.Epsilon);
+                                   SpriteEffects.None, 5 * float.Epsilon);
             spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, Data.Network.Error,
                                    new Vector2(Data.Window.WindowWidth / 2 - 42, Data.Window.WindowHeight / 2), Color.Red,
-                                   0f, Vector2.Zero, 1f, SpriteEffects.None, float.Epsilon);
+                                   0f, Vector2.Zero, 1f, SpriteEffects.None, 5 * float.Epsilon);
             resourcesDisplayer.Set(PlayGame.Map.PlayerResources);
             int Client_Count = 1;
             while (Client_Count <= Data.Network.ConnectedClients.Count)
@@ -206,7 +195,7 @@ namespace Exodus.GameStates
                     GameMouse.Active = true;
                     break;
             }
-            _selectionSquare.Active = Data.GameInfos.currentMode == Data.GameInfos.ModeGame.Normal;
+            _selectionSquare.Active = Data.GameInfos.currentMode == Data.GameInfos.ModeGame.Normal && !_miniMap.Focused;
             base.Draw(spriteBatch);
         }
         public override void Update(GameTime gameTime)
@@ -512,6 +501,22 @@ namespace Exodus.GameStates
                         for (int y = Orders.listItems[i].pos.Value.Y, mY = y + Orders.listItems[i].Width; y < mY; y++)
                             for (int x = Orders.listItems[i].pos.Value.X, mX = x + Orders.listItems[i].Width; x < mX; x++)
                                 PlayGame.Map.MapCells[x, y].ListItems.Add(Orders.listPassives[i]);
+            }
+            if (Data.Network.SinglePlayer)
+            {
+                bool findOur = false;
+                bool findEnemy = false;
+                for (int i = 0; i < Map.ListItems.Count; i++)
+                {
+                    if (Map.ListItems[i].IdPlayer == Data.Network.IdPlayer)
+                        findOur = true;
+                    else
+                        findEnemy = true;
+                }
+                if (!findOur)
+                    game.Push(new GameStates.GameFinishedState(game, this, endGameState.lost));
+                else if (!findEnemy)
+                    game.Push(new GameStates.GameFinishedState(game, this, endGameState.won));
             }
             base.Update(gameTime);
         }

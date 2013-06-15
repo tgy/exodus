@@ -77,6 +77,9 @@ namespace Exodus
             Menu["StartButtonClick"] = Menu["StartButtonHover"];
             Menu["SoundButton"] = content.Load<Texture2D>("Menu/Buttons/SoundButton");
             Menu["SoundButtonProgress"] = content.Load<Texture2D>("Menu/Buttons/SoundButtonProgress");
+            Menu["EndGameBG"] = content.Load<Texture2D>("Menu/Backgrounds/BackgroundPixel");
+            Menu["EndGameLost"] = content.Load<Texture2D>("Menu/Backgrounds/YouLost");
+            Menu["EndGameWon"] = content.Load<Texture2D>("Menu/Backgrounds/YouWon");
         }
         public static void LoadGameItems(ContentManager content)
         {
@@ -100,6 +103,7 @@ namespace Exodus
             GameItems[typeof(Laserman) + "1"] = content.Load<Texture2D>("Game/Units/Laserman1");
             GameItems[typeof(Laserman) + "2"] = content.Load<Texture2D>("Game/Units/Laserman2");
             GameItems[typeof(HydrogenExtractor) + "1"] = content.Load<Texture2D>("Game/Buildings/hydrogenExtractor");
+            GameItems[typeof(HydrogenExtractor) + "2"] = content.Load<Texture2D>("Game/Buildings/hydrogenExtractor");
         }
         public static void LoadMiniGameItems(ContentManager content)
         {

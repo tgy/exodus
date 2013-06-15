@@ -33,6 +33,7 @@ namespace Exodus.Network.ClientSide
         public static GUI.Items.PlayerInfosLaunching player1;
         public static Func<string, string, string, bool> resetObservers = null;
         public static Func<bool> RunGameFunc = null;
+        public static Application g;
 
         #region Start
         public static void Start(object ip)
@@ -266,12 +267,15 @@ namespace Exodus.Network.ClientSide
                 if (!Server.IsRunning)
                 {
                     string[][] result = SyncClient.SendSQLRequest("SELECT `name`, `avatar` FROM `user` WHERE `id` = " + Id);
-                    PlayerOpponent.name = result[0][0];
-                    PlayerOpponent.avatarURL = result[0][1];
-                    PlayerOpponent.rank = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + Id + ")"))[0][0]) + 1;
-                    PlayerOpponent.victories = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + Id))[0][0]);
-                    PlayerOpponent.defeats = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + Id + " AND (`P1ID`=" + Id + " OR `P2ID`=" + Id + ")"))[0][0]);
-                    player1.Reset(PlayerOpponent.name, PlayerOpponent.avatarURL, PlayerOpponent.rank, PlayerOpponent.victories, PlayerOpponent.defeats, false);
+                    if (result != null)
+                    {
+                        PlayerOpponent.name = result[0][0];
+                        PlayerOpponent.avatarURL = result[0][1];
+                        PlayerOpponent.rank = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `user` WHERE `score` > (SELECT `score` FROM `user` WHERE `id` = " + Id + ")"))[0][0]) + 1;
+                        PlayerOpponent.victories = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`=" + Id))[0][0]);
+                        PlayerOpponent.defeats = Int32.Parse(((string[][])SyncClient.SendSQLRequest("SELECT COUNT(*) FROM `game` WHERE `winnerID`!=" + Id + " AND (`P1ID`=" + Id + " OR `P2ID`=" + Id + ")"))[0][0]);
+                        player1.Reset(PlayerOpponent.name, PlayerOpponent.avatarURL, PlayerOpponent.rank, PlayerOpponent.victories, PlayerOpponent.defeats, false);
+                    }
                 }
             }
             else if (o is Network.Orders.Task)
@@ -415,6 +419,12 @@ namespace Exodus.Network.ClientSide
                         s3 = l[2];
                     resetObservers(s1, s2, s3);
                 }
+            }
+            else if (o is WhoWon)
+            {
+                WhoWon Orders = (WhoWon)o;
+                g.Push(new GameStates.GameFinishedState(g, g.Peek(), Orders.InternetID == Data.PlayerInfos.InternetID ? GameStates.endGameState.won : GameStates.endGameState.lost));
+                //FIXME: STOP CLIENT
             }
 
             // On gère pas l'objet reçue, exception

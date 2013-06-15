@@ -79,7 +79,10 @@ namespace Exodus.PlayGame.Tasks
             {
                 if (path == null)
                 {
-                    path = AStar.Pathfind(parent.pos.Value, this.Arrival, this.Arrived);
+                    if (this.Arrived != null)
+                        path = AStar.Pathfind(parent.pos.Value, this.Arrival, this.Arrived);
+                    else
+                        path = AStar.Pathfind(parent.pos.Value, this.Arrival);
                 }
                 else
                 {

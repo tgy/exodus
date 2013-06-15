@@ -105,6 +105,9 @@ namespace Exodus.Network.ServerSide
             Thread ReSyncAuto = new Thread(ReSyncTimer);
             ReSyncAuto.Name = "ReSyncAuto";
             ReSyncAuto.Start();
+            Thread CheckWinner = new Thread(CheckWin);
+            CheckWinner.Name = "CheckWin";
+            CheckWinner.Start();
         }
         #endregion
 
@@ -401,6 +404,7 @@ namespace Exodus.Network.ServerSide
         }
         private static void ReSyncTimer()
         {
+            Thread.Sleep(100);
             while (IsRunning)
             {
                 Resync();
@@ -416,6 +420,54 @@ namespace Exodus.Network.ServerSide
                     r.Add(Data.Network.ConnectedClients[i].Name);
                 SendToAll(r);
                 Thread.Sleep(1000);
+            }
+        }
+        private static void CheckWin()
+        {
+            while (IsRunning && GameRunned)
+            {
+                Thread.Sleep(1000);
+                if (Data.Network.ConnectedClients.Count > 2)
+                {
+                    int idP1, idP2;
+                    if (Data.Network.ConnectedClients[0].Id == 1)
+                    {
+                        idP1 = Data.Network.ConnectedClients[0].InternetID;
+                        idP2 = Data.Network.ConnectedClients[1].InternetID;
+                    }
+                    else
+                    {
+                        idP1 = Data.Network.ConnectedClients[1].InternetID;
+                        idP2 = Data.Network.ConnectedClients[0].InternetID;
+                    }
+                    bool foundP1 = false, foundP2 = false;
+                    for (int i = 0; i < PlayGame.Map.ListItems.Count && !(foundP1 && foundP2); i++)
+                    {
+                        if (PlayGame.Map.ListItems[i].IdPlayer == 1)
+                            foundP1 = true;
+                        else if (PlayGame.Map.ListItems[i].IdPlayer == 2)
+                            foundP2 = true;
+                    }
+                    if (!foundP1 || !foundP2)
+                    {
+                        if (foundP1)
+                            SendToAll(new WhoWon(idP1));
+                        else if (foundP2)
+                            SendToAll(new WhoWon(idP2));
+                        else
+                            SendToAll(new WhoWon((new Random().Next(2)) == 1 ? idP2 : idP1));
+                        GameRunned = false;
+                        //FIXME STOP SERVER
+                    }
+                }
+                else if (Data.Network.ConnectedClients.Count == 1)
+                {
+                    SendToAll(new WhoWon(Data.Network.ConnectedClients[0].InternetID));
+                    GameRunned = false;
+                }
+                else
+                    throw new Exception("No Clients connected ?");
+
             }
         }
         #endregion

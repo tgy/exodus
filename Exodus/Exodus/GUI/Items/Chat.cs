@@ -58,9 +58,9 @@ namespace Exodus.GUI.Items
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
             int step = 12;
-            spriteBatch.DrawString(GUI.Fonts.Eurostile10, "ChatBox:", new Vector2(Area.X, Area.Y), Color.White, 0f, Vector2.Zero, 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, float.Epsilon);
+            spriteBatch.DrawString(GUI.Fonts.Eurostile10, "ChatBox:", new Vector2(Area.X, Area.Y), Color.White, 0f, Vector2.Zero, 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 3 * float.Epsilon);
             for (int i = 0; i < _listMsg.Count; i++)
-                spriteBatch.DrawString(GUI.Fonts.Eurostile10, _listMsg[i], new Vector2(Area.X, (i + 1) * step + Area.Y), Color.White, 0f, Vector2.Zero, 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, float.Epsilon);
+                spriteBatch.DrawString(GUI.Fonts.Eurostile10, _listMsg[i], new Vector2(Area.X, (i + 1) * step + Area.Y), Color.White, 0f, Vector2.Zero, 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 3 * float.Epsilon);
             base.Draw(spriteBatch);
         }
     }

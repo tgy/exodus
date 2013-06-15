@@ -21,8 +21,8 @@ namespace Exodus.GUI.Components.Buttons.GameButtons
             Item = item;
             Depth = depth;
             BigLife = new BigLife(x + 2, y + 63, Depth - 6 * Data.GameDisplaying.Epsilon);
-            _maxLife = new Label(Fonts.Arial9, "", x + 32, y + 70) { Color = new Color(22, 127, 176) };
-            _currentLife = new Label(Fonts.Arial9, "", 0, y + 70);
+            _maxLife = new Label(Fonts.Arial9, "", x + 32, y + 70, 4 * float.Epsilon) { Color = new Color(22, 127, 176) };
+            _currentLife = new Label(Fonts.Arial9, "", 0, y + 70, 4 * float.Epsilon);
         }
 
         public override void Update(GameTime gameTime)

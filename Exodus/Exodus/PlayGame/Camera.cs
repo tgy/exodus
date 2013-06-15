@@ -95,5 +95,20 @@ namespace Exodus.PlayGame
             }
             GameMouse.Reset(dir);
         }
+        public static void Set(int X, int Y)
+        {
+            if (X < minX)
+                x = minX;
+            else if (X > maxX)
+                x = maxX;
+            else
+                x = X;
+            if (Y < minY)
+                y = minY;
+            else if (Y > maxY)
+                y = maxY;
+            else
+                y = Y;
+        }
     }
 }

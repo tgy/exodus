@@ -20,6 +20,7 @@ namespace Exodus.PlayGame.Items.Units
             this.IdPlayer = IdPlayer;
             Initialize(40, 24, 9, 15);
             SightRange = 6;
+            Range = 4;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Exodus.PlayGame.Tasks
 {
@@ -9,11 +10,13 @@ namespace Exodus.PlayGame.Tasks
     class Attack : Task
     {
         public Item Enemy;
+        public Func<Point, Point, bool> Arrived;
         public Attack(Item parent, Item enemy) : base(parent, "Attack", "Attack the ennemy")
         {
             if (parent != null)
                 this.Parent = parent;
             this.Enemy = enemy;
+            this.Arrived = ((p1, p2) => AStar.Heuristic(p1, p2) <= this.Parent.Range * 10);
         }
 
         public override void Initialize()
@@ -29,15 +32,15 @@ namespace Exodus.PlayGame.Tasks
             if (!this.Finished)
             {
                 // si l'ennemi n'est plus juste a côté
-                if (Math.Abs(Enemy.pos.Value.X - this.Parent.pos.Value.X) + Math.Abs(Enemy.pos.Value.Y - this.Parent.pos.Value.Y) > 2)
+                if (!Arrived(Parent.pos.Value,Enemy.pos.Value))
                 {
-                    this.Parent.AddTask(new PlayGame.Tasks.Move(this.Parent, Enemy.pos.Value), false, true);
+                    this.Parent.AddTask(new PlayGame.Tasks.Move(this.Parent, Enemy.pos.Value, Arrived), false, true);
                 }
                 else
                 {
                     if (this.Parent.AttackSound != null)
                         this.Parent.AttackSound.Play();
-                    if (!(this.Enemy.TasksList.Count > 0 && (this.Enemy.TasksList[0] is Attack || this.Enemy.TasksList[0] is Move)))
+                    if (Enemy is Unit && !(this.Enemy.TasksList.Count > 0 && (this.Enemy.TasksList[0] is Attack || this.Enemy.TasksList[0] is Move)))
                         this.Enemy.AddTask(new Attack(this.Enemy, this.Parent), true, false);
                     this.Parent.currentAttackDelay -= (int)gameTime.ElapsedGameTime.TotalMilliseconds;
                     if (this.Parent.currentAttackDelay < 0)

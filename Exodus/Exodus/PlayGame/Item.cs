@@ -31,8 +31,8 @@ namespace Exodus.PlayGame
                    currentLife;
         public int maxShield { get; protected set; }
         public int maxLife { get; protected set; }
-        public int Range { get; protected set; }
-        public int SightRange { get; protected set; }
+        public float Range { get; protected set; }
+        public float SightRange { get; protected set; }
         public int AttackDelayMax { get; protected set; }
         public int currentAttackDelay;
         public int AttackStrength;

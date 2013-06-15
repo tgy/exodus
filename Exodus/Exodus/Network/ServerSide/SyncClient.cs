@@ -212,6 +212,9 @@ namespace Exodus.Network.ServerSide
             {
                 if (/*client.Connected && */Client.Available != 0)
                 {
+                    #region debug
+                    byte[] b;
+                    #endregion
                     lenght = NetReader.ReadByte() * 256 + NetReader.ReadByte();
                     data = NetReader.ReadBytes(lenght + 1);
                     //object GameList = Serialize.Serializer.ByteArrayToGameList(data);
@@ -241,7 +244,7 @@ namespace Exodus.Network.ServerSide
                     InternetGames.Clear();
                     break;
 
-                case 2:
+                case 2://SQL
                     //IsRunning = false;
                     ProcessSQLRequest(ShortenArray(data, 1));
                     break;

@@ -108,10 +108,10 @@ namespace Exodus.GameStates
                 Map.AddItem(i);
                 i = new PlayGame.Items.Obstacles.Iron();
                 i.SetPos(110, 136, true);
-                Map.AddItem(i);
+                Map.AddPassiveItem(i);
                 i = new PlayGame.Items.Obstacles.Gas();
                 i.SetPos(86, 160, true);
-                Map.AddItem(i);
+                Map.AddPassiveItem(i);
             }
             start = DateTime.Now;
             AI.task = 0;

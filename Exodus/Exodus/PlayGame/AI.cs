@@ -44,6 +44,7 @@ namespace Exodus.PlayGame
                 {
                     i.AddTask(new Tasks.HarvestIron(w3, i), true, false);
                 }
+                task++;
             }
         }
     }

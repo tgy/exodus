@@ -148,6 +148,7 @@ namespace Exodus.PlayGame
                         //Map.ObstacleMap[i, j] = false;
                         Map.MapCells[i, j].ListItems.Remove(this);
                     }
+
             }
             pos = new Point(x, y);
             if (secure)

@@ -33,6 +33,7 @@ namespace Exodus.Network.ClientSide
         public static GUI.Items.PlayerInfosLaunching player1;
         public static Func<string, string, string, bool> resetObservers = null;
         public static Func<bool> RunGameFunc = null;
+        public static Application g;
 
         #region Start
         public static void Start(object ip)
@@ -418,6 +419,12 @@ namespace Exodus.Network.ClientSide
                         s3 = l[2];
                     resetObservers(s1, s2, s3);
                 }
+            }
+            else if (o is WhoWon)
+            {
+                WhoWon Orders = (WhoWon)o;
+                g.Push(new GameStates.GameFinishedState(g, g.Peek(), Orders.InternetID == Data.PlayerInfos.InternetID ? GameStates.endGameState.won : GameStates.endGameState.lost));
+                //FIXME: STOP CLIENT
             }
 
             // On gère pas l'objet reçue, exception

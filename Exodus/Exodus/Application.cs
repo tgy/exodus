@@ -123,6 +123,7 @@ namespace Exodus
             Textures.LoadMiniGameItems(Content);
             Textures.LoadBigGameItems(Content);
             GameMouse.Initialize(Content);
+            Network.ClientSide.Client.g = this;
             statusBar = new StatusBar(Data.Window.ScreenCenter.X - Textures.Menu["StatusBar"].Width / 2,
                                                 Data.Window.ScreenCenter.Y - 117);
             ParticleEngine.ParticleEngine particleMenu = new ParticleEngine.Engine.StarsEngine(

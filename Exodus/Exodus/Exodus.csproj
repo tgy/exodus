@@ -115,6 +115,7 @@
     <Compile Include="GUI\Components\Buttons\SoundButton.cs" />
     <Compile Include="Network\Orders\LaunchGame.cs" />
     <Compile Include="Network\Orders\Tasks\HarvestIron.cs" />
+    <Compile Include="Network\Orders\WhoWon.cs" />
     <Compile Include="PlayerOpponent.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="GameMouse.cs" />

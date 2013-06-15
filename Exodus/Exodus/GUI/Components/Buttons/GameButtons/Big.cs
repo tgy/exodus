@@ -21,30 +21,33 @@ namespace Exodus.GUI.Components.Buttons.GameButtons
             Item = item;
             Depth = depth;
             BigLife = new BigLife(x + 2, y + 63, Depth - 6 * Data.GameDisplaying.Epsilon);
-            _maxLife = new Label(Fonts.Arial9, "", x + 32, y + 70) { Color = new Color(22, 127, 176) };
-            _currentLife = new Label(Fonts.Arial9, "", 0, y + 70);
+            _maxLife = new Label(Fonts.Arial9, "", x + 32, y + 70, 4 * float.Epsilon) { Color = new Color(22, 127, 176) };
+            _currentLife = new Label(Fonts.Arial9, "", 0, y + 70, 4 * float.Epsilon);
         }
 
         public override void Update(GameTime gameTime)
         {
-            BigLife.Value = 100 * Item.currentLife / Item.maxLife;
-            _maxLife.Txt = " / " + Item.maxLife.ToString();
-            _currentLife.Txt = Item.currentLife.ToString();
+            if (Item != null)
+            {
+                BigLife.Value = 100 * Item.currentLife / Item.maxLife;
+                _maxLife.Txt = " / " + Item.maxLife.ToString();
+                _currentLife.Txt = Item.currentLife.ToString();
 
-            _currentLife.Pos.X = (int)(_maxLife.Pos.X - Fonts.Arial9.MeasureString(_currentLife.Txt).X);
+                _currentLife.Pos.X = (int)(_maxLife.Pos.X - Fonts.Arial9.MeasureString(_currentLife.Txt).X);
 
-            int percentage = 100 * Item.currentLife / Item.maxLife;
-            Color color;
-            if (percentage >= 75)
-                color = new Color(91, 224, 43);
-            else if (percentage >= 50)
-                color = new Color(255, 221, 61);
-            else if (percentage >= 25)
-                color = new Color(230, 130, 9);
-            else
-                color = new Color(218, 33, 13);
+                int percentage = 100 * Item.currentLife / Item.maxLife;
+                Color color;
+                if (percentage >= 75)
+                    color = new Color(91, 224, 43);
+                else if (percentage >= 50)
+                    color = new Color(255, 221, 61);
+                else if (percentage >= 25)
+                    color = new Color(230, 130, 9);
+                else
+                    color = new Color(218, 33, 13);
 
-            _currentLife.Color = color;
+                _currentLife.Color = color;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

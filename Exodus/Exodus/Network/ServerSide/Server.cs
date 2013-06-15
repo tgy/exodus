@@ -105,6 +105,9 @@ namespace Exodus.Network.ServerSide
             Thread ReSyncAuto = new Thread(ReSyncTimer);
             ReSyncAuto.Name = "ReSyncAuto";
             ReSyncAuto.Start();
+            Thread CheckWinner = new Thread(CheckWin);
+            CheckWinner.Name = "CheckWin";
+            CheckWinner.Start();
         }
         #endregion
 
@@ -401,6 +404,7 @@ namespace Exodus.Network.ServerSide
         }
         private static void ReSyncTimer()
         {
+            Thread.Sleep(100);
             while (IsRunning)
             {
                 Resync();
@@ -418,6 +422,59 @@ namespace Exodus.Network.ServerSide
                 Thread.Sleep(1000);
             }
         }
+        private static void CheckWin()
+        {
+            while (IsRunning && GameRunned)
+            {
+                Thread.Sleep(1000);
+                if (Data.Network.ConnectedClients.Count >= 2)
+                {
+                    int idP1, idP2;
+                    if (Data.Network.ConnectedClients[0].Id == 1)
+                    {
+                        idP1 = Data.Network.ConnectedClients[0].InternetID;
+                        idP2 = Data.Network.ConnectedClients[1].InternetID;
+                    }
+                    else
+                    {
+                        idP1 = Data.Network.ConnectedClients[1].InternetID;
+                        idP2 = Data.Network.ConnectedClients[0].InternetID;
+                    }
+                    bool foundP1 = false, foundP2 = false;
+                    for (int i = 0; i < PlayGame.Map.ListItems.Count && !(foundP1 && foundP2); i++)
+                    {
+                        if (PlayGame.Map.ListItems[i].IdPlayer == 1)
+                            foundP1 = true;
+                        else if (PlayGame.Map.ListItems[i].IdPlayer == 2)
+                            foundP2 = true;
+                    }
+                    if (!foundP1 || !foundP2)
+                    {
+                        if (foundP1)
+                        {
+                            SendToAll(new WhoWon(idP1));
+                            ThisClientWins((byte)idP1);
+                        }
+                        else if (foundP2)
+                        {
+                            SendToAll(new WhoWon(idP2));
+                            ThisClientWins((byte)idP1);
+                        }
+                        else
+                            SendToAll(new WhoWon((new Random().Next(2)) == 1 ? idP2 : idP1));
+                        GameRunned = false;
+                        //FIXME STOP SERVER
+                    }
+                }
+                else if (Data.Network.ConnectedClients.Count == 1)
+                {
+                    SendToAll(new WhoWon(Data.Network.ConnectedClients[0].InternetID));
+                    GameRunned = false;
+                    //FIXME STOP SERVER
+                }
+
+            }
+        }
         #endregion
 
         private static void SClientCrash(SClient client)
@@ -425,22 +482,21 @@ namespace Exodus.Network.ServerSide
             int id;
             if (Data.Network.ConnectedClients[0].InternetID == client.InternetID)
                 id = Data.Network.ConnectedClients[1].InternetID;
-            else id = client.InternetID;
+            else id = Data.Network.ConnectedClients[0].InternetID;
             client.Stop();
             Data.Network.ConnectedClients.Remove(client);
             SendToAll("[" + DateTime.Now.ToShortTimeString() + "] * " + client.Name + " has left the game. (Crash)");
             TheGame.NbPlayers--;
             GameHasChanged = true;
-            ThisClientWinns(id);
+            ThisClientWins((byte)id);
         }
-        private static void ThisClientWinns(int id)
+        private static void ThisClientWins(byte id)
         {
-            byte[] Sint = Serialize.Serializer.ObjectToByteArray(id);
-            byte[] WinPacket = new byte[Sint.Length + 3];
-            WinPacket[0] = (byte)(Sint.Length / 256);
-            WinPacket[1] = (byte)(Sint.Length % 256);
+            byte[] WinPacket = new byte[4];
+            WinPacket[0] = 0;
+            WinPacket[1] = 2;
             WinPacket[2] = 4;
-            Sint.CopyTo(WinPacket, 3);
+            WinPacket[3] = id;
             SyncClient.SendDataToGameManagerAsServer(WinPacket);
         }
         private static int IsSClientAlreadyConnected(SClient client)

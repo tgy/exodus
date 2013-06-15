@@ -68,7 +68,7 @@ namespace Exodus.Network.ServerSide
             try
             {
                 //Client = new TcpClient(Dns.GetHostAddresses("thefirsthacker.myftp.org")[0].ToString(), 4000);
-                Client = new TcpClient("192.168.1.15", 4000);
+                Client = new TcpClient("192.168.1.14", 4000);
                 //Client = new TcpClient("192.168.1.15", 4000);
                 //NetReader = new BinaryReader(Client.GetStream());
                 //InternetGames = new List<Game>();
@@ -135,7 +135,7 @@ namespace Exodus.Network.ServerSide
             SQLAnswer = null;
             ConnectToSendRequest();
             SendDBCMDToGameManager(request);
-            for (byte b = 0; b < 10; b++)
+            for (byte b = 0; b < 30; b++)
             {
                 Thread.Sleep(100);
                 if (SQLAnswer != null)

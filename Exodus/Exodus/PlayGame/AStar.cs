@@ -31,11 +31,15 @@ namespace Exodus.PlayGame
                 return i;
             }
         }
-        public static LinkedList<Point> Pathfind(Point Start, Point Arrival, Func<Point, Point, bool> Arrived)
+        public static LinkedList<Point> Pathfind(Point Start, Point Arrival)
+        {
+            return Pathfind(Start, Arrival, ValidCase);
+        }
+        public static LinkedList<Point> Pathfind(Point Start, Point Arrival, Func<int,int, bool> IsValidCase)
         {
             // Si la case n'est pas valable ou est un obstacle
-            Arrival = closestFreePoint(x => ValidCase(x.X, x.Y), Arrival, Start);
-            if (Arrival.X == -1 && Arrival.Y == -1 || !ValidCase(Arrival.X, Arrival.Y))
+            Arrival = closestFreePoint(x => IsValidCase(x.X, x.Y), Arrival, Start);
+            if (Arrival.X == -1 && Arrival.Y == -1 || !IsValidCase(Arrival.X, Arrival.Y))
                 return null;
             BinaryHeap<CellInfos> openSet = new BinaryHeap<CellInfos>(
                 (x, y) => x.currentCost + x.heuristic < y.currentCost + y.heuristic,
@@ -49,7 +53,7 @@ namespace Exodus.PlayGame
             while (openSet2.Count > 0)
             {
                 current = openSet.First();
-                if (Arrived(current.point, Arrival))
+                if (current.point.Equals(Arrival))
                     return ReconstructPath(current);
                 openSet2.Remove(current.point);
                 openSet.Remove(current);
@@ -139,7 +143,7 @@ namespace Exodus.PlayGame
                 result.Add(new Point(p.X - 1, p.Y));
             return result;
         }
-        static bool ValidCase(int x, int y)
+        public static bool ValidCase(int x, int y)
         {
             return (x >= 0 && x < Map.Width && y >= 0 && y < Map.Height && Map.MapCells[x, y].ListItems.Count == 0);
         }

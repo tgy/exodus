@@ -15,9 +15,9 @@ namespace Exodus.PlayGame.Tasks
             baseTimer;
         Point Arrival;
         Unit parent;
-        Func<Point, Point, bool> Arrived = ((p1, p2) => p1.Equals(p2));
-        public Move(Item parent, Point Arrival, Func<Point, Point, bool> Arrived)
-            : this(parent,Arrival)
+        Func<int, int, bool> Arrived = null;
+        public Move(Item parent, Point Arrival, Func<int, int, bool> Arrived)
+            : this(parent, Arrival)
         {
             this.Arrived = Arrived;
         }
@@ -46,8 +46,11 @@ namespace Exodus.PlayGame.Tasks
                 Finished = true;
             else
             {
-                this.path = PlayGame.AStar.Pathfind(parent.pos.Value, this.Arrival, this.Arrived);
-                if (path == null)
+                if (this.Arrived == null)
+                    this.path = PlayGame.AStar.Pathfind(parent.pos.Value, this.Arrival);
+                else
+                    this.path = PlayGame.AStar.Pathfind(parent.pos.Value, this.Arrival, this.Arrived);
+                if (path == null || (path.Count == 1 && path.First.Equals(this.parent.pos)))
                 {
                     this.Finished = true;
                     // si le chemin est null a cause d'autres unites selectionnees, on recalcule le path

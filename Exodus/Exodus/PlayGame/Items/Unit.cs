@@ -60,12 +60,11 @@ namespace Exodus.PlayGame
                 Item item = null;
                 int currentHeuristic = 0,
                     tempHeuristic;
-                int limit = (int)(this.SightRange * 10);
                 for (int i = 0; i < Map.ListItems.Count; i++)
                     if (Map.ListItems[i].IdPlayer != this.IdPlayer && Map.ListItems[i].pos != null && this.pos != null)
                     {
                         tempHeuristic = AStar.Heuristic(Map.ListItems[i].pos.Value, this.pos.Value);
-                        if (tempHeuristic <= limit && (item == null || currentHeuristic > tempHeuristic))
+                        if (tempHeuristic <= this.SightRange && (item == null || currentHeuristic > tempHeuristic))
                         {
                             item = Map.ListItems[i];
                             currentHeuristic = tempHeuristic;

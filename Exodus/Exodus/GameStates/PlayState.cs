@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -104,6 +105,26 @@ namespace Exodus.GameStates
                 Map.AddItem(i);
                 i = new PlayGame.Items.Buildings.Habitation(2);
                 i.SetPos(96, 34, true);
+                Map.AddItem(i);
+                for (int x = 100; x < 110; x++)
+                    for (int y = 30; y < 50; y++)
+                    {
+                        i = new PlayGame.Items.Units.Worker(2);
+                        i.SetPos(x, y, true);
+                        Map.AddItem(i);
+                    }
+                for (int x = 120; x < 130; x += 2)
+                    for (int y = 30; y < 50; y += 2)
+                    {
+                        i = new PlayGame.Items.Buildings.Habitation(2);
+                        i.SetPos(x, y, true);
+                        Map.AddItem(i);
+                    }
+                i = new PlayGame.Items.Obstacles.Gas();
+                i.SetPos(110, 50, true);
+                Map.ListPassiveItems.Add(i);
+                i = new PlayGame.Items.Units.Laserman(1);
+                i.SetPos(100, 21, true);
                 Map.AddItem(i);
             }
             start = DateTime.Now;

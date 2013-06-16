@@ -15,7 +15,7 @@ namespace Exodus.PlayGame.Items.Obstacles
             maxShield = 666;
             Width = 2;
             base.Initialize(40, 24, 25, 24);
-            this.currentResource = new Resource(0, 0, 0, 50, 0);
+            this.currentResource = new Resource(0, 0, 0, 5000, 0);
         }
 
         protected override void UpdateAnim()

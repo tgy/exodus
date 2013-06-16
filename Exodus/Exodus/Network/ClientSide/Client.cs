@@ -243,14 +243,14 @@ namespace Exodus.Network.ClientSide
         #region Compute
         private static void ProcessObject(byte[] ObjectTable)
         {
-            object o;
+            object o = null;
             try
             {
                 o = Serialize.Serializer.ByteArrayToObject(ObjectTable);
             }
             catch
             {
-                o = "Desync detected!";
+                //o = "Desync detected!";
                 //if (IsRunning) // Fuckit
             }
             //    o = ""; //throw new Exception("Error during deserialization!");
@@ -432,6 +432,8 @@ namespace Exodus.Network.ClientSide
                 g.Push(new GameStates.GameFinishedState(g, g.Peek(), Orders.InternetID == Data.PlayerInfos.InternetID ? GameStates.endGameState.won : GameStates.endGameState.lost));
                 //FIXME: STOP CLIENT
             }
+            else
+                return;
 
             // On gère pas l'objet reçue, exception
             //else

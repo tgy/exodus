@@ -39,7 +39,7 @@ namespace Exodus.Network.ServerSide
                 Data.Network.Server = "Server not started, another program is\nalready using the port " + Data.Network.Port;
                 return;
             }
-            TheGame = new Game(LocalIP(), "Default");
+            TheGame = new Game(LocalIP(), "     Hephaistos-42");
             Data.Network.GameStartTime = DateTime.Now;
             IsRunning = true;
             GameRunned = false;
@@ -367,7 +367,7 @@ namespace Exodus.Network.ServerSide
                 }
                 catch
                 {
-                    SendToAll("Desync detected!");
+                    //SendToAll("Desync detected!");
                     return;
                 }
                 //Un Observateur doit-il pouvoir envoyer des messages de chat?

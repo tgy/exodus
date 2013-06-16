@@ -79,8 +79,8 @@ namespace Exodus
             public static string Login = "";
             public static string Pwd = "";
             public static int LevelSound = 0;
-            public static string PathConfig = "../../../Datas/config.txt";
-            public static string PathMaps = "../../../Maps/";
+            public static string PathConfig = "Datas/config.txt";
+            public static string PathMaps = "Maps/";
             public static string currentMap = "";
             public static string MapsFileExtension = ".exd";
             public static int MapMaxLenghtName = 42;

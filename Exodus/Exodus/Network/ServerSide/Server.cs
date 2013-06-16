@@ -414,7 +414,7 @@ namespace Exodus.Network.ServerSide
             while (IsRunning)
             {
                 Resync();
-                Thread.Sleep(10000);
+                Thread.Sleep(5000);
             }
         }
         private static void SyncObserversAuto()

@@ -4,21 +4,6 @@ GraphicQuality=0
 PaddingMap=7
 LastIP=192.168.1.39
 Port=1337
-<<<<<<< HEAD
 Login=䒴䒁䒚䒞䒃䒜䒄
 Pwd=䒑䒚䒃䓃䓃䓁
-=======
-<<<<<<< HEAD
-Login=䒡䒆䒀䒇䒊䒰䒁䒜䒄䒑䒒䒁
-Pwd=䓀䓆䓄䓀䓆䓄
-=======
-<<<<<<< HEAD
-Login=䒴䒁䒚䒞䒃䒜䒄
-Pwd=䒑䒚䒃䓃䓃䓁
-=======
-Login=䒉䒖䒛䒚䒁
-Pwd=䒇䒜䒜䒔䒊䒠䒦䒰䒸䒠
->>>>>>> 552d1c8350e64d90a33e03055f729ace9191f977
->>>>>>> 25fe5d1e6f7c9b13dcded626ac901fa58a20cd52
->>>>>>> f674eb17db6e90a2ec1d3ad309fe83dcbc901514
 ColorObstacles=255,0,255,0

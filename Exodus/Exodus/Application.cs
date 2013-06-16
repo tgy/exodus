@@ -488,7 +488,7 @@ namespace Exodus
                     catch
                     {
                         Player.ConnectionState = 2;
-                        statusBar.Text = "Problem?";
+                        statusBar.Text = "Restart the game";
                         statusBar.Active = false;
                     }
                 }

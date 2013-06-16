@@ -189,18 +189,13 @@ namespace Exodus.PlayGame
             #region MàJ Tâches
             if (TasksList.Count > 0)
             {
-                if (TasksList[0] != null)
+                TasksList[0].Update(gameTime);
+                if (TasksList[0].Finished)
                 {
-                    TasksList[0].Update(gameTime);
-                    if (TasksList[0].Finished)
-                    {
-                        TasksList.RemoveAt(0);
-                        if (TasksList.Count > 0)
-                            TasksList[0].Initialize();
-                    }
-                }
-                else
                     TasksList.RemoveAt(0);
+                    if (TasksList.Count > 0)
+                        TasksList[0].Initialize();
+                }
             }
             #endregion
             #region MàJ de l'anim

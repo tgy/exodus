@@ -18,7 +18,7 @@ namespace Exodus.PlayGame.Items.Buildings
             Width = 2;
             this.IdPlayer = IdPlayer;
             base.Initialize(Int32.MaxValue, 1, 20, 6);
-            this.resourcesGeneration.Electricity = 10;
+            this.resourcesGeneration.Electricity = 15;
             this.resourcesGeneration = new Resource(0, 0, 0, 5, 0);
         }
     }

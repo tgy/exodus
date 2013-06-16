@@ -139,7 +139,7 @@ namespace Exodus.Network.ServerSide
                     }
                     catch
                     {
-                        throw new Exception("The lenght of the message was not correct! (Server stopped during the writing?)");
+                        //throw new Exception("The lenght of the message was not correct! (Server stopped during the writing?)");
                     }
                     ProcessPlayerObject(client, data);
                 }

@@ -126,24 +126,27 @@ namespace Exodus.PlayGame
                     l.Add(h);
                 }
             }
-            Items.Buildings.Habitation i = (Items.Buildings.Habitation)l[rand.Next(l.Count)];
-            switch (rand.Next(7))
+            if (l.Count > 0)
             {
-                case 0:
-                case 1:
-                    i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Gunner)], new Items.Units.Gunner(id), i.pos.Value, true, true, false), false, false);
-                    break;
-                case 2:
-                case 3:
-                    i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Laserman)], new Items.Units.Laserman(id), i.pos.Value, true, true, false), false, false);
-                    break;
-                case 4:
-                case 5:
-                    i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Spider)], new Items.Units.Spider(id), i.pos.Value, true, true, false), false, false);
-                    break;
-                case 6:
-                    i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Worker)], new Items.Units.Worker(id), i.pos.Value, true, true, false), false, false);
-                    break;
+                Items.Buildings.Habitation i = (Items.Buildings.Habitation)l[rand.Next(l.Count)];
+                switch (rand.Next(7))
+                {
+                    case 0:
+                    case 1:
+                        i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Gunner)], new Items.Units.Gunner(id), i.pos.Value, true, true, false), false, false);
+                        break;
+                    case 2:
+                    case 3:
+                        i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Laserman)], new Items.Units.Laserman(id), i.pos.Value, true, true, false), false, false);
+                        break;
+                    case 4:
+                    case 5:
+                        i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Spider)], new Items.Units.Spider(id), i.pos.Value, true, true, false), false, false);
+                        break;
+                    case 6:
+                        i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Worker)], new Items.Units.Worker(id), i.pos.Value, true, true, false), false, false);
+                        break;
+                }
             }
         }
 

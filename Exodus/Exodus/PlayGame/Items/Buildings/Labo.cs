@@ -11,7 +11,7 @@ namespace Exodus.PlayGame.Items.Buildings
         public Laboratory(int IdPlayer)
         {
             Name = "Laboratory";
-            maxLife = 5000;
+            maxLife = 40000;
             maxShield = 0;
             Width = 3;
             this.IdPlayer = IdPlayer;

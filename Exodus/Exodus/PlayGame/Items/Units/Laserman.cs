@@ -11,11 +11,11 @@ namespace Exodus.PlayGame.Items.Units
         public Laserman(int IdPlayer)
         {
             Name = "Laserman";
-            maxLife = 700;
+            maxLife = 40000;
             maxShield = 0;
-            Speed = 300;
-            AttackStrength = 5;
-            AttackDelayMax = 10;
+            Speed = 400;
+            AttackStrength = 900;
+            AttackDelayMax = 500;
             currentAttackDelay = AttackDelayMax;
             this.IdPlayer = IdPlayer;
             Initialize(20, 24, -47, -5);

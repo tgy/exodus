@@ -26,13 +26,18 @@ namespace Exodus.PlayGame.Tasks
         }
         public override void Initialize()
         {
-            child.SetPos(pos.X, pos.Y, true);
-            child.PrimaryId = primaryId;
-            if (child is Building || child is Unit)
-                Map.AddItem(child);
+            if (child != null)
+            {
+                child.SetPos(pos.X, pos.Y, true);
+                child.PrimaryId = primaryId;
+                if (child is Building || child is Unit)
+                    Map.AddItem(child);
+                else
+                    Map.AddPassiveItem(child);
+                Finished = true;
+            }
             else
-                Map.AddPassiveItem(child);
-            Finished = true;
+                Finished = true;
         }
         public override void Update(GameTime gameTime)
         {

@@ -79,8 +79,9 @@ namespace Exodus
             public static string Login = "";
             public static string Pwd = "";
             public static int LevelSound = 0;
-            public static string PathConfig = "Datas/config.txt";
-            public static string PathMaps = "Maps/";
+            public static string PathConfig = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Exodus\\Datas\\";
+            public static string ConfigFile = "config.txt";
+            public static string PathMaps = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Exodus\\Maps\\";
             public static string currentMap = "";
             public static string MapsFileExtension = ".exd";
             public static int MapMaxLenghtName = 42;
@@ -109,6 +110,10 @@ namespace Exodus
         }
         public static void Load()
         {
+            if (!System.IO.Directory.Exists(Config.PathMaps))
+                System.IO.Directory.CreateDirectory(Config.PathMaps);
+            if (!System.IO.Directory.Exists(Config.PathConfig))
+                System.IO.Directory.CreateDirectory(Config.PathConfig);
             GameInfos.timeCreatingItem.Add(typeof(Gunner), 5000);
             GameInfos.timeCreatingItem.Add(typeof(Worker), 1000);
             GameInfos.timeCreatingItem.Add(typeof(Habitation), 1500);
@@ -131,7 +136,7 @@ namespace Exodus
         {
             try
             {
-                string[] configs = System.IO.File.ReadAllLines(Config.PathConfig);
+                string[] configs = System.IO.File.ReadAllLines(Config.PathConfig + Config.ConfigFile);
                 byte a = 255, r = 255, g = 0, b = 0;
                 foreach (
                     string[] array in
@@ -214,7 +219,7 @@ namespace Exodus
         {
             try
             {
-                System.IO.File.WriteAllText(Config.PathConfig,
+                System.IO.File.WriteAllText(Config.PathConfig + Config.ConfigFile,
                     "DisplayObstacles=" + GameDisplaying.DisplayObstacle + "\n" +
                     "LevelSound=" + Config.LevelSound + "\n" +
                     "GraphicQuality=" + GameDisplaying.GraphicQuality + "\n" +
@@ -226,7 +231,7 @@ namespace Exodus
                     "ColorObstacles=" + GameDisplaying.DisplayingColor.A + "," + GameDisplaying.DisplayingColor.R + "," + GameDisplaying.DisplayingColor.G + "," + GameDisplaying.DisplayingColor.B
                 );
             }
-            catch
+            catch (Exception e)
             {
             }
         }

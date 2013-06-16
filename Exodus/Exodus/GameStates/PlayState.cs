@@ -94,8 +94,12 @@ namespace Exodus.GameStates
             {
                 if (Network.ServerSide.Server.IsRunning)
                 {
-                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 1, 100, 20));
-                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 2, 100, 30));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 1, 96, 24));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Gas), 0, 70, 70));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Iron), 0, 90, 40));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 2, 96, 150));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Gas), 0, 110, 136));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Iron), 0, 76, 140));
                 }
             }
             else
@@ -104,6 +108,12 @@ namespace Exodus.GameStates
                 i = new PlayGame.Items.Buildings.Habitation(1);
                 i.SetPos(96, 24, true);
                 Map.AddItem(i);
+                i = new PlayGame.Items.Obstacles.Gas();
+                i.SetPos(70, 70, true);
+                Map.AddPassiveItem(i);
+                i = new PlayGame.Items.Obstacles.Iron();
+                i.SetPos(90, 40, true);
+                Map.AddPassiveItem(i);
                 i = new PlayGame.Items.Buildings.Habitation(2);
                 i.SetPos(96, 150, true);
                 Map.AddItem(i);
@@ -111,7 +121,7 @@ namespace Exodus.GameStates
                 i.SetPos(110, 136, true);
                 Map.AddPassiveItem(i);
                 i = new PlayGame.Items.Obstacles.Gas();
-                i.SetPos(86, 160, true);
+                i.SetPos(76, 140, true);
                 Map.AddPassiveItem(i);
             }
             start = DateTime.Now;

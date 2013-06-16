@@ -163,7 +163,7 @@ namespace Exodus.GameStates
                 }
 
             #endregion
-            spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, Data.Network.Running_as + " (Id:" + Data.Network.IdPlayer + ")",
+            /*spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, Data.Network.Running_as + " (Id:" + Data.Network.IdPlayer + ")",
                                    new Vector2(Data.Window.WindowWidth - 420, 15), Color.Red, 0f, Vector2.Zero, 1f,
                                    SpriteEffects.None, 5 * float.Epsilon);
             spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, Data.Network.Client,
@@ -177,7 +177,7 @@ namespace Exodus.GameStates
                                    SpriteEffects.None, 5 * float.Epsilon);
             spriteBatch.DrawString(GUI.Fonts.Eurostile12Bold, Data.Network.Error,
                                    new Vector2(Data.Window.WindowWidth / 2 - 42, Data.Window.WindowHeight / 2), Color.Red,
-                                   0f, Vector2.Zero, 1f, SpriteEffects.None, 5 * float.Epsilon);
+                                   0f, Vector2.Zero, 1f, SpriteEffects.None, 5 * float.Epsilon);*/
             resourcesDisplayer.Set(PlayGame.Map.PlayerResources);
             int Client_Count = 1;
             while (Client_Count <= Data.Network.ConnectedClients.Count)

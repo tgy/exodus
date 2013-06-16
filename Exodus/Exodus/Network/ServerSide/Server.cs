@@ -118,7 +118,7 @@ namespace Exodus.Network.ServerSide
         {
             SClient client = (SClient)Sclient;
             BinaryReader Receiver = new BinaryReader(client.Client.GetStream());
-            int lenght;
+            int lenght = 0;
             byte[] data;
             while (IsRunning)
             {
@@ -130,7 +130,7 @@ namespace Exodus.Network.ServerSide
                     }
                     catch
                     {
-                        throw new Exception("Couldn't read message lenght. Client disconnected?");
+                        //throw new Exception("Couldn't read message lenght. Client disconnected?");
                     }
 
                     try

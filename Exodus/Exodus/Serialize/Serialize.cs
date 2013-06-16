@@ -31,7 +31,13 @@ namespace Exodus.Serialize
             if (o == null)
                 return null;
             MemoryStream _memoryStream = new MemoryStream();
-            _formatter.Serialize(_memoryStream, o);
+            try
+            {
+                _formatter.Serialize(_memoryStream, o);
+            }
+            catch
+            {
+            }
             return _memoryStream.ToArray();
         }
         static public object ByteArrayToObject(byte[] b)

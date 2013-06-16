@@ -119,7 +119,7 @@ namespace Exodus.Network.ServerSide
             SClient client = (SClient)Sclient;
             BinaryReader Receiver = new BinaryReader(client.Client.GetStream());
             int lenght = 0;
-            byte[] data;
+            byte[] data = null;
             while (IsRunning)
             {
                 if (client.Connected && client.Client.Available != 0)
@@ -141,7 +141,8 @@ namespace Exodus.Network.ServerSide
                     {
                         //throw new Exception("The lenght of the message was not correct! (Server stopped during the writing?)");
                     }
-                    ProcessPlayerObject(client, data);
+                    if (data != null)
+                        ProcessPlayerObject(client, data);
                 }
                 else
                     Thread.Sleep(5);

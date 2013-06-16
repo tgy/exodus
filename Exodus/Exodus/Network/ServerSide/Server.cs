@@ -397,8 +397,8 @@ namespace Exodus.Network.ServerSide
                 {
                     client.InternetID = (int)o;
                 }
-                else
-                    throw new Exception("This action is forbidden!"); ;
+                //else
+                //    throw new Exception("This action is forbidden!"); ;
             }
         }
         private static void Resync()

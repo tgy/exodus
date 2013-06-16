@@ -42,6 +42,8 @@ namespace Exodus.PlayGame.Tasks
         }
         public override void Initialize()
         {
+            if (AStar.GetFreeNeighbors(this.parent.pos.Value).Count == 0)
+                return;
             if (parent == null)
                 Finished = true;
             else
@@ -53,13 +55,13 @@ namespace Exodus.PlayGame.Tasks
                 if (path == null || (path.Count == 1 && path.First.Equals(this.parent.pos)))
                 {
                     this.Finished = true;
-                    // si le chemin est null a cause d'autres unites selectionnees, on recalcule le path
-                    List<Point> neighbors = AStar.GetAllNeighbors(parent.pos.Value);
-                    foreach (Point p in neighbors)
-                    {
-                        if (Map.MapCells[p.X, p.Y].ListItems.Count > 0 && Map.ListSelectedItems.Exists(n => n == Map.MapCells[p.X, p.Y].ListItems[0].PrimaryId))
-                            this.Finished = false;
-                    }
+                    //// si le chemin est null a cause d'autres unites selectionnees, on recalcule le path
+                    //List<Point> neighbors = AStar.GetAllNeighbors(parent.pos.Value);
+                    //foreach (Point p in neighbors)
+                    //{
+                    //    if (Map.MapCells[p.X, p.Y].ListItems.Count > 0 && Map.ListSelectedItems.Exists(n => n == Map.MapCells[p.X, p.Y].ListItems[0].PrimaryId))
+                    //        this.Finished = false;
+                    //}
                 }
                 else
                 {

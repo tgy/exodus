@@ -15,7 +15,11 @@ namespace Exodus.Serialize
         static object o;
         static public void Serialize(object o, string path)
         {
-            _stream = File.Open(path, FileMode.Create);
+            try
+            {
+                _stream = File.Open(path, FileMode.Create);
+            }
+            catch { }
             _formatter.Serialize(_stream, o);
             _stream.Close();
         }

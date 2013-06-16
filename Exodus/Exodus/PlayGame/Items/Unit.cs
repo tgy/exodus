@@ -70,7 +70,7 @@ namespace Exodus.PlayGame
                             currentHeuristic = tempHeuristic;
                         }
                     }
-                if (item != null)
+                if (item != null && item.TasksList.Count > 0 && !(item.TasksList[0] is Tasks.Wait))
                 {
                     if (Data.Network.SinglePlayer)
                     {

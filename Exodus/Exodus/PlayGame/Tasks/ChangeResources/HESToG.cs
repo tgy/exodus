@@ -11,7 +11,7 @@ namespace Exodus.PlayGame.Tasks.ChangeResources
     class HESToG : ChangeResource
     {
         public HESToG(Item parent)
-            : base(parent, 35000, new Resource(450, 0, 0, 200, 1000), new Resource(0, 0, 350, 0, 0))
+            : base(parent, 20000, new Resource(450, 0, 0, 200, 1000), new Resource(0, 0, 350, 0, 0))
         {
         }
     }

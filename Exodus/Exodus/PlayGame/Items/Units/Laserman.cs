@@ -10,7 +10,7 @@ namespace Exodus.PlayGame.Items.Units
     {
         public Laserman(int IdPlayer)
         {
-            Name = "Laserman";
+            Name = "ObiWan";
             maxLife = 40000;
             maxShield = 0;
             Speed = 400;
@@ -20,7 +20,7 @@ namespace Exodus.PlayGame.Items.Units
             this.IdPlayer = IdPlayer;
             Initialize(20, 24, -47, -5);
             SightRange = 100;
-            Range = 14;
+            Range = 30;
         }
     }
 }

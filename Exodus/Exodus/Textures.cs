@@ -89,12 +89,12 @@ namespace Exodus
             GameItems[typeof(Gunner) + "2"] = content.Load<Texture2D>("Game/Units/gunner-yellow");
             GameItems[typeof(Habitation) + "1"] = content.Load<Texture2D>("Game/Buildings/habitation-blue");
             GameItems[typeof(Habitation) + "2"] = content.Load<Texture2D>("Game/Buildings/habitation-yellow");
-            GameItems[typeof(Spider) + "1"] = content.Load<Texture2D>("Game/Units/Spider");
             GameItems[typeof(Spider) + "2"] = content.Load<Texture2D>("Game/Units/Spider");
+            GameItems[typeof(Spider) + "1"] = content.Load<Texture2D>("Game/Units/SpiderBlue");
             GameItems[typeof(Laserman) + "1"] = content.Load<Texture2D>("Game/Units/Laserman-blue");
             GameItems[typeof(Laserman) + "2"] = content.Load<Texture2D>("Game/Units/Laserman-yellow");
             GameItems[typeof(HydrogenExtractor) + "1"] = content.Load<Texture2D>("Game/Buildings/hydrogenExtractor");
-            GameItems[typeof(HydrogenExtractor) + "2"] = content.Load<Texture2D>("Game/Buildings/hydrogenExtractor");
+            GameItems[typeof(HydrogenExtractor) + "2"] = content.Load<Texture2D>("Game/Buildings/hydrogenExtractorYellow");
             GameItems[typeof(University) + "1"] = content.Load<Texture2D>("Game/Buildings/labo-blue");
             GameItems[typeof(University) + "2"] = content.Load<Texture2D>("Game/Buildings/labo-blue");
             GameItems[typeof(Laboratory) + "1"] = content.Load<Texture2D>("Game/Buildings/labo-blue");

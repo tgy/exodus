@@ -14,7 +14,7 @@ namespace Exodus.PlayGame.Items.Units
             maxLife = 3000;
             maxShield = 0;
             Speed = 100;
-            AttackStrength = 60;
+            AttackStrength = 38;
             AttackDelayMax = 100;
             currentAttackDelay = AttackDelayMax;
             this.IdPlayer = IdPlayer;

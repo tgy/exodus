@@ -13,7 +13,7 @@ namespace Exodus.PlayGame.Items.Buildings
         {
             Name = "Hydrogen extractor";
             this.Value = 0;
-            maxLife = 10000;
+            maxLife = 20000;
             maxShield = 0;
             Width = 2;
             this.IdPlayer = IdPlayer;

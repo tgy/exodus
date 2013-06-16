@@ -104,6 +104,9 @@ namespace Exodus.GameStates
                     Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Gas), 0, 110, 25));
                     Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Iron), 0, 105, 35));
 
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Gas), 0, 91, 70));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Gas), 0, 101, 100));
+
                     Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 2, 96, 150));
                     Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Gas), 0, 83, 145));
                     Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Iron), 0, 105, 141));
@@ -119,6 +122,18 @@ namespace Exodus.GameStates
                 Map.AddItem(i);
                 i = new PlayGame.Items.Obstacles.Gas();
                 i.SetPos(110, 25, true);
+                Map.AddPassiveItem(i);
+                i = new PlayGame.Items.Obstacles.Gas();
+                i.SetPos(91, 70, true);
+                Map.AddPassiveItem(i);
+                i = new PlayGame.Items.Obstacles.Gas();
+                i.SetPos(101, 100, true);
+                Map.AddPassiveItem(i);
+                i = new PlayGame.Items.Obstacles.Iron();
+                i.SetPos(96, 60, true);
+                Map.AddPassiveItem(i);
+                i = new PlayGame.Items.Obstacles.Iron();
+                i.SetPos(105, 110, true);
                 Map.AddPassiveItem(i);
                 i = new PlayGame.Items.Obstacles.Iron();
                 i.SetPos(105, 35, true);

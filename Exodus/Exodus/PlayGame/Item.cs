@@ -319,9 +319,12 @@ namespace Exodus.PlayGame
                             }
                             else
                             {
-                                if (TasksList[i] != null)
-                                    TasksList[i].BruteFinish();
-                                TasksList.RemoveAt(i);
+                                if (TasksList.Count < i)
+                                {
+                                    if (TasksList[i] != null)
+                                        TasksList[i].BruteFinish();
+                                    TasksList.RemoveAt(i);
+                                }
                             }
 
                         }

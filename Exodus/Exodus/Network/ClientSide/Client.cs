@@ -480,7 +480,8 @@ namespace Exodus.Network.ClientSide
             IsRunning = false;
             IsRefreshing = false;
             // BroadcastListener.Close();
-            sender.Close();
+            if (sender != null)
+                sender.Close();
             client.Close();
         }
     }

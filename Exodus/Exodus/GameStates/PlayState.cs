@@ -509,8 +509,8 @@ namespace Exodus.GameStates
                                 PlayGame.Map.MapCells[x, y].ListItems.Add(Orders.listItems[i]);
                 for (int i = 0; i < Orders.listPassives.Count; i++)
                     if (Orders.listPassives[i].pos != null)
-                        for (int y = Orders.listItems[i].pos.Value.Y, mY = y + Orders.listItems[i].Width; y < mY; y++)
-                            for (int x = Orders.listItems[i].pos.Value.X, mX = x + Orders.listItems[i].Width; x < mX; x++)
+                        for (int y = Orders.listPassives[i].pos.Value.Y, mY = y + Orders.listPassives[i].Width; y < mY; y++)
+                            for (int x = Orders.listPassives[i].pos.Value.X, mX = x + Orders.listPassives[i].Width; x < mX; x++)
                                 PlayGame.Map.MapCells[x, y].ListItems.Add(Orders.listPassives[i]);
             }
             if (Data.Network.SinglePlayer)

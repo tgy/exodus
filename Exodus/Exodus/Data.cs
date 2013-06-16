@@ -128,7 +128,7 @@ namespace Exodus
             GameInfos.CostsItems.Add(typeof(Spider), new Resource(0, 100, 0, 0, 50));
             GameInfos.CostsItems.Add(typeof(University), new Resource(350, 500, 100, 200, 1000));
             GameInfos.CostsItems.Add(typeof(Laboratory), new Resource(0, 200, 0, 200, 300));
-            GameInfos.CostsItems.Add(typeof(Laserman), new Resource(500, 500, 150, 300, 1000));
+            GameInfos.CostsItems.Add(typeof(Laserman), new Resource(350, 0, 150, 300, 300));
             GameInfos.CostsItems.Add(typeof(HydrogenExtractor), new Resource(0, 150, 0, 0, 0));
             LoadPlayerConfig();
         }

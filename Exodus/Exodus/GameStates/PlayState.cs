@@ -196,14 +196,14 @@ namespace Exodus.GameStates
                                    new Vector2(Data.Window.WindowWidth / 2 - 42, Data.Window.WindowHeight / 2), Color.Red,
                                    0f, Vector2.Zero, 1f, SpriteEffects.None, 5 * float.Epsilon);*/
             resourcesDisplayer.Set(PlayGame.Map.PlayerResources);
-            int Client_Count = 1;
+            /*int Client_Count = 1;
             while (Client_Count <= Data.Network.ConnectedClients.Count)
             {
                 spriteBatch.DrawString(GUI.Fonts.Eurostile12, Data.Network.ConnectedClients[Client_Count - 1].IP.Split(':')[0],
                                    new Vector2(Data.Window.WindowWidth - 245, 15 * Client_Count + 69), Color.Red, 0f, Vector2.Zero, 1f,
                                    SpriteEffects.None, float.Epsilon);
                 Client_Count++;
-            }
+            }*/
             // Selon notre mode de jeu, on va dessiner des trucs en plus, ou non :)
             switch (Data.GameInfos.currentMode)
             {

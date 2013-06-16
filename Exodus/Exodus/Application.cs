@@ -367,6 +367,7 @@ namespace Exodus
                         //Data.Network.LastIP = "90.24.210.69";
                         Data.Network.SinglePlayer = false;
                         player2.Reset(Data.PlayerInfos.Name, Exodus.Player.avatarURL, Exodus.Player.rank, Exodus.Player.victories, Exodus.Player.defeats, true);
+                        player1.Reset("", 0, 0, 0, false);
                         NetGame.Start("C");
                         Push(m);
                         statusBar.Active = true;
@@ -655,6 +656,7 @@ namespace Exodus
         {
             Push(m);
             player1.Reset(Data.PlayerInfos.Name, Exodus.Player.avatarURL, Exodus.Player.rank, Exodus.Player.victories, Exodus.Player.defeats, true);
+            player2.Reset("", 0, 0, 0, false);
             Data.Network.SinglePlayer = false;
             NetGame.Start("SC");
             statusBar.Active = true;

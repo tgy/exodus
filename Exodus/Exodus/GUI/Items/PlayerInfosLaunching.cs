@@ -99,24 +99,27 @@ namespace Exodus.GUI.Items
             Percentage.Txt = (int)percentage + "%";
             FrontPercentageWidth = (int)(percentage * BackPercentage.Width / 100);
             WebClient Client = new WebClient();
-            try
+            if (avatarURL != "")
             {
-                if (!IsOur)
+                try
                 {
-                    Client.DownloadFile(Data.PlayerInfos.beginAvatar + avatarURL, "Content/" + avatarURL);
-                    Stream s = new FileStream("Content/" + avatarURL, FileMode.Open);
-                    _avatar = Texture2D.FromStream(Data.GameDisplaying.GraphicsDevice, s);
+                    if (!IsOur)
+                    {
+                        Client.DownloadFile(Data.PlayerInfos.beginAvatar + avatarURL, "Content/" + avatarURL);
+                        Stream s = new FileStream("Content/" + avatarURL, FileMode.Open);
+                        _avatar = Texture2D.FromStream(Data.GameDisplaying.GraphicsDevice, s);
+                    }
+                    else
+                        _avatar = Exodus.Player.avatar;
+                    if (avatar != null)
+                        Components.Remove(avatar);
+                    avatar = new JustTexture(_avatar, avatarFrame.Area.X + (_avatarFrame.Width - _avatar.Width) / 2 - 1, avatarFrame.Area.Y + (_avatarFrame.Height - _avatar.Height) / 2 - 1, layerDepth);
+                    Components.Add(avatar);
                 }
-                else
-                    _avatar = Exodus.Player.avatar;
-                if (avatar != null)
+                catch
+                {
                     Components.Remove(avatar);
-                avatar = new JustTexture(_avatar, avatarFrame.Area.X + (_avatarFrame.Width - _avatar.Width) / 2 - 1, avatarFrame.Area.Y + (_avatarFrame.Height - _avatar.Height) / 2 - 1, layerDepth);
-                Components.Add(avatar);
-            }
-            catch
-            {
-                Components.Remove(avatar);
+                }
             }
         }
         public override void Update(GameTime gameTime)

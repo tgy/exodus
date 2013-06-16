@@ -106,6 +106,8 @@ namespace Exodus.GameStates
 
                     Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Gas), 0, 91, 70));
                     Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Gas), 0, 101, 100));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Iron), 0, 96, 60));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Iron), 0, 105, 110));
 
                     Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 2, 96, 150));
                     Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Gas), 0, 83, 145));

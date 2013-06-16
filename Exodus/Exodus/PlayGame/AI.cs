@@ -67,7 +67,7 @@ namespace Exodus.PlayGame
                 }
                 else if ((task - 4) % 4 == 0 && time >= new TimeSpan(0, 0, 0, 15) && (time.Seconds - 15) % 20 == 0)
                 {
-                    for (int i = 0; i < rand.Next(10); i++)
+                    for (int i = 0; i < rand.Next(5); i++)
                     {
                         ProduceRandomUnit();
                     }
@@ -129,23 +129,22 @@ namespace Exodus.PlayGame
             if (l.Count > 0)
             {
                 Items.Buildings.Habitation i = (Items.Buildings.Habitation)l[rand.Next(l.Count)];
-                switch (rand.Next(7))
+                int n = rand.Next(100);
+                if (n < 10)
                 {
-                    case 0:
-                    case 1:
-                        i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Gunner)], new Items.Units.Gunner(id), i.pos.Value, true, true, false), false, false);
-                        break;
-                    case 2:
-                    case 3:
-                        i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Laserman)], new Items.Units.Laserman(id), i.pos.Value, true, true, false), false, false);
-                        break;
-                    case 4:
-                    case 5:
-                        i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Spider)], new Items.Units.Spider(id), i.pos.Value, true, true, false), false, false);
-                        break;
-                    case 6:
-                        i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Worker)], new Items.Units.Worker(id), i.pos.Value, true, true, false), false, false);
-                        break;
+                    i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Gunner)], new Items.Units.Gunner(id), i.pos.Value, true, true, false), false, false);
+                }
+                else if (n < 15)
+                {
+                    i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Laserman)], new Items.Units.Laserman(id), i.pos.Value, true, true, false), false, false);
+                }
+                else if (n < 85)
+                {
+                    i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Spider)], new Items.Units.Spider(id), i.pos.Value, true, true, false), false, false);
+                }
+                else if (n < 100)
+                {
+                    i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Worker)], new Items.Units.Worker(id), i.pos.Value, true, true, false), false, false);
                 }
             }
         }

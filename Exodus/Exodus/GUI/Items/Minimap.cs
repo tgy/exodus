@@ -62,16 +62,18 @@ namespace Exodus.GUI.Components
             foreach (PlayGame.Item i in l)
             {
                 Color c = Color.Gray;
-                if (!(i is PlayGame.Obstacle) || i is PlayGame.Building)
+                if (!(i is PlayGame.Obstacle) || i is PlayGame.Building || i is PlayGame.Items.Obstacles.Gas || i is PlayGame.Items.Obstacles.Iron)
                 {
-                    if (!PlayGame.Map.ListSelectedItems.Exists(n => n == i.IdPlayer))
+                    if (i is PlayGame.Items.Obstacles.Gas)
+                        c = Color.Green;
+                    else if (!PlayGame.Map.ListSelectedItems.Exists(n => n == i.IdPlayer))
                         switch (i.IdPlayer)
                         {
                             case 0:
-                                c = Color.Gray;
+                                c = new Color(154,154,154);
                                 break;
                             case 1:
-                                c = Color.Blue;
+                                c = new Color(0,148,128);
                                 break;
                             case 2:
                                 c = Color.Yellow;

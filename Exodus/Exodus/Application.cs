@@ -410,7 +410,7 @@ namespace Exodus
         }
         private void LaunchGame(MenuState m, int i)
         {
-            //if (Data.Network.ConnectedClients.Count > 1)
+            if (Data.Network.ConnectedClients.Count > 1)
                 Client.SendObject(new Network.Orders.LaunchGame());
         }
         private void Editor(MenuState m, int i)

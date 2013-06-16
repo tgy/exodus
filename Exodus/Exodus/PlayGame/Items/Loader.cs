@@ -44,6 +44,8 @@ namespace Exodus.PlayGame.Items
                 return new Nothing2x2();
             if (t == typeof(Iron))
                 return new Iron();
+            if (t == typeof(Gas))
+                return new Gas();
             return null;
         }
         public static Item LoadItem(Type t, int IdPlayer)

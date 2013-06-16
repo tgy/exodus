@@ -100,7 +100,7 @@ namespace Exodus.Network.ClientSide
             }
             catch
             {
-                throw new Exception("Another Socket is alreading using the port 4269!");
+                // throw new Exception("Another Socket is alreading using the port 4269!");
             }
             EndPoint = new IPEndPoint(IPAddress.Any, 4269);
             for (int i = 0; i < 10; i++)

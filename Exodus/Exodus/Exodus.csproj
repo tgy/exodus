@@ -234,6 +234,7 @@
     <Compile Include="PlayGame\Tasks\Hold.cs" />
     <Compile Include="PlayGame\Tasks\Move.cs" />
     <Compile Include="PlayGame\Tasks\ProductItem.cs" />
+    <Compile Include="PlayGame\Tasks\Wait.cs" />
     <Compile Include="Serialize\Serial Class\BuildingFile.cs" />
     <Compile Include="Serialize\Serial Class\ItemFile.cs" />
     <Compile Include="Serialize\Serial Class\MapFile.cs" />

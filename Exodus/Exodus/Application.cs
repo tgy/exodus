@@ -93,7 +93,7 @@ namespace Exodus
                     PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width,
                     PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height
                 };
-
+            _graphics.ToggleFullScreen();
             Content.RootDirectory = "Content";
         }
         protected override void Initialize()

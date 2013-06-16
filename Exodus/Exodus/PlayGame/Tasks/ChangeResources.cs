@@ -29,7 +29,7 @@ namespace Exodus.PlayGame.Tasks
                 if (!(PlayGame.Map.PlayerResources >= Cost))
                 {
                     Finished = true;
-                    Network.ClientSide.Client.chat.InsertMsg("Not enough resources: you are missing" + (PlayGame.Map.PlayerResources - Cost).ToString());
+                    Network.ClientSide.Client.chat.InsertMsg("Not enough resources: you are missing" + (Cost - PlayGame.Map.PlayerResources).ToString());
                 }
                 else
                     PlayGame.Map.PlayerResources -= Cost;

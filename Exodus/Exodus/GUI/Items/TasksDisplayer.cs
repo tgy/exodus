@@ -308,7 +308,7 @@ namespace Exodus.GUI.Items
             {
                 if (!(PlayGame.Map.PlayerResources >= Data.GameInfos.CostsItems[t]))
                 {
-                    Network.ClientSide.Client.chat.InsertMsg("Not enough resources: you are missing" + (PlayGame.Map.PlayerResources - Data.GameInfos.CostsItems[t]).ToString());
+                    Network.ClientSide.Client.chat.InsertMsg("Not enough resources: you are missing" + (Data.GameInfos.CostsItems[t] - PlayGame.Map.PlayerResources).ToString());
                 }
                 else
                 {

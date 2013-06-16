@@ -244,14 +244,15 @@ namespace Exodus.Network.ClientSide
         private static void ProcessObject(byte[] ObjectTable)
         {
             object o;
-            //try
-            //{
-            o = Serialize.Serializer.ByteArrayToObject(ObjectTable);
-            //}
-            //catch
-            //{
-            //if (IsRunning)
-            //{
+            try
+            {
+                o = Serialize.Serializer.ByteArrayToObject(ObjectTable);
+            }
+            catch
+            {
+                o = "Desync detected!";
+                //if (IsRunning) // Fuckit
+            }
             //    o = ""; //throw new Exception("Error during deserialization!");
             //}
             //return;

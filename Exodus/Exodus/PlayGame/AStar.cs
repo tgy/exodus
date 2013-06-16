@@ -176,8 +176,8 @@ namespace Exodus.PlayGame
                             min = current;
                         else
                         {
-                            int d = Heuristic(current, min) - Heuristic(start, min);
-                            if (d < 0)
+                            int d = Heuristic(start, current) - Heuristic(start, min);
+                            if (d < 0 && Heuristic(p, current) <= Heuristic(min, current))
                                 min = current;
                             else if (d > 0)
                                 return min;

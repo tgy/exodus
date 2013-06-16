@@ -389,12 +389,15 @@ namespace Exodus.Network.ClientSide
                     Orders.Tasks.HarvestIron Orders = (Orders.Tasks.HarvestIron)o;
                     PlayGame.Item item = null,
                                   iron = null;
-                    for (int i = 0; i < Map.ListItems.Count && (item == null || iron == null); i++)
+                    for (int i = 0; i < Map.ListItems.Count && item == null; i++)
                     {
                         if (item == null && Orders.parentPrimaryKey == Map.ListItems[i].PrimaryId)
                             item = Map.ListItems[i];
-                        else if (iron == null && Orders.ironPrimaryKey == Map.ListItems[i].PrimaryId)
-                            iron = Map.ListItems[i];
+                    }
+                    for (int i = 0; i < Map.ListPassiveItems.Count && iron == null; i++)
+                    {
+                        if (iron == null && Orders.ironPrimaryKey == Map.ListPassiveItems[i].PrimaryId)
+                            iron = Map.ListPassiveItems[i];
                     }
                     if (item != null && iron != null)
                     {

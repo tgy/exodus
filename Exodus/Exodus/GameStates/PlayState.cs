@@ -90,17 +90,26 @@ namespace Exodus.GameStates
             Map.Load(200, 200);
             Map.ClearSelection();
             Tile.tileSetWidth = (Tile.tileSetTextures[0, 0].Width * (Tile.tileSetTextures.GetLength(0) - 1) + Tile.tileSetTextures[Tile.tileSetTextures.GetLength(0) - 1, 0].Width) / Tile.tileWidth;
+            start = DateTime.Now;
+            AI.task = 0;
+            Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
+            Map.PlayerResources = new Resource(10000, 10000, 10000, 10000, 10000);
+            AI.Load(2);
+            base.LoadContent();
             if (!Data.Network.SinglePlayer)
             {
                 if (Network.ServerSide.Server.IsRunning)
                 {
                     Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 1, 96, 24));
-                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Gas), 0, 70, 70));
-                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Iron), 0, 90, 40));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Gas), 0, 110, 25));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Iron), 0, 105, 35));
+
                     Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Buildings.Habitation), 2, 96, 150));
-                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Gas), 0, 110, 136));
-                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Iron), 0, 76, 140));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Gas), 0, 83, 145));
+                    Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.CheatSpawn(0, true, typeof(PlayGame.Items.Obstacles.Iron), 0, 105, 141));
                 }
+                if (Data.Network.IdPlayer == 2)
+                    Camera.Set(Camera.minX + 3916, Camera.minY + 2071);
             }
             else
             {
@@ -109,27 +118,21 @@ namespace Exodus.GameStates
                 i.SetPos(96, 24, true);
                 Map.AddItem(i);
                 i = new PlayGame.Items.Obstacles.Gas();
-                i.SetPos(70, 70, true);
+                i.SetPos(110, 25, true);
                 Map.AddPassiveItem(i);
                 i = new PlayGame.Items.Obstacles.Iron();
-                i.SetPos(90, 40, true);
+                i.SetPos(105, 35, true);
                 Map.AddPassiveItem(i);
                 i = new PlayGame.Items.Buildings.Habitation(2);
                 i.SetPos(96, 150, true);
                 Map.AddItem(i);
                 i = new PlayGame.Items.Obstacles.Iron();
-                i.SetPos(110, 136, true);
+                i.SetPos(105, 141, true);
                 Map.AddPassiveItem(i);
                 i = new PlayGame.Items.Obstacles.Gas();
-                i.SetPos(76, 140, true);
+                i.SetPos(86, 145, true);
                 Map.AddPassiveItem(i);
             }
-            start = DateTime.Now;
-            AI.task = 0;
-            Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
-            Map.PlayerResources = new Resource(10000, 10000, 10000, 10000, 10000);
-            AI.Load(2);
-            base.LoadContent();
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

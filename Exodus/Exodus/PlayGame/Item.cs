@@ -339,6 +339,10 @@ namespace Exodus.PlayGame
                         else if (TasksList.Count == 0)
                             TasksList.Add(t);
                     }
+                    else if (TasksList.Count > 0)
+                    {
+                        TasksList[0].MustStop = true;
+                    }
                 }
             }
         }

@@ -11,7 +11,7 @@ namespace Exodus.PlayGame.Items.Buildings
         public Habitation(int IdPlayer)
         {
             Name = "Photocopieuse";
-            maxLife = 750;
+            maxLife = 30000;
             maxShield = 0;
             Width = 2;
             this.IdPlayer = IdPlayer;

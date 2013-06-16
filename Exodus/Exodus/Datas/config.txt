@@ -1,4 +1,4 @@
-DisplayObstacles=True
+DisplayObstacles=False
 LevelSound=0
 GraphicQuality=0
 PaddingMap=7

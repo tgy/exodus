@@ -12,6 +12,7 @@ namespace Exodus.PlayGame
         public static Items.Buildings.Habitation baseAI;
         public static Random rand = new Random();
         public static int id;
+        public static TimeSpan timeSpan;
         
         public static void Load(int idAI)
         {
@@ -20,6 +21,7 @@ namespace Exodus.PlayGame
 
         public static void Update(TimeSpan time)
         {
+            timeSpan = time;
             if (task == 0 && time >= new TimeSpan(0, 0, 0, 2))
             {
                 baseAI = (Items.Buildings.Habitation)Map.ListItems.FirstOrDefault(x => x is Items.Buildings.Habitation && x.IdPlayer == id);
@@ -130,11 +132,11 @@ namespace Exodus.PlayGame
             {
                 Items.Buildings.Habitation i = (Items.Buildings.Habitation)l[rand.Next(l.Count)];
                 int n = rand.Next(100);
-                if (n < 10)
+                if (n < 10 && timeSpan >= new TimeSpan(0, 2, 0))
                 {
                     i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Gunner)], new Items.Units.Gunner(id), i.pos.Value, true, true, false), false, false);
                 }
-                else if (n < 15)
+                else if (n < 15 && timeSpan >= new TimeSpan(0, 7, 0))
                 {
                     i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Laserman)], new Items.Units.Laserman(id), i.pos.Value, true, true, false), false, false);
                 }

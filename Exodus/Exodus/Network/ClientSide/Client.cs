@@ -393,7 +393,7 @@ namespace Exodus.Network.ClientSide
                     {
                         if (item == null && Orders.parentPrimaryKey == Map.ListItems[i].PrimaryId)
                             item = Map.ListItems[i];
-                        else if (iron == null && Orders.ironPrimaryKey == Map.ListItems[i].PrimaryId)
+                        else if (iron == null && Orders.ironPrimaryKey == Map.ListPassiveItems[i].PrimaryId)
                             iron = Map.ListItems[i];
                     }
                     if (item != null && iron != null)

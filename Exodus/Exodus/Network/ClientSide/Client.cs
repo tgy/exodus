@@ -161,7 +161,12 @@ namespace Exodus.Network.ClientSide
             if (obj is Orders.Tasks.ProductItem)
                 UnitsTrained++;
             else if (obj is Orders.Tasks.Die)
-                UnitsLost++;
+            {
+                long id = ((Orders.Tasks.Die)obj).parentPrimaryKey;
+                PlayGame.Item i = Map.ListItems.FirstOrDefault(u => u.PrimaryId == id);
+                if (i != null && i.PrimaryId == Data.Network.IdPlayer)
+                    UnitsLost++;
+            }
             if (IsRunning)
             {
                 byte[] ObjectTable = Serialize.Serializer.ObjectToByteArray(obj);

@@ -42,12 +42,12 @@ namespace Exodus.PlayGame.Tasks
         }
         public override void Initialize()
         {
-            if (AStar.GetFreeNeighbors(this.parent.pos.Value).Count == 0)
-                return;
             if (parent == null)
                 Finished = true;
             else
             {
+                if (AStar.GetFreeNeighbors(this.parent.pos.Value).Count == 0)
+                    return;
                 if (this.Arrived == null)
                     this.path = PlayGame.AStar.Pathfind(parent.pos.Value, this.Arrival);
                 else

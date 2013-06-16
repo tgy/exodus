@@ -92,6 +92,8 @@ namespace Exodus.Network.ServerSide
                         Observer_reading = new Thread(new ParameterizedThreadStart(ReceiveObserver));
                         Observer_reading.Name = "Receiver (" + Accepted.IP + ") (Observer)";
                         Observer_reading.Start(Accepted);
+                        SendToClient(Accepted, new GetId(0));
+                        SendToClient(Accepted, Data.PlayerInfos.InternetID);
                     }
                 }
                 else

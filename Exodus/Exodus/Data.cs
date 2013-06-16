@@ -120,7 +120,7 @@ namespace Exodus
             GameInfos.CostsItems.Add(typeof(Gunner), new Resource(150, 50, 0, 50, 75));
             GameInfos.CostsItems.Add(typeof(Worker), new Resource(0, 50, 0, 0, 20));
             GameInfos.CostsItems.Add(typeof(Habitation), new Resource(0, 150, 0, 0, 10));
-            GameInfos.CostsItems.Add(typeof(Spider), new Resource(0, 100, 0, 0, 35));
+            GameInfos.CostsItems.Add(typeof(Spider), new Resource(0, 100, 0, 0, 50));
             GameInfos.CostsItems.Add(typeof(University), new Resource(350, 500, 100, 200, 1000));
             GameInfos.CostsItems.Add(typeof(Laboratory), new Resource(0, 200, 0, 200, 300));
             GameInfos.CostsItems.Add(typeof(Laserman), new Resource(500, 500, 150, 300, 1000));

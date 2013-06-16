@@ -93,7 +93,7 @@ namespace Exodus.GameStates
             start = DateTime.Now;
             AI.task = 0;
             Map.EarningPerSec = new Resource(0, 0, 0, 0, 0);
-            Map.PlayerResources = new Resource(10000, 10000, 10000, 10000, 10000);
+            Map.PlayerResources = new Resource(0, 300, 0, 0, 500);
             AI.Load(2);
             base.LoadContent();
             if (!Data.Network.SinglePlayer)
@@ -158,7 +158,7 @@ namespace Exodus.GameStates
                                      0f, Vector2.Zero, 1f, SpriteEffects.None, 1f
                         );
                     for (int i = 0; i < Map.MapCells[x, y].ListItems.Count; i++)
-                        if (Map.MapCells[x,y].ListItems[i].pos != null && Map.MapCells[x,y].ListItems[i].pos.Value.X == x && Map.MapCells[x,y].ListItems[i].pos.Value.Y == y)
+                        if (Map.MapCells[x, y].ListItems[i].pos != null && Map.MapCells[x, y].ListItems[i].pos.Value.X == x && Map.MapCells[x, y].ListItems[i].pos.Value.Y == y)
                             Map.MapCells[x, y].ListItems[i].Draw(spriteBatch);
                 }
 

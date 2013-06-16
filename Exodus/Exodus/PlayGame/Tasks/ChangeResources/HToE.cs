@@ -11,7 +11,7 @@ namespace Exodus.PlayGame.Tasks.ChangeResources
     class HToE : ChangeResource
     {
         public HToE(Item parent)
-            : base(parent, 10000, new Resource(0,0,0,10,0), new Resource(0,0,0,0,100))
+            : base(parent, 10000, new Resource(0, 0, 0, 100, 0), new Resource(0, 0, 0, 0, 1000))
         {
         }
     }

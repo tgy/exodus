@@ -11,7 +11,7 @@ namespace Exodus.PlayGame.Tasks.ChangeResources
     class HEIToS : ChangeResource
     {
         public HEIToS(Item parent)
-            : base(parent, 20000, new Resource(0, 100, 0, 10, 50), new Resource(50, 0, 0, 0, 0))
+            : base(parent, 20000, new Resource(0, 400, 0, 200, 400), new Resource(300, 0, 0, 0, 0))
         {
         }
     }

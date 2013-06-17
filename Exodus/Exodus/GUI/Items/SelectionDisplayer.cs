@@ -33,7 +33,7 @@ namespace Exodus.GUI.Items
                 for (int i = 0; i < Map.ListSelectedItems.Count; i++)
                     Components.Add(new MiniItem(Area.X + 9 + (Textures.GameUI["smallItem"].Width + 3)*(i%9),
                                                 Area.Y + 10 + (Textures.GameUI["smallItem"].Height + 3)*(i/9),
-                                                Depth - 6*Data.GameDisplaying.Epsilon, i));
+                                                Depth - 6 * Data.GameDisplaying.Epsilon, i));
 
             base.Update(gameTime);
         }

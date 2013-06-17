@@ -80,7 +80,7 @@ namespace Exodus
             public static string Pwd = "";
             public static int LevelSound = 0;
             public static string PathConfig = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Exodus\\Datas\\";
-            public static string ConfigFile = "config.txt";
+            public static string ConfigFile = "config.conf";
             public static string PathMaps = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Exodus\\Maps\\";
             public static string currentMap = "";
             public static string MapsFileExtension = ".exd";

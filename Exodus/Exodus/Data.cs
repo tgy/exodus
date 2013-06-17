@@ -78,7 +78,7 @@ namespace Exodus
         {
             public static string Login = "";
             public static string Pwd = "";
-            public static int LevelSound = 0;
+            public static int LevelSound = 30;
             public static string PathConfig = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Exodus\\Datas\\";
             public static string ConfigFile = "config.conf";
             public static string PathMaps = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Exodus\\Maps\\";

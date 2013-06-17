@@ -78,7 +78,7 @@ namespace Exodus
         {
             public static string Login = "";
             public static string Pwd = "";
-            public static int LevelSound = 0;
+            public static int LevelSound = 30;
             public static string PathConfig = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Exodus\\Datas\\";
             public static string ConfigFile = "config.conf";
             public static string PathMaps = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Exodus\\Maps\\";
@@ -115,13 +115,13 @@ namespace Exodus
             if (!System.IO.Directory.Exists(Config.PathConfig))
                 System.IO.Directory.CreateDirectory(Config.PathConfig);
             GameInfos.timeCreatingItem.Add(typeof(Gunner), 5000);
-            GameInfos.timeCreatingItem.Add(typeof(Worker), 1000);
-            GameInfos.timeCreatingItem.Add(typeof(Habitation), 1500);
-            GameInfos.timeCreatingItem.Add(typeof(Spider), 2500);
+            GameInfos.timeCreatingItem.Add(typeof(Worker), 2000);
+            GameInfos.timeCreatingItem.Add(typeof(Habitation), 3000);
+            GameInfos.timeCreatingItem.Add(typeof(Spider), 3500);
             GameInfos.timeCreatingItem.Add(typeof(University), 5000);
-            GameInfos.timeCreatingItem.Add(typeof(Laboratory), 20000);
-            GameInfos.timeCreatingItem.Add(typeof(Laserman), 20000);
-            GameInfos.timeCreatingItem.Add(typeof(HydrogenExtractor), 3000);
+            GameInfos.timeCreatingItem.Add(typeof(Laboratory), 10000);
+            GameInfos.timeCreatingItem.Add(typeof(Laserman), 15000);
+            GameInfos.timeCreatingItem.Add(typeof(HydrogenExtractor), 5000);
             GameInfos.CostsItems.Add(typeof(Gunner), new Resource(150, 50, 0, 20, 75));
             GameInfos.CostsItems.Add(typeof(Worker), new Resource(0, 50, 0, 0, 20));
             GameInfos.CostsItems.Add(typeof(Habitation), new Resource(0, 150, 0, 0, 10));

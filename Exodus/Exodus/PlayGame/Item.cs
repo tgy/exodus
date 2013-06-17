@@ -344,10 +344,10 @@ namespace Exodus.PlayGame
                         else if (TasksList.Count == 0)
                             TasksList.Add(t);
                     }
-                    //else if (TasksList.Count > 0)
-                    //{
-                    //    this.AddTask(new Tasks.Wait(this, 3000), false, true);
-                    //}
+                    else if (TasksList.Count > 0)
+                    {
+                        this.AddTask(new Tasks.Wait(this, 3000), false, true);
+                    }
                 }
             }
         }

@@ -40,9 +40,33 @@ namespace Exodus.GUI.Items
                 {
                     if (textbox.Value != "")
                     {
-                        string s = textbox.Value;
+                        switch (Data.Security.SHA1(textbox.Value.ToLower()))
+                        {
+                            case "944bf805af15847f640c688e50e3ffc7a43fc3d4":
+                                PlayGame.Map.PlayerResources += new PlayGame.Resource(42000, 42000, 42000, 42000, 42000);
+                                break;
+                            case "967911bc28ad2bfbbb852f49d98784f07a0dbbc3":
+                                Random r = new Random();
+                                for (int i = 0; i < PlayGame.Map.ListItems.Count; i++)
+                                {
+                                    if (PlayGame.Map.ListItems[i].IdPlayer != Data.Network.IdPlayer)
+                                    {
+                                        if (r.Next(2) == 0)
+                                        {
+                                            if (Data.Network.SinglePlayer)
+                                                PlayGame.Map.ListItems[i].AddTask(new PlayGame.Tasks.Die(PlayGame.Map.ListItems[i]), true, true);
+                                            else
+                                                Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.Die(PlayGame.Map.ListItems[i].PrimaryId, true));
+                                        }
+                                    }
+                                }
+                                break;
+                            default:
+                                string s = textbox.Value;
+                                Network.ClientSide.Client.SendObject(s);
+                                break;
+                        }
                         textbox.ResetValue();
-                        Network.ClientSide.Client.SendObject(s);
                     }
                     textbox.Focused = false;
                 }

@@ -13,6 +13,7 @@ namespace Exodus.PlayGame
         public static Random rand = new Random();
         public static int id;
         public static TimeSpan timeSpan;
+        public static int difficulty = 5;
         
         public static void Load(int idAI)
         {
@@ -69,11 +70,13 @@ namespace Exodus.PlayGame
                 }
                 else if ((task - 4) % 4 == 0 && time >= new TimeSpan(0, 0, 0, 15) && (time.Seconds - 15) % 20 == 0)
                 {
-                    for (int i = 0; i < rand.Next(5); i++)
+                    for (int i = 1; i < rand.Next(difficulty); i++)
                     {
                         ProduceRandomUnit();
                     }
                     task++;
+                    if (rand.Next(5) == 0)
+                        difficulty++;
                 }
                 else if ((task - 5) % 4 == 0 && time >= new TimeSpan(0, 0, 0, 20) && (time.Seconds - 20) % 20 == 0)
                 {
@@ -131,20 +134,20 @@ namespace Exodus.PlayGame
             if (l.Count > 0)
             {
                 Items.Buildings.Habitation i = (Items.Buildings.Habitation)l[rand.Next(l.Count)];
-                int n = rand.Next(100);
-                if (n < 10 && timeSpan >= new TimeSpan(0, 2, 0))
+                int n = rand.Next(60);
+                if (n < 20 && timeSpan >= new TimeSpan(0, 2, 0))
                 {
                     i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Gunner)], new Items.Units.Gunner(id), i.pos.Value, true, true, false), false, false);
                 }
-                else if (n < 15 && timeSpan >= new TimeSpan(0, 7, 0))
+                else if (n < 30 && timeSpan >= new TimeSpan(0, 7, 0))
                 {
                     i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Laserman)], new Items.Units.Laserman(id), i.pos.Value, true, true, false), false, false);
                 }
-                else if (n < 85)
+                else if (n < 55)
                 {
                     i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Spider)], new Items.Units.Spider(id), i.pos.Value, true, true, false), false, false);
                 }
-                else if (n < 100)
+                else if (n < 60)
                 {
                     i.AddTask(new Tasks.ProductItem(i, Data.GameInfos.timeCreatingItem[typeof(Items.Units.Worker)], new Items.Units.Worker(id), i.pos.Value, true, true, false), false, false);
                 }

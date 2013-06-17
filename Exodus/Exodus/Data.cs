@@ -80,12 +80,12 @@ namespace Exodus
             public static string Pwd = "";
             public static int LevelSound = 0;
             public static string PathConfig = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Exodus\\Datas\\";
-            public static string ConfigFile = "config.txt";
+            public static string ConfigFile = "config.conf";
             public static string PathMaps = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\Exodus\\Maps\\";
             public static string currentMap = "";
             public static string MapsFileExtension = ".exd";
             public static int MapMaxLenghtName = 42;
-            public static int TimerDoubleClick = 200;
+            public static int TimerDoubleClick = 300;
             public static int SpaceBetweenMenuItems = 30;
             //public static int SpaceFromBorderMovingCamera = 30;
             public static int DecalageSimpleClick = 5;
@@ -128,7 +128,7 @@ namespace Exodus
             GameInfos.CostsItems.Add(typeof(Spider), new Resource(0, 100, 0, 0, 50));
             GameInfos.CostsItems.Add(typeof(University), new Resource(350, 500, 100, 200, 1000));
             GameInfos.CostsItems.Add(typeof(Laboratory), new Resource(0, 200, 0, 200, 300));
-            GameInfos.CostsItems.Add(typeof(Laserman), new Resource(500, 500, 150, 300, 1000));
+            GameInfos.CostsItems.Add(typeof(Laserman), new Resource(150, 0, 150, 150, 300));
             GameInfos.CostsItems.Add(typeof(HydrogenExtractor), new Resource(0, 150, 0, 0, 0));
             LoadPlayerConfig();
         }

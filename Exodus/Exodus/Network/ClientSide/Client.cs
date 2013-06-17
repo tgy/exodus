@@ -352,15 +352,21 @@ namespace Exodus.Network.ClientSide
                 else if (o is Orders.Tasks.Die)
                 {
                     Orders.Tasks.Die Orders = (Orders.Tasks.Die)o;
-                    PlayGame.Item i = PlayGame.Map.ListItems.FirstOrDefault(s => s.PrimaryId == Orders.parentPrimaryKey);
-                    if (i != null)
-                        i.AddTask(
-                            new PlayGame.Tasks.Die(
-                                i
-                                ),
-                                true,
-                                false
-                                );
+                    try
+                    {
+                        PlayGame.Item i = PlayGame.Map.ListItems.FirstOrDefault(s => s.PrimaryId == Orders.parentPrimaryKey);
+                        if (i != null)
+                            i.AddTask(
+                                new PlayGame.Tasks.Die(
+                                    i
+                                    ),
+                                    true,
+                                    false
+                                    );
+                    }
+                    catch
+                    {
+                    }
                 }
                 else if (o is Orders.Tasks.Attack)
                 {

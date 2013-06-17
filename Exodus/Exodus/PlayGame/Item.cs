@@ -220,7 +220,7 @@ namespace Exodus.PlayGame
                     Network.ClientSide.Client.SendObject(new Network.Orders.Tasks.Die(this.PrimaryId, false));
             }
             #endregion
-            this.bigLife.Depth = this.layerDepth;
+            this.bigLife.Depth = this.layerDepth - Data.GameDisplaying.Epsilon;
             this.bigLife.Value = 100 * currentLife / maxLife;
             this.bigLife.Area.X = this.screenPos.X + this.screenPos.Width / 2 - this.bigLife.Area.Width / 2;
             this.bigLife.Area.Y = this.screenPos.Y;
@@ -344,10 +344,10 @@ namespace Exodus.PlayGame
                         else if (TasksList.Count == 0)
                             TasksList.Add(t);
                     }
-                    else if (TasksList.Count > 0)
-                    {
-                        TasksList.Insert(0, new Tasks.Wait(this, 3000));
-                    }
+                    //else if (TasksList.Count > 0)
+                    //{
+                    //    this.AddTask(new Tasks.Wait(this, 3000), false, true);
+                    //}
                 }
             }
         }

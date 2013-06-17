@@ -50,7 +50,7 @@ namespace Exodus.PlayGame
             openSet2[openSet.First().point] = openSet.First();
             CellInfos current, temp, temp2;
             List<Point> neighbors;
-            while (openSet2.Count > 0)
+            while (openSet2.Count > 0 && openSet2.Count < 300)
             {
                 current = openSet.First();
                 if (current.point.Equals(Arrival))

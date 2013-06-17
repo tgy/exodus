@@ -140,7 +140,7 @@ namespace Exodus.GUI.Items
             {
                 t = Textures.GameUI["Die"];
                 display.Add(
-                    new Mini(Die, default(Type), t, Textures.GameUI["Diehover"], currentX, Area.Y + 14)
+                    new Mini(DoNothing, default(Type), t, Textures.GameUI["Diehover"], currentX, Area.Y + 14)
                     );
                 currentX += t.Width + _step;
             }

@@ -39,7 +39,7 @@ namespace Exodus.GUI.Components.Buttons.GameButtons
 
         public override void Update(GameTime gameTime)
         {
-            PlayGame.Item i = Map.ListItems.Find(u => u.PrimaryId == Map.ListSelectedItems[Id]);
+            PlayGame.Item i = Map.ListItems.Find(u => u.PrimaryId == Id);
             if (i != null)
             {
                 _miniLife.Value = 100 * i.currentLife / i.maxLife;

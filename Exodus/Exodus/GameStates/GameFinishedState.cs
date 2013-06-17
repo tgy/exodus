@@ -31,7 +31,7 @@ namespace Exodus.GameStates
         }
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            if (Inputs.KeyboardState.IsKeyDown(Keys.Enter))
+            if (Inputs.PreKeyboardState.IsKeyUp(Keys.Enter) && Inputs.KeyboardState.IsKeyDown(Keys.Enter))
             {
                 while (!(game.Peek() is MenuState))
                     game.Pop();

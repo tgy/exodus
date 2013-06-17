@@ -85,7 +85,7 @@ namespace Exodus
             public static string currentMap = "";
             public static string MapsFileExtension = ".exd";
             public static int MapMaxLenghtName = 42;
-            public static int TimerDoubleClick = 200;
+            public static int TimerDoubleClick = 300;
             public static int SpaceBetweenMenuItems = 30;
             //public static int SpaceFromBorderMovingCamera = 30;
             public static int DecalageSimpleClick = 5;
@@ -128,7 +128,7 @@ namespace Exodus
             GameInfos.CostsItems.Add(typeof(Spider), new Resource(0, 100, 0, 0, 50));
             GameInfos.CostsItems.Add(typeof(University), new Resource(350, 500, 100, 200, 1000));
             GameInfos.CostsItems.Add(typeof(Laboratory), new Resource(0, 200, 0, 200, 300));
-            GameInfos.CostsItems.Add(typeof(Laserman), new Resource(500, 500, 150, 300, 1000));
+            GameInfos.CostsItems.Add(typeof(Laserman), new Resource(350, 0, 150, 300, 300));
             GameInfos.CostsItems.Add(typeof(HydrogenExtractor), new Resource(0, 150, 0, 0, 0));
             LoadPlayerConfig();
         }

@@ -354,8 +354,8 @@ namespace Exodus.Network.ServerSide
                 TPStats.AddStatistic((Statistics)o);
             else if (o is Task)
                 SendToAll(o);
-            else
-                throw new Exception("Dah hell is that object?");
+            /*else
+                throw new Exception("Dah hell is that object?");*/
         }
         private static void ProcessObserverObject(SClient client, byte[] ObjectTablePlusOne)
         {

@@ -198,7 +198,8 @@ namespace Exodus.Network.ClientSide
                 catch
                 {
                     Data.Network.ServerIP = "Host crashed, game is finished.";
-                    chat.InsertMsg("Server crashed!");
+                    if (chat != null)
+                        chat.InsertMsg("Server crashed!");
                     IsRunning = false;
                 }
             }

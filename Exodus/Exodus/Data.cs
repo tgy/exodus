@@ -231,7 +231,7 @@ namespace Exodus
                     "ColorObstacles=" + GameDisplaying.DisplayingColor.A + "," + GameDisplaying.DisplayingColor.R + "," + GameDisplaying.DisplayingColor.G + "," + GameDisplaying.DisplayingColor.B
                 );
             }
-            catch (Exception e)
+            catch
             {
             }
         }

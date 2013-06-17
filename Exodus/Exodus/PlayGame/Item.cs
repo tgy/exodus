@@ -346,7 +346,7 @@ namespace Exodus.PlayGame
                     }
                     else if (TasksList.Count > 0)
                     {
-                        TasksList.Insert(0, new Tasks.Wait(this, 3000));
+                        this.AddTask(new Tasks.Wait(this, 3000), false, true);
                     }
                 }
             }

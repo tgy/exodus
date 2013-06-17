@@ -85,7 +85,7 @@ namespace Exodus
             public static string currentMap = "";
             public static string MapsFileExtension = ".exd";
             public static int MapMaxLenghtName = 42;
-            public static int TimerDoubleClick = 200;
+            public static int TimerDoubleClick = 300;
             public static int SpaceBetweenMenuItems = 30;
             //public static int SpaceFromBorderMovingCamera = 30;
             public static int DecalageSimpleClick = 5;
